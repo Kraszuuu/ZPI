@@ -27,23 +27,7 @@ public class PlayerMotor : MonoBehaviour
 
         if (lerpCrouch)
         {
-            crouchTimer += Time.deltaTime;
-            float p = crouchTimer / 1;
-            p *= p;
-            if (crouching)
-            {
-                controller.height = Mathf.Lerp(controller.height, 1, p);
-            }
-            else
-            {
-                controller.height = Mathf.Lerp(controller.height, 2, p);
-            }
-
-            if (p > 1)
-            {
-                lerpCrouch = false;
-                crouchTimer = 0f;
-            }
+            LerpCrouch();
         }
     }
 
@@ -77,7 +61,29 @@ public class PlayerMotor : MonoBehaviour
         lerpCrouch = true;
     }
 
-    public void Spring()
+    // slowly change camera height while in process of crouching/standing up
+    private void LerpCrouch()
+    {
+        crouchTimer += Time.deltaTime;
+        float p = crouchTimer / 1;
+        p *= p;
+        if (crouching)
+        {
+            controller.height = Mathf.Lerp(controller.height, 1, p);
+        }
+        else
+        {
+            controller.height = Mathf.Lerp(controller.height, 2, p);
+        }
+
+        if (p > 1)
+        {
+            lerpCrouch = false;
+            crouchTimer = 0f;
+        }
+    }
+
+    public void Sprint()
     {
         sprinting = !sprinting;
         if (sprinting)
