@@ -27,25 +27,13 @@ public class SpellCasting : MonoBehaviour
         // Œledzenie ruchu myszy, gdy przycisk jest wciœniêty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
-            inputManager.isCastSpelling = true;
-            Vector3 screenPos = Input.mousePosition;
-            Vector3 mousePosV2 = Input.mousePosition;
-
-            if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePosV2) > minDistance)
-            {
-                if (mousePositions.Count > 0)
-                {
-                }
-                mousePositions.Add(mousePosV2); // Dodajemy pozycjê myszy do listy, jeœli jest wystarczaj¹co daleko od ostatniego punktu
-            }
+            HandleMouseInput();
         }
 
         // Gdy przycisk myszy zostanie puszczony, analizujemy gest
         if (Input.GetMouseButtonUp(0))
         {
-            inputManager.isCastSpelling = false;
-            RecognizeSpell(); // Funkcja do rozpoznawania zaklêcia
-            mousePositions.Clear(); // Wyczyœæ listê punktów po analizie
+            FinalizeSpellCasting();
         }
     }
 
@@ -209,5 +197,32 @@ public class SpellCasting : MonoBehaviour
     {
         Debug.Log("Casting spell: " + spellName);
         // Tu dodaj logikê odpowiedniego zaklêcia
+    }
+
+    private void HandleMouseInput()
+    {
+        inputManager.isCastSpelling = true;
+
+        // Zatrzymanie czasu podczas rzucania zaklêcia
+        if (Time.timeScale != 0f)
+        {
+            Time.timeScale = 0f;
+        }
+
+        Vector3 mousePosV2 = Input.mousePosition;
+        if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePosV2) > minDistance)
+        {
+            mousePositions.Add(mousePosV2);
+        }
+    }
+
+    private void FinalizeSpellCasting()
+    {
+        inputManager.isCastSpelling = false;
+        RecognizeSpell();
+        mousePositions.Clear();
+
+        // Przywrócenie normalnego up³ywu czasu
+        Time.timeScale = 1f;
     }
 }
