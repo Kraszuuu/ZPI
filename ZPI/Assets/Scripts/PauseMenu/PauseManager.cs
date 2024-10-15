@@ -20,14 +20,14 @@ public class PauseManager : MonoBehaviour
     public void PauseGame()
     {
         PausePanel.SetActive(true);
-        gameFreezer.setIsGamePaused(true);
+        gameFreezer.SetIsGamePaused(true);
         Debug.Log("PAUZA");
     }
 
     public void ResumeGame()
     {
         PausePanel.SetActive(false);
-        gameFreezer.setIsGamePaused(false);
+        gameFreezer.SetIsGamePaused(false);
         Debug.Log("WZNOWIONO");
     }
 }

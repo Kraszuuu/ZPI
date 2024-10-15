@@ -7,16 +7,26 @@ public class GameFreezer : MonoBehaviour
     private bool isCastSpelling;
     private bool isGamePaused;
 
-    public void setIsCastSpelling(bool castSpelling)
+    public void SetIsCastSpelling(bool castSpelling)
     {
         this.isCastSpelling = castSpelling;
         UpdateTimeScale();
     }
 
-    public void setIsGamePaused(bool isGamePaused)
+    public void SetIsGamePaused(bool isGamePaused)
     {
         this.isGamePaused = isGamePaused;
         UpdateTimeScale();
+    }
+
+    public bool IsCastSpelling()
+    {
+        return isCastSpelling;
+    }
+
+    public bool IsGamePaused()
+    {
+        return isGamePaused;
     }
 
     private void UpdateTimeScale()

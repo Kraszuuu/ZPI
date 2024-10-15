@@ -206,7 +206,7 @@ public class SpellCasting : MonoBehaviour
         inputManager.isCastSpelling = true;
 
         // Zatrzymanie czasu podczas rzucania zaklêcia
-        gameFreezer.setIsCastSpelling(true);
+        gameFreezer.SetIsCastSpelling(true);
 
         Vector3 mousePosV2 = Input.mousePosition;
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePosV2) > minDistance)
@@ -222,6 +222,6 @@ public class SpellCasting : MonoBehaviour
         mousePositions.Clear();
 
         // Przywrócenie normalnego up³ywu czasu
-        gameFreezer.setIsCastSpelling(false);
+        gameFreezer.SetIsCastSpelling(false);
     }
 }
