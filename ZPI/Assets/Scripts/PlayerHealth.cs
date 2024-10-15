@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlyerHealth : MonoBehaviour
 {
     private float health;
     private float lerpTimer;
+
     [Header("Health Bar")]
     public float maxHealth = 100f;
     public float chipSpeed = 2f;
@@ -19,11 +21,16 @@ public class PlyerHealth : MonoBehaviour
     public float fadeSpeed;
 
     private float durationTimer;
+
+    public Image endGameOverlay;
+    private float gameOverTimer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
+        endGameOverlay.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,15 +42,28 @@ public class PlyerHealth : MonoBehaviour
         {
             if (health < 30)
             {
-                return;
-            }
-            durationTimer += Time.deltaTime;
-            if (durationTimer > duration)
-            {
                 float tempAlpha = overlay.color.a;
-                tempAlpha -= Time.deltaTime * fadeSpeed;
+                tempAlpha -= Time.deltaTime * (fadeSpeed / 4);
+                if (tempAlpha < 0.5) tempAlpha = 1;
                 overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, tempAlpha);
             }
+            else
+            {
+                durationTimer += Time.deltaTime;
+                if (durationTimer > duration)
+                {
+                    float tempAlpha = overlay.color.a;
+                    tempAlpha -= Time.deltaTime * fadeSpeed;
+                    overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, tempAlpha);
+                }
+            }
+        }
+        if (health <= 0)
+        {
+            endGameOverlay.gameObject.SetActive(true);
+            gameOverTimer += Time.deltaTime;
+            if (gameOverTimer > 3)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -61,7 +81,7 @@ public class PlyerHealth : MonoBehaviour
             percentComplete = percentComplete * percentComplete;
             backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
         }
-        if (fillF < hFraction)
+        else if (fillF < hFraction)
         {
             backHealthBar.color = Color.green;
             backHealthBar.fillAmount = hFraction;
