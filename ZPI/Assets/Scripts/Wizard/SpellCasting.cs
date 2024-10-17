@@ -8,6 +8,7 @@ using static UnityEditor.PlayerSettings;
 
 public class SpellCasting : MonoBehaviour
 {
+    private GameFreezer gameFreezer;
     private List<Vector3> mousePositions = new List<Vector3>();
     private InputManager inputManager;
     private FireBaseScript prefabScript;
@@ -18,6 +19,7 @@ public class SpellCasting : MonoBehaviour
 
     private void Start()
     {
+        gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencjê do skryptu obracaj¹cego kamerê
         inputManager = FindObjectOfType<InputManager>();
     }
@@ -204,10 +206,7 @@ public class SpellCasting : MonoBehaviour
         inputManager.isCastSpelling = true;
 
         // Zatrzymanie czasu podczas rzucania zaklêcia
-        if (Time.timeScale != 0f)
-        {
-            Time.timeScale = 0f;
-        }
+        gameFreezer.SetIsCastSpelling(true);
 
         Vector3 mousePosV2 = Input.mousePosition;
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePosV2) > minDistance)
@@ -223,6 +222,6 @@ public class SpellCasting : MonoBehaviour
         mousePositions.Clear();
 
         // Przywrócenie normalnego up³ywu czasu
-        Time.timeScale = 1f;
+        gameFreezer.SetIsCastSpelling(false);
     }
 }
