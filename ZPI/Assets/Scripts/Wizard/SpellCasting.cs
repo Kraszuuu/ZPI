@@ -8,25 +8,26 @@ using static UnityEditor.PlayerSettings;
 
 public class SpellCasting : MonoBehaviour
 {
+    public CameraShake cameraShake;
     private GameFreezer gameFreezer;
     private List<Vector3> mousePositions = new List<Vector3>();
     private InputManager inputManager;
     private FireBaseScript prefabScript;
     private GameObject fireball;
-    public float minDistance = 20f; // Minimalna odleg³oœæ miêdzy punktami, aby unikn¹æ nadmiernej liczby punktów
-    public GameObject fireballPrefab; // Prefab, który zawiera FireBaseScript
-    public float spellCastDistance = 10f; // Odleg³oœæ, na jak¹ rzucane jest zaklêcie
+    public float minDistance = 20f; // Minimalna odlegï¿½oï¿½ï¿½ miï¿½dzy punktami, aby uniknï¿½ï¿½ nadmiernej liczby punktï¿½w
+    public GameObject fireballPrefab; // Prefab, ktï¿½ry zawiera FireBaseScript
+    public float spellCastDistance = 10f; // Odlegï¿½oï¿½ï¿½, na jakï¿½ rzucane jest zaklï¿½cie
 
     private void Start()
     {
         gameFreezer = FindObjectOfType<GameFreezer>();
-        // Pobieramy referencjê do skryptu obracaj¹cego kamerê
+        // Pobieramy referencjï¿½ do skryptu obracajï¿½cego kamerï¿½
         inputManager = FindObjectOfType<InputManager>();
     }
 
     void Update()
     {
-        // Œledzenie ruchu myszy, gdy przycisk jest wciœniêty
+        // ï¿½ledzenie ruchu myszy, gdy przycisk jest wciï¿½niï¿½ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
             HandleMouseInput();
@@ -41,7 +42,7 @@ public class SpellCasting : MonoBehaviour
 
     void RecognizeSpell()
     {
-        // Przyk³ad: proste rozpoznawanie linii pionowej
+        // Przykï¿½ad: proste rozpoznawanie linii pionowej
         if (IsVerticalLine())
         {
             CastFireSpellInDirection();
@@ -54,7 +55,7 @@ public class SpellCasting : MonoBehaviour
         {
             CastSpell("Z gowno");
         }
-        else 
+        else
         {
             Debug.Log("Unrecognized spell pattern");
         }
@@ -72,6 +73,8 @@ public class SpellCasting : MonoBehaviour
         Vector3 right = transform.right;
         Vector3 up = transform.up;
         Quaternion rotation = Quaternion.identity;
+
+        cameraShake.Shake();
 
         // Instancjonowanie prefabrykatu ognistej kuli
         fireball = Instantiate(fireballPrefab);
@@ -114,10 +117,10 @@ public class SpellCasting : MonoBehaviour
 
     bool IsVerticalLine()
     {
-        // Proste sprawdzenie, czy œlad przypomina pionow¹ liniê
+        // Proste sprawdzenie, czy ï¿½lad przypomina pionowï¿½ liniï¿½
         if (mousePositions.Count < 2) return false;
 
-        float previousX  = Math.Abs(mousePositions[0].x);
+        float previousX = Math.Abs(mousePositions[0].x);
         float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
 
         foreach (var point in mousePositions)
@@ -135,7 +138,7 @@ public class SpellCasting : MonoBehaviour
 
     bool IsHorizontalLine()
     {
-        // Proste sprawdzenie, czy œlad przypomina pionow¹ liniê
+        // Proste sprawdzenie, czy ï¿½lad przypomina pionowï¿½ liniï¿½
         if (mousePositions.Count < 2) return false;
 
         float previousY = Math.Abs(mousePositions[0].y);
@@ -152,12 +155,12 @@ public class SpellCasting : MonoBehaviour
         return true;
     }
 
-    // Funkcja do porównywania kierunków z wzorcem "Z"
+    // Funkcja do porï¿½wnywania kierunkï¿½w z wzorcem "Z"
     bool IsZShape()
     {
         if (mousePositions.Count < 3) return false;
 
-        // Analiza kierunków miêdzy punktami
+        // Analiza kierunkï¿½w miï¿½dzy punktami
         List<Vector2> directions = new List<Vector2>();
 
         for (int i = 1; i < mousePositions.Count; i++)
@@ -166,7 +169,7 @@ public class SpellCasting : MonoBehaviour
             directions.Add(direction);
         }
 
-        // SprawdŸ, czy ruch odpowiada wzorcowi litery Z
+        // Sprawdï¿½, czy ruch odpowiada wzorcowi litery Z
         bool firstLine = false;
         bool diagonalLine = false;
         bool secondLine = false;
@@ -180,7 +183,7 @@ public class SpellCasting : MonoBehaviour
                 //Debug.Log("PIERWSZA LINIA");
                 firstLine = true;
             }
-            else if (firstLine && !diagonalLine && dir.x < 0 && dir.y < 0) // Ukoœny ruch w lewo-dó³
+            else if (firstLine && !diagonalLine && dir.x < 0 && dir.y < 0) // Ukoï¿½ny ruch w lewo-dï¿½
             {
                 //Debug.Log("DRUGA LINIA");
                 diagonalLine = true;
@@ -188,7 +191,7 @@ public class SpellCasting : MonoBehaviour
             else if (diagonalLine && !secondLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Drugi poziomy ruch w prawo
             {
                 secondLine = true;
-                break; // Wzorzec rozpoznany, mo¿na zakoñczyæ pêtlê
+                break; // Wzorzec rozpoznany, moï¿½na zakoï¿½czyï¿½ pï¿½tlï¿½
             }
         }
 
@@ -198,14 +201,14 @@ public class SpellCasting : MonoBehaviour
     void CastSpell(string spellName)
     {
         Debug.Log("Casting spell: " + spellName);
-        // Tu dodaj logikê odpowiedniego zaklêcia
+        // Tu dodaj logikï¿½ odpowiedniego zaklï¿½cia
     }
 
     private void HandleMouseInput()
     {
         inputManager.isCastSpelling = true;
 
-        // Zatrzymanie czasu podczas rzucania zaklêcia
+        // Zatrzymanie czasu podczas rzucania zaklï¿½cia
         gameFreezer.SetIsCastSpelling(true);
 
         Vector3 mousePosV2 = Input.mousePosition;
@@ -221,7 +224,7 @@ public class SpellCasting : MonoBehaviour
         RecognizeSpell();
         mousePositions.Clear();
 
-        // Przywrócenie normalnego up³ywu czasu
+        // Przywrï¿½cenie normalnego upï¿½ywu czasu
         gameFreezer.SetIsCastSpelling(false);
     }
 }
