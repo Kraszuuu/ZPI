@@ -14,6 +14,7 @@ public class PlayerMotor : MonoBehaviour
     public float speed = 5f;
     public float gravity = -9.8f;
     public float jumpHeight = 3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,13 +32,13 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
-    //receive the inputs from out InputManager.cs and apply them to our characte4r controller.
+    //receive the inputs from out InputManager.cs and apply them to our character controller.
     public void ProcessMove(Vector2 input)
     {
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
-        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+        controller.Move(speed * Time.deltaTime * transform.TransformDirection(moveDirection));
         if (isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = -2f;
