@@ -30,6 +30,13 @@ public class SpellCasting : MonoBehaviour
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
+            if (!inputManager.isCastSpelling)
+            {
+                inputManager.isCastSpelling = true;
+                gameFreezer.SetIsCastSpelling(true);
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
             HandleMouseInput();
         }
 
@@ -206,11 +213,6 @@ public class SpellCasting : MonoBehaviour
 
     private void HandleMouseInput()
     {
-        inputManager.isCastSpelling = true;
-
-        // Zatrzymanie czasu podczas rzucania zakl�cia
-        gameFreezer.SetIsCastSpelling(true);
-
         Vector3 mousePosV2 = Input.mousePosition;
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePosV2) > minDistance)
         {
@@ -226,5 +228,6 @@ public class SpellCasting : MonoBehaviour
 
         // Przywr�cenie normalnego up�ywu czasu
         gameFreezer.SetIsCastSpelling(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

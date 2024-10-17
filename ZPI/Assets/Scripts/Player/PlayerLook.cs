@@ -7,25 +7,23 @@ public class PlayerLook : MonoBehaviour
     public Camera cam;
     private float xRotation = 0f;
 
-    public float xSensitivity = 40f;
-    public float ySensitivity = 40f;
+    public float sensitivity = 30f;
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
     }
 
     public void ProcessLook(Vector2 input)
     {
-        float mouseX = input.x;
-        float mouseY = input.y;
-        //caluclate camera rotation for looking up and down
-        xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
+        float mouseX = input.x * sensitivity * Time.deltaTime;
+        float mouseY = input.y * sensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-        //apply this to our camera transform.
+
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        //rotate player to look left and right
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
+        transform.Rotate(Vector3.up * mouseX);
     }
 }
