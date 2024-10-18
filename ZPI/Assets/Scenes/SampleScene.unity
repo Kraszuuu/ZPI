@@ -1512,6 +1512,11 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &590024417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5730793301270126740, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
+  m_PrefabInstance: {fileID: 2569627551059570507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &628122712
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,6 +2205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060dfcf60cf3b9147bff2e315d009c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraShake: {fileID: 1864202598}
   minDistance: 20
   fireballPrefab: {fileID: 121802, guid: 8f18e1d8c46c51f429429815455062fc, type: 3}
   spellCastDistance: 10
@@ -4816,6 +4822,20 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7200104214974415883, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
   m_PrefabInstance: {fileID: 2569627551059570507}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1864202598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590024417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fd061c6a0c1fb418727ca3652623cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.6
+  shakeIntensity: 0.2
 --- !u!1 &1897578988
 GameObject:
   m_ObjectHideFlags: 0
@@ -5659,6 +5679,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4977454392104243776, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 939752300}
+    - targetCorrespondingSourceObject: {fileID: 5730793301270126740, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1864202598}
   m_SourcePrefab: {fileID: 100100000, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
