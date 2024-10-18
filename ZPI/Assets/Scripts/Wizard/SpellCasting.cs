@@ -17,12 +17,15 @@ public class SpellCasting : MonoBehaviour
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
+    public LineRenderer lineRenderer;
 
     private void Start()
     {
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 0;
     }
 
     void Update()
@@ -213,10 +216,14 @@ public class SpellCasting : MonoBehaviour
 
     private void HandleMouseInput()
     {
-        Vector3 mousePosV2 = Input.mousePosition;
-        if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePosV2) > minDistance)
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0.5f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
         {
-            mousePositions.Add(mousePosV2);
+            mousePositions.Add(mousePos);
+            lineRenderer.positionCount = mousePositions.Count;
+            lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
         }
     }
 
@@ -225,6 +232,7 @@ public class SpellCasting : MonoBehaviour
         inputManager.isCastSpelling = false;
         RecognizeSpell();
         mousePositions.Clear();
+        lineRenderer.positionCount = 0;
 
         // Przywr�cenie normalnego up�ywu czasu
         gameFreezer.SetIsCastSpelling(false);
