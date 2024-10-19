@@ -14,7 +14,7 @@ public class PlayerLook : MonoBehaviour
     [Tooltip("How far in degrees can you move the camera down")]
     public float BottomClamp = -90.0f;
 
-    private const float _threshold = 0.01f;
+    private const float _threshold = 0.002f;
     private float _rotationVelocity;
     private float _cameraPitchAngle;
 

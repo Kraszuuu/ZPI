@@ -2246,12 +2246,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WalkingSpeed: 5
-  SprintingSpeed: 10
+  SprintingSpeed: 12
   MovementSharpnessOnGround: 15
-  MaxSpeedInAir: 5
-  AccelerationSpeedInAir: 2
-  GravityForce: -9.8
-  JumpHeight: 3
+  SprintHoldToLockThreshold: 1
+  MaxSpeedInAir: 12
+  AccelerationSpeedInAir: 5
+  GravityForce: -18
+  JumpHeight: 2.5
 --- !u!114 &939752282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5142,7 +5143,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590024417}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2fd061c6a0c1fb418727ca3652623cb, type: 3}
   m_Name: 
@@ -5968,27 +5969,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7070799
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.006170542
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7070799
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.006170542
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

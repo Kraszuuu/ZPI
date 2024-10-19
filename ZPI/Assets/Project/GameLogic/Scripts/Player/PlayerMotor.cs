@@ -6,11 +6,12 @@ public class PlayerMotor : MonoBehaviour
 {
     [Header("Movement")]
     public float WalkingSpeed = 5f;
-    public float SprintingSpeed = 10f;
+    public float SprintingSpeed = 12f;
     public float MovementSharpnessOnGround = 15f;
+    public float SprintHoldToLockThreshold = 2f;
 
     [Header("Movement in air")]
-    public float MaxSpeedInAir = 10f;
+    public float MaxSpeedInAir = 12f;
     public float AccelerationSpeedInAir = 2f;
 
     [Header("Jumping")]
@@ -23,8 +24,12 @@ public class PlayerMotor : MonoBehaviour
     private bool _isCrouching;
     private bool _lerpCrouch;
     private bool _isSprinting;
+    private bool _sprintLocked;
     private float _currentSpeed;
     private float _crouchTimer;
+
+    private float _sprintTimer = 0f;
+    private bool _isMovingForward = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,14 +47,39 @@ public class PlayerMotor : MonoBehaviour
         {
             LerpCrouch();
         }
+
+        if (_sprintLocked && !_isMovingForward)
+        {
+            _sprintLocked = false;
+            _isSprinting = false;
+            _currentSpeed = WalkingSpeed;
+        }
     }
 
     // receive the inputs from InputManager.cs and apply them to the character _controller.
     public void ProcessMove(Vector2 input)
     {
+        _isMovingForward = input.y > 0; // sprawdzamy, czy postacie idzie do przodu
+
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
+
+        // Handle sprint locking after 2 seconds
+        if (_isSprinting && _isMovingForward && !_sprintLocked)
+        {
+            _sprintTimer += Time.deltaTime;
+            if (_sprintTimer >= SprintHoldToLockThreshold)
+            {
+                _sprintLocked = true;
+                _currentSpeed = SprintingSpeed;
+                Debug.Log("Sprint locked!");
+            }
+        }
+        else
+        {
+            _sprintTimer = 0f;  // reset timer, jeśli sprint został odpuszczony
+        }
 
         // Handle grounded movement
         if (_isGrounded)
@@ -122,8 +152,11 @@ public class PlayerMotor : MonoBehaviour
 
     public void Sprint()
     {
-        _isSprinting = !_isSprinting;
-        _currentSpeed = _isSprinting ? SprintingSpeed : WalkingSpeed;
+        if (!_sprintLocked)
+        {
+            _isSprinting = !_isSprinting;
+            _currentSpeed = _isSprinting ? SprintingSpeed : WalkingSpeed;
+        }
     }
-
 }
+
