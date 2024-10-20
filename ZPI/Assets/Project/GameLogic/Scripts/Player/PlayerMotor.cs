@@ -31,6 +31,8 @@ public class PlayerMotor : MonoBehaviour
     private float _sprintTimer = 0f;
     private bool _isMovingForward = false;
 
+    public bool isEnabled = true;
+
     // Start is called before the first frame update
     void Start()
     {
