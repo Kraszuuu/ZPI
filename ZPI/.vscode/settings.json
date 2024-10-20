@@ -54,6 +54,7 @@
     "dotnet.defaultSolution": "ZPI.sln",
     "cSpell.words": [
         "Behaviour",
+        "Leaderboard",
         "Rigidbody"
     ]
 }
