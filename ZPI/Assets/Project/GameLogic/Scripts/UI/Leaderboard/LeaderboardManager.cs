@@ -29,7 +29,6 @@ public class LeaderboardManager : MonoBehaviour
         for (int i = 0; i < topScores.Count; i++)
         {
             GameObject newScore = Instantiate(scoreEntryPrefab, leaderboardPanel);
-            Debug.Log(topScores[i].Time.GetType());
             var textComponent = newScore.GetComponentInChildren<TextMeshProUGUI>();
             if (textComponent != null)
             {
