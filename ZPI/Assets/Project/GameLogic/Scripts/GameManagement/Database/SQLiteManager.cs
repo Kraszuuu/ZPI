@@ -13,15 +13,8 @@ public class SQLiteManager : MonoBehaviour
     {
         // Ustaw �cie�k� bazy danych
         dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
-        Debug.Log(dbPath);
+        Debug.Log("INICJALIZUJE BAZKE");
         CreateDatabase();
-        InsertData(new MyData {Nickname = "k00zka", Time = 10.11});
-        List<MyData> data = GetData();
-        for (int i = 0; i < data.Count; i++)
-        {
-            Debug.Log(data[i].Time);
-        }
-       
     }
 
     private void CreateDatabase()
@@ -50,11 +43,15 @@ public class SQLiteManager : MonoBehaviour
 
     public List<MyData> GetTopScores(int limit = 10)
     {
+        if (string.IsNullOrEmpty(dbPath))
+        {
+            dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
+        }
         List<MyData> topScores = new List<MyData>();
         using (var connection = new SQLiteConnection(dbPath))
         {
             topScores = connection.Table<MyData>()
-                        .OrderByDescending(d => d.Time)
+                        .OrderBy(d => d.Time)
                         .Take(limit)
                         .ToList();
         }
