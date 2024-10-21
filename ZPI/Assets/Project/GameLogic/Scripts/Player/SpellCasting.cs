@@ -72,7 +72,7 @@ public class SpellCasting : MonoBehaviour
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
     }
 
-    void CastFireSpellInDirection()
+    public void CastFireSpellInDirection()
     {
         fireball = null;
         prefabScript = null;

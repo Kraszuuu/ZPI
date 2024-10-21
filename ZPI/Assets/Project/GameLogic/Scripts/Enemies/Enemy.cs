@@ -15,6 +15,12 @@ public class Enemy : MonoBehaviour
 
     public Path path;
 
+    [Header("Speed")]
+    public float speed;
+
+    [Header("Enemy class")]
+    public EnemyType enemyType;
+
     [Header("Sight Values")]
     public float sightDistance = 20f;
     public float fieldOfView = 85f;
@@ -52,29 +58,23 @@ public class Enemy : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        if (player != null)
-        {
-            //is the player close enough to be seen?
-            if (Vector3.Distance(transform.position, player.transform.position) < sightDistance)
-            {
-                Vector3 targetDirection = player.transform.position - transform.position - (Vector3.up * eyeHeight);
-                float angleToPlayer = Vector3.Angle(targetDirection, transform.forward);
-                if (angleToPlayer >= -fieldOfView && angleToPlayer <= fieldOfView)
-                {
-                    Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
-                    RaycastHit hitInfo = new RaycastHit();
-                    if (Physics.Raycast(ray, out hitInfo, sightDistance))
-                    {
-                        if (hitInfo.transform.gameObject == player)
-                        {
-                            Debug.DrawRay(ray.origin, ray.direction * sightDistance, Color.yellow);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
+        if (player == null) return false;
+
+        //is the player close enough to be seen?
+        if (Vector3.Distance(transform.position, player.transform.position) >= sightDistance) return false;
+
+        //is the player in enemy's field of view
+        Vector3 targetDirection = player.transform.position - transform.position - (Vector3.up * eyeHeight);
+        float angleToPlayer = Vector3.Angle(targetDirection, transform.forward);
+        if (angleToPlayer < -fieldOfView || angleToPlayer > fieldOfView) return false;
+
+        //is enemy looking at the player (?)
+        Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
+        RaycastHit hitInfo = new RaycastHit();
+        if (!Physics.Raycast(ray, out hitInfo, sightDistance) || hitInfo.transform.gameObject != player) return false;
+
+        Debug.DrawRay(ray.origin, ray.direction * sightDistance, Color.yellow);
+        return true;
     }
 
     public void TakeDamage(int damage)
