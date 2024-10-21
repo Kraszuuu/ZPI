@@ -19,6 +19,12 @@ public class SpellCasting : MonoBehaviour
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public LineRenderer lineRenderer;
 
+    private List<DollarPoint> _drawPoints = new List<DollarPoint>();
+    public event Action<DollarPoint[]> OnDrawFinished;
+    private RecognitionManager recognitionManager;
+
+    private int _strokeIndex;
+
     private void Start()
     {
         gameFreezer = FindObjectOfType<GameFreezer>();
@@ -26,6 +32,7 @@ public class SpellCasting : MonoBehaviour
         inputManager = FindObjectOfType<InputManager>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
+        recognitionManager = new RecognitionManager();
     }
 
     void Update()
@@ -50,24 +57,20 @@ public class SpellCasting : MonoBehaviour
         }
     }
 
-    void RecognizeSpell()
+    void RecognizeSpell(string name)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (IsVerticalLine())
+        if (name == null)
+        {
+            Debug.Log("Unrecognized spell pattern");
+        }
+        else if (name.Equals("I"))
         {
             CastFireSpellInDirection();
         }
-        else if (IsHorizontalLine())
+        else if (name.Equals("Z"))
         {
             CastSpell("IceBeam");
-        }
-        else if (IsZShape())
-        {
-            CastSpell("Z gowno");
-        }
-        else
-        {
-            Debug.Log("Unrecognized spell pattern");
         }
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
     }
@@ -125,88 +128,7 @@ public class SpellCasting : MonoBehaviour
         fireball.transform.rotation = rotation;
     }
 
-    bool IsVerticalLine()
-    {
-        // Proste sprawdzenie, czy �lad przypomina pionow� lini�
-        if (mousePositions.Count < 2) return false;
-
-        float previousX = Math.Abs(mousePositions[0].x);
-        float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
-
-        foreach (var point in mousePositions)
-        {
-            //Debug.Log("POPRZEDNI: " + previousX);
-            //Debug.Log(point.x);
-            if (Math.Abs(previousX - Math.Abs(point.x)) > threshold)
-            {
-                return false;
-            }
-            previousX = Math.Abs(point.x);
-        }
-        return true;
-    }
-
-    bool IsHorizontalLine()
-    {
-        // Proste sprawdzenie, czy �lad przypomina pionow� lini�
-        if (mousePositions.Count < 2) return false;
-
-        float previousY = Math.Abs(mousePositions[0].y);
-        float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
-
-        foreach (var point in mousePositions)
-        {
-            if (Math.Abs(previousY - Math.Abs(point.y)) > threshold)
-            {
-                return false;
-            }
-            previousY = Math.Abs(point.y);
-        }
-        return true;
-    }
-
-    // Funkcja do por�wnywania kierunk�w z wzorcem "Z"
-    bool IsZShape()
-    {
-        if (mousePositions.Count < 3) return false;
-
-        // Analiza kierunk�w mi�dzy punktami
-        List<Vector2> directions = new List<Vector2>();
-
-        for (int i = 1; i < mousePositions.Count; i++)
-        {
-            Vector2 direction = (mousePositions[i] - mousePositions[i - 1]).normalized;
-            directions.Add(direction);
-        }
-
-        // Sprawd�, czy ruch odpowiada wzorcowi litery Z
-        bool firstLine = false;
-        bool diagonalLine = false;
-        bool secondLine = false;
-
-        foreach (var dir in directions)
-        {
-            //Debug.Log(dir);
-            //Debug.Log("WSPOLRZEDNA IKSOWA: " + dir.x);
-            if (!firstLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Poziomy ruch w prawo
-            {
-                //Debug.Log("PIERWSZA LINIA");
-                firstLine = true;
-            }
-            else if (firstLine && !diagonalLine && dir.x < 0 && dir.y < 0) // Uko�ny ruch w lewo-d�
-            {
-                //Debug.Log("DRUGA LINIA");
-                diagonalLine = true;
-            }
-            else if (diagonalLine && !secondLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Drugi poziomy ruch w prawo
-            {
-                secondLine = true;
-                break; // Wzorzec rozpoznany, mo�na zako�czy� p�tl�
-            }
-        }
-
-        return firstLine && diagonalLine && secondLine;
-    }
+    
 
     void CastSpell(string spellName)
     {
@@ -222,6 +144,7 @@ public class SpellCasting : MonoBehaviour
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
         {
             mousePositions.Add(mousePos);
+            _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = 1 });
             lineRenderer.positionCount = mousePositions.Count;
             lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
         }
@@ -229,8 +152,11 @@ public class SpellCasting : MonoBehaviour
 
     private void FinalizeSpellCasting()
     {
+        (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
+        _drawPoints.Clear();
+        Debug.Log("AAAAAAAAAAA " + result);
         inputManager.isCastSpelling = false;
-        RecognizeSpell();
+        RecognizeSpell(result);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
 
@@ -238,4 +164,101 @@ public class SpellCasting : MonoBehaviour
         gameFreezer.SetIsCastSpelling(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //bool IsVerticalLine()
+    //{
+    //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
+    //    if (mousePositions.Count < 2) return false;
+
+    //    float previousX = Math.Abs(mousePositions[0].x);
+    //    float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
+
+    //    foreach (var point in mousePositions)
+    //    {
+    //        //Debug.Log("POPRZEDNI: " + previousX);
+    //        //Debug.Log(point.x);
+    //        if (Math.Abs(previousX - Math.Abs(point.x)) > threshold)
+    //        {
+    //            return false;
+    //        }
+    //        previousX = Math.Abs(point.x);
+    //    }
+    //    return true;
+    //}
+
+    //bool IsHorizontalLine()
+    //{
+    //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
+    //    if (mousePositions.Count < 2) return false;
+
+    //    float previousY = Math.Abs(mousePositions[0].y);
+    //    float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
+
+    //    foreach (var point in mousePositions)
+    //    {
+    //        if (Math.Abs(previousY - Math.Abs(point.y)) > threshold)
+    //        {
+    //            return false;
+    //        }
+    //        previousY = Math.Abs(point.y);
+    //    }
+    //    return true;
+    //}
+
+    //// Funkcja do por�wnywania kierunk�w z wzorcem "Z"
+    //bool IsZShape()
+    //{
+    //    if (mousePositions.Count < 3) return false;
+
+    //    // Analiza kierunk�w mi�dzy punktami
+    //    List<Vector2> directions = new List<Vector2>();
+
+    //    for (int i = 1; i < mousePositions.Count; i++)
+    //    {
+    //        Vector2 direction = (mousePositions[i] - mousePositions[i - 1]).normalized;
+    //        directions.Add(direction);
+    //    }
+
+    //    // Sprawd�, czy ruch odpowiada wzorcowi litery Z
+    //    bool firstLine = false;
+    //    bool diagonalLine = false;
+    //    bool secondLine = false;
+
+    //    foreach (var dir in directions)
+    //    {
+    //        //Debug.Log(dir);
+    //        //Debug.Log("WSPOLRZEDNA IKSOWA: " + dir.x);
+    //        if (!firstLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Poziomy ruch w prawo
+    //        {
+    //            //Debug.Log("PIERWSZA LINIA");
+    //            firstLine = true;
+    //        }
+    //        else if (firstLine && !diagonalLine && dir.x < 0 && dir.y < 0) // Uko�ny ruch w lewo-d�
+    //        {
+    //            //Debug.Log("DRUGA LINIA");
+    //            diagonalLine = true;
+    //        }
+    //        else if (diagonalLine && !secondLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Drugi poziomy ruch w prawo
+    //        {
+    //            secondLine = true;
+    //            break; // Wzorzec rozpoznany, mo�na zako�czy� p�tl�
+    //        }
+    //    }
+
+    //    return firstLine && diagonalLine && secondLine;
+    //}
 }
