@@ -37,23 +37,25 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
-        // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
-        if (Input.GetMouseButton(0)) // Lewy przycisk myszy
+        if (!GameOverManager.isGameOver)
         {
-            if (!inputManager.isCastSpelling)
+            // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
+            if (Input.GetMouseButton(0)) // Lewy przycisk myszy
             {
-                inputManager.isCastSpelling = true;
-                gameFreezer.SetIsCastSpelling(true);
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.lockState = CursorLockMode.Confined;
+                if (!inputManager.isCastSpelling)
+                {
+                    inputManager.isCastSpelling = true;
+                    gameFreezer.SetIsCastSpelling(true);
+                    Cursor.lockState = CursorLockMode.Confined;
+                }
+                HandleMouseInput();
             }
-            HandleMouseInput();
-        }
 
-        // Gdy przycisk myszy zostanie puszczony, analizujemy gest
-        if (Input.GetMouseButtonUp(0))
-        {
-            FinalizeSpellCasting();
+            // Gdy przycisk myszy zostanie puszczony, analizujemy gest
+            if (Input.GetMouseButtonUp(0))
+            {
+                FinalizeSpellCasting();
+            }
         }
     }
 
