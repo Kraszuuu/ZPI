@@ -18,18 +18,27 @@ public class PlayerMotor : MonoBehaviour
     public float GravityForce = -9.8f;
     public float JumpHeight = 3f;
 
+    [Header("Dashing")]
+    public float DashSpeed = 20f;
+    public float DashDuration = 0.2f;
+    public float DashCooldown = 1f;
+
     private CharacterController _controller;
     private Vector3 _playerVelocity;
     private bool _isGrounded;
     private bool _isCrouching;
     private bool _lerpCrouch;
     private bool _isSprinting;
+    private bool _isDashing = false;
     private bool _sprintLocked;
     private float _currentSpeed;
     private float _crouchTimer;
 
     private float _sprintTimer = 0f;
     private bool _isMovingForward = false;
+    private float _dashTime = 0f;
+    private float _dashCooldownTime = 0f;
+    private Vector3 _dashDirection;
 
     public bool isEnabled = true;
 
@@ -56,57 +65,95 @@ public class PlayerMotor : MonoBehaviour
             _isSprinting = false;
             _currentSpeed = WalkingSpeed;
         }
+
+        // Obsługa dashowania
+        if (_dashCooldownTime <= 0 && !_isDashing && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E)))
+        {
+            StartDash(Input.GetKeyDown(KeyCode.Q) ? Vector3.left : Vector3.right);
+        }
+
+        if (_isDashing)
+        {
+            _dashTime -= Time.deltaTime;
+            _controller.Move(_dashDirection * DashSpeed * Time.deltaTime);
+            if (_dashTime <= 0)
+            {
+                EndDash();
+            }
+        }
+
+        _dashCooldownTime -= Time.deltaTime;
     }
 
     // receive the inputs from InputManager.cs and apply them to the character _controller.
     public void ProcessMove(Vector2 input)
     {
-        _isMovingForward = input.y > 0; // sprawdzamy, czy postacie idzie do przodu
-
-        Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
-
-        // Handle sprint locking after 2 seconds
-        if (_isSprinting && _isMovingForward && !_sprintLocked)
+        if (!_isDashing)
         {
-            _sprintTimer += Time.deltaTime;
-            if (_sprintTimer >= SprintHoldToLockThreshold)
+            _isMovingForward = input.y > 0; // sprawdzamy, czy postacie idzie do przodu
+
+            Vector3 moveDirection = Vector3.zero;
+            moveDirection.x = input.x;
+            moveDirection.z = input.y;
+
+            // Handle sprint locking after 2 seconds
+            if (_isSprinting && _isMovingForward && !_sprintLocked)
             {
-                _sprintLocked = true;
-                _currentSpeed = SprintingSpeed;
-                Debug.Log("Sprint locked!");
+                _sprintTimer += Time.deltaTime;
+                if (_sprintTimer >= SprintHoldToLockThreshold)
+                {
+                    _sprintLocked = true;
+                    _currentSpeed = SprintingSpeed;
+                    Debug.Log("Sprint locked!");
+                }
             }
-        }
-        else
-        {
-            _sprintTimer = 0f;  // reset timer, jeśli sprint został odpuszczony
-        }
-
-        // Handle grounded movement
-        if (_isGrounded)
-        {
-            Vector3 targetVelocity = transform.TransformDirection(moveDirection) * _currentSpeed;
-
-            // Use Lerp for smooth speed changes
-            _playerVelocity = Vector3.Lerp(_playerVelocity, targetVelocity, MovementSharpnessOnGround * Time.deltaTime);
-
-            if (_playerVelocity.y < 0)
+            else
             {
-                _playerVelocity.y = -2f;
+                _sprintTimer = 0f;  // reset timer, jeśli sprint został odpuszczony
             }
-        }
-        else
-        {
-            // Handle air movement
-            HandleAirMovement(moveDirection);
-        }
 
-        // Apply gravity
-        _playerVelocity.y += GravityForce * Time.deltaTime;
+            // Handle grounded movement
+            if (_isGrounded)
+            {
+                Vector3 targetVelocity = transform.TransformDirection(moveDirection) * _currentSpeed;
 
-        // Move the character
-        _controller.Move(_playerVelocity * Time.deltaTime);
+                // Use Lerp for smooth speed changes
+                _playerVelocity = Vector3.Lerp(_playerVelocity, targetVelocity, MovementSharpnessOnGround * Time.deltaTime);
+
+                if (_playerVelocity.y < 0)
+                {
+                    _playerVelocity.y = -2f;
+                }
+            }
+            else
+            {
+                // Handle air movement
+                HandleAirMovement(moveDirection);
+            }
+
+            // Apply gravity
+            _playerVelocity.y += GravityForce * Time.deltaTime;
+
+            // Move the character
+            _controller.Move(_playerVelocity * Time.deltaTime);
+        }
+    }
+
+    void StartDash(Vector3 direction)
+    {
+        _isDashing = true;
+        _dashTime = DashDuration;
+        _dashCooldownTime = DashCooldown;
+        _dashDirection = transform.TransformDirection(direction);
+        _playerVelocity = direction * DashSpeed;
+        Debug.Log("Dashing!");
+    }
+
+    void EndDash()
+    {
+        _isDashing = false;
+        _playerVelocity = Vector3.zero;
+        Debug.Log("Dash ended.");
     }
 
     void HandleAirMovement(Vector3 moveDirection)
