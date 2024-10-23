@@ -24,8 +24,21 @@ public class PlayerVoiceCommands : MonoBehaviour
 
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech)
     {
-        Debug.Log("You said: " + speech.text);
-        actions[speech.text].Invoke();
+        if (Input.GetMouseButton(0))
+        {
+            while (Input.GetMouseButton(0))
+            {
+
+            }
+
+            Debug.Log("You said (GESTURE RECOGNIZED): " + speech.text);
+            actions[speech.text].Invoke();
+        }
+        else
+        {
+            Debug.Log("You said (no gesture recognition): " + speech.text);
+            actions[speech.text].Invoke();
+        }
     }
 
     private void AddWords()
