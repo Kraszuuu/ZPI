@@ -19,8 +19,8 @@ public class PlayerMotor : MonoBehaviour
     public float JumpHeight = 3f;
 
     [Header("Dashing")]
-    public float DashSpeed = 20f;
-    public float DashDuration = 0.2f;
+    public float DashSpeed = 10f;
+    public float DashDuration = 0.4f;
     public float DashCooldown = 1f;
 
     private CharacterController _controller;
@@ -33,6 +33,7 @@ public class PlayerMotor : MonoBehaviour
     private bool _sprintLocked;
     private float _currentSpeed;
     private float _crouchTimer;
+    private float _dashTimer;
 
     private float _sprintTimer = 0f;
     private bool _isMovingForward = false;
@@ -66,20 +67,9 @@ public class PlayerMotor : MonoBehaviour
             _currentSpeed = WalkingSpeed;
         }
 
-        // Obsługa dashowania
-        if (_dashCooldownTime <= 0 && !_isDashing && (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E)))
-        {
-            StartDash(Input.GetKeyDown(KeyCode.Q) ? Vector3.left : Vector3.right);
-        }
-
         if (_isDashing)
         {
-            _dashTime -= Time.deltaTime;
-            _controller.Move(_dashDirection * DashSpeed * Time.deltaTime);
-            if (_dashTime <= 0)
-            {
-                EndDash();
-            }
+            PerformDash();
         }
 
         _dashCooldownTime -= Time.deltaTime;
@@ -90,7 +80,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (!_isDashing)
         {
-            _isMovingForward = input.y > 0; // sprawdzamy, czy postacie idzie do przodu
+            _isMovingForward = input.y > 0;
 
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
@@ -109,15 +99,13 @@ public class PlayerMotor : MonoBehaviour
             }
             else
             {
-                _sprintTimer = 0f;  // reset timer, jeśli sprint został odpuszczony
+                _sprintTimer = 0f;
             }
 
-            // Handle grounded movement
             if (_isGrounded)
             {
                 Vector3 targetVelocity = transform.TransformDirection(moveDirection) * _currentSpeed;
 
-                // Use Lerp for smooth speed changes
                 _playerVelocity = Vector3.Lerp(_playerVelocity, targetVelocity, MovementSharpnessOnGround * Time.deltaTime);
 
                 if (_playerVelocity.y < 0)
@@ -139,21 +127,58 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
-    void StartDash(Vector3 direction)
+    public void StartDash(Vector3 direction)
     {
         _isDashing = true;
         _dashTime = DashDuration;
         _dashCooldownTime = DashCooldown;
         _dashDirection = transform.TransformDirection(direction);
         _playerVelocity = direction * DashSpeed;
-        Debug.Log("Dashing!");
     }
 
-    void EndDash()
+    private void PerformDash()
+    {
+        _dashTime -= Time.deltaTime;
+
+        if (_dashTime > 0.25)
+        {
+            _dashTimer += Time.deltaTime;
+            float p = _dashTimer / 0.5f;
+            p *= p;
+
+            float targetHeight = 0.8f;
+            _controller.height = Mathf.Lerp(_controller.height, targetHeight, p);
+
+            Vector3 dashMovement = _dashDirection + Vector3.down;
+
+            _controller.Move(dashMovement * DashSpeed * Time.deltaTime);
+        }
+        else if (_dashTime > 0)
+        {
+            _dashTimer -= Time.deltaTime;
+
+            float p = (_dashTimer / 0.5f);
+            p = 1 - p;
+            p *= p;
+
+            float targetHeight = 2f;
+            _controller.height = Mathf.Lerp(_controller.height, targetHeight, p);
+
+            Vector3 dashMovement = _dashDirection;
+
+            _controller.Move(dashMovement * DashSpeed * Time.deltaTime);
+        }
+        else if (_dashTime <= 0)
+        {
+            EndDash();
+        }
+    }
+
+    private void EndDash()
     {
         _isDashing = false;
+        _dashTimer = 0f;
         _playerVelocity = Vector3.zero;
-        Debug.Log("Dash ended.");
     }
 
     void HandleAirMovement(Vector3 moveDirection)
