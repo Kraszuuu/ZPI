@@ -20,9 +20,9 @@ public class GameFreezer : MonoBehaviour
         UpdateTimeScale();
     }
 
-    public void SetIsGamePaused(bool isGamePaused)
+    public void SetIsGamePaused(bool gamePaused)
     {
-        this.isGamePaused = isGamePaused;
+        this.isGamePaused = gamePaused;
         UpdateTimeScale();
     }
 
