@@ -2533,6 +2533,9 @@ MonoBehaviour:
   AccelerationSpeedInAir: 5
   GravityForce: -18
   JumpHeight: 2.5
+  DashSpeed: 10
+  DashDuration: 0.6
+  DashCooldown: 1
   isEnabled: 1
 --- !u!114 &939752282
 MonoBehaviour:
