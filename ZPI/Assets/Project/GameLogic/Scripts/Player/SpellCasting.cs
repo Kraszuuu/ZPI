@@ -20,7 +20,7 @@ public class SpellCasting : MonoBehaviour
     public LineRenderer lineRenderer;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
-    public event Action<DollarPoint[]> OnDrawFinished;
+
     private RecognitionManager recognitionManager;
 
     private int _strokeIndex;
@@ -57,10 +57,10 @@ public class SpellCasting : MonoBehaviour
         }
     }
 
-    void RecognizeSpell(string name)
+    void RecognizeSpell(string name, float distance)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (name == null)
+        if (name == null || distance > 2f)
         {
             Debug.Log("Unrecognized spell pattern");
         }
@@ -154,9 +154,9 @@ public class SpellCasting : MonoBehaviour
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        Debug.Log("AAAAAAAAAAA " + result);
+        Debug.Log("Spell: " + result + " points: " + points);
         inputManager.isCastSpelling = false;
-        RecognizeSpell(result);
+        RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
 

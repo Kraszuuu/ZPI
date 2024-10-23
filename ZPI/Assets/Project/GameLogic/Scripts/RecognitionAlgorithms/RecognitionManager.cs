@@ -12,7 +12,7 @@ public class RecognitionManager : MonoBehaviour
     private GestureTemplates _templates => GestureTemplates.Get();
     private static readonly DollarOneRecognizer _dollarOneRecognizer = new DollarOneRecognizer();
     private static readonly DollarPRecognizer _dollarPRecognizer = new DollarPRecognizer();
-    private IRecognizer _currentRecognizer = _dollarOneRecognizer;
+    private IRecognizer _currentRecognizer = _dollarPRecognizer;
     private RecognizerState _state = RecognizerState.RECOGNITION;
 
     public enum RecognizerState
