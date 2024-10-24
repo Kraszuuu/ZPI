@@ -5,7 +5,6 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     public BaseState activeState;
-   
 
     public void Initialize()
     {

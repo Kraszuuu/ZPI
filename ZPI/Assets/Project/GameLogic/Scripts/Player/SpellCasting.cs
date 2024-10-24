@@ -18,6 +18,7 @@ public class SpellCasting : MonoBehaviour
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public LineRenderer lineRenderer;
+    private PlayerVoiceCommands playerVoiceCommands;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
     public event Action<DollarPoint[]> OnDrawFinished;
@@ -33,51 +34,61 @@ public class SpellCasting : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
+        playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
     }
 
     void Update()
     {
-        if (!GameOverManager.isGameOver && !gameFreezer.IsGamePaused())
-        {
-            // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
-            if (Input.GetMouseButton(0)) // Lewy przycisk myszy
-            {
-                if (!inputManager.isCastSpelling)
-                {
-                    inputManager.isCastSpelling = true;
-                    gameFreezer.SetIsCastSpelling(true);
-                    Cursor.lockState = CursorLockMode.Confined;
-                }
-                HandleMouseInput();
-            }
+        if (GameOverManager.isGameOver) return;
 
-            // Gdy przycisk myszy zostanie puszczony, analizujemy gest
-            if (Input.GetMouseButtonUp(0))
+        // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
+        if (Input.GetMouseButton(0)) // Lewy przycisk myszy
+        {
+            if (!inputManager.isCastSpelling)
             {
-                FinalizeSpellCasting();
+                inputManager.isCastSpelling = true;
+                gameFreezer.SetIsCastSpelling(true);
+                Cursor.lockState = CursorLockMode.Confined;
             }
+            HandleMouseInput();
+        }
+
+        // Gdy przycisk myszy zostanie puszczony, analizujemy gest
+        if (Input.GetMouseButtonUp(0))
+        {
+            FinalizeSpellCasting();
         }
     }
 
     void RecognizeSpell(string name)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (name == null)
+        if (name != null && distance <= 2f)
+        {
+            if (playerVoiceCommands.recognizedSpell != null)
+            {
+                Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
+            }
+
+            if (name.Equals("I"))
+            {
+                CastFireSpellInDirection();
+            }
+            else if (name.Equals("Z"))
+            {
+                CastSpell("IceBeam");
+            }
+            Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
+        }
+        else
         {
             Debug.Log("Unrecognized spell pattern");
         }
-        else if (name.Equals("I"))
-        {
-            CastFireSpellInDirection();
-        }
-        else if (name.Equals("Z"))
-        {
-            CastSpell("IceBeam");
-        }
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
+        playerVoiceCommands.recognizedSpell = null;
     }
 
-    void CastFireSpellInDirection()
+    public void CastFireSpellInDirection()
     {
         fireball = null;
         prefabScript = null;
