@@ -10,6 +10,7 @@ public class PlayerVoiceCommands : MonoBehaviour
     private KeywordRecognizer keywordRecognizer;
     private Dictionary<string, Action> actions = new Dictionary<string, Action>();
     private SpellCasting spellCasting;
+    public string recognizedSpell;
 
     private void Start()
     {
@@ -26,13 +27,14 @@ public class PlayerVoiceCommands : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            while (Input.GetMouseButton(0))
-            {
+            recognizedSpell = speech.text;
+            //while (Input.GetMouseButton(0))
+            //{
 
-            }
+            //}
 
-            Debug.Log("You said (GESTURE RECOGNIZED): " + speech.text);
-            actions[speech.text].Invoke();
+            //Debug.Log("You said (GESTURE RECOGNIZED): " + speech.text);
+            //actions[speech.text].Invoke();
         }
         else
         {
