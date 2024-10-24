@@ -9,7 +9,7 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-        //gameFreezer = FindObjectOfType<GameFreezer>();
+
     }
 
     private void OnEnable()
@@ -21,6 +21,7 @@ public class PauseManager : MonoBehaviour
     {
         PausePanel.SetActive(true);
         gameFreezer.SetIsGamePaused(true);
+        Cursor.lockState = CursorLockMode.Confined;
         Debug.Log("PAUZA");
     }
 
