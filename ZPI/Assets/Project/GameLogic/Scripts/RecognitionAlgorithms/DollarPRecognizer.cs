@@ -9,24 +9,30 @@ public class DollarPRecognizer : Recognizer, IRecognizer
     public (string, float) DoRecognition(DollarPoint[] points, int n,
         List<RecognitionManager.GestureTemplate> gestureTemplates)
     {
-        DollarPoint[] normalizedPoints = Normalize(points, n);
-        RecognitionManager.GestureTemplate winnerGesture = new RecognitionManager.GestureTemplate();
-        float minDistance = Mathf.Infinity;
-        float distance = 0;
-        foreach (RecognitionManager.GestureTemplate gestureTemplate in gestureTemplates)
+        if (points.Length > 1)
         {
-            //Should be stored in proceesed, but for testing purpose we use RawPoints
-            DollarPoint[] normalizedTemplatePoints = Normalize(gestureTemplate.Points, n);
 
-            distance = GreedyCloudMatch(normalizedPoints, normalizedTemplatePoints, n);
-            if (minDistance > distance)
+            DollarPoint[] normalizedPoints = Normalize(points, n);
+            RecognitionManager.GestureTemplate winnerGesture = new RecognitionManager.GestureTemplate();
+            float minDistance = Mathf.Infinity;
+            float distance = 0;
+            foreach (RecognitionManager.GestureTemplate gestureTemplate in gestureTemplates)
             {
-                minDistance = distance;
-                winnerGesture = gestureTemplate;
+                //Should be stored in proceesed, but for testing purpose we use RawPoints
+                DollarPoint[] normalizedTemplatePoints = Normalize(gestureTemplate.Points, n);
+
+                distance = GreedyCloudMatch(normalizedPoints, normalizedTemplatePoints, n);
+                if (minDistance > distance)
+                {
+                    minDistance = distance;
+                    winnerGesture = gestureTemplate;
+                }
             }
+            return (winnerGesture.Name, minDistance);
         }
 
-        return (winnerGesture.Name, minDistance);
+        return (null, 0.0f);
+        
     }
 
     private float GreedyCloudMatch(DollarPoint[] points, DollarPoint[] templatePoints, int n)

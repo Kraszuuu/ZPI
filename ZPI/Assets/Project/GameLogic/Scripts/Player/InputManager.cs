@@ -28,6 +28,8 @@ public class InputManager : MonoBehaviour
 
         onFoot.Sprint.performed += ctx => motor.Sprint();
         onFoot.Sprint.canceled += ctx => motor.Sprint();
+
+        onFoot.Dash.performed += OnDashPerformed;
     }
 
     // Update is called once per frame
@@ -54,4 +56,16 @@ public class InputManager : MonoBehaviour
     {
         onFoot.Disable();
     }
+    private void OnDashPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.displayName == "Q")
+        {
+            motor.StartDash(Vector3.left); // Dash w lewo
+        }
+        else if (context.control.displayName == "E")
+        {
+            motor.StartDash(Vector3.right); // Dash w prawo
+        }
+    }
+
 }

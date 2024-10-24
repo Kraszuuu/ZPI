@@ -20,7 +20,7 @@ public class SpellCasting : MonoBehaviour
     public LineRenderer lineRenderer;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
-    public event Action<DollarPoint[]> OnDrawFinished;
+
     private RecognitionManager recognitionManager;
 
     private int _strokeIndex;
@@ -37,30 +37,32 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
-        // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
-        if (Input.GetMouseButton(0)) // Lewy przycisk myszy
+        if (!GameOverManager.isGameOver)
         {
-            if (!inputManager.isCastSpelling)
+            // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
+            if (Input.GetMouseButton(0)) // Lewy przycisk myszy
             {
-                inputManager.isCastSpelling = true;
-                gameFreezer.SetIsCastSpelling(true);
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.lockState = CursorLockMode.Confined;
+                if (!inputManager.isCastSpelling)
+                {
+                    inputManager.isCastSpelling = true;
+                    gameFreezer.SetIsCastSpelling(true);
+                    Cursor.lockState = CursorLockMode.Confined;
+                }
+                HandleMouseInput();
             }
-            HandleMouseInput();
-        }
 
-        // Gdy przycisk myszy zostanie puszczony, analizujemy gest
-        if (Input.GetMouseButtonUp(0))
-        {
-            FinalizeSpellCasting();
+            // Gdy przycisk myszy zostanie puszczony, analizujemy gest
+            if (Input.GetMouseButtonUp(0))
+            {
+                FinalizeSpellCasting();
+            }
         }
     }
 
-    void RecognizeSpell(string name)
+    void RecognizeSpell(string name, float distance)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (name == null)
+        if (name == null || distance > 2f)
         {
             Debug.Log("Unrecognized spell pattern");
         }
@@ -154,9 +156,9 @@ public class SpellCasting : MonoBehaviour
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        Debug.Log("AAAAAAAAAAA " + result);
+        Debug.Log("Spell: " + result + " points: " + points);
         inputManager.isCastSpelling = false;
-        RecognizeSpell(result);
+        RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
 

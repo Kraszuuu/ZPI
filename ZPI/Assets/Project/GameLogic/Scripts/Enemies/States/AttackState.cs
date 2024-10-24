@@ -7,6 +7,7 @@ public class AttackState : BaseState
     private float moveTimer;
     private float losePlayerTimer;
     private float shotTimer;
+
     public override void Enter()
     {
 
@@ -54,23 +55,30 @@ public class AttackState : BaseState
         Transform gunbarrel = enemy.gunBarrel;
 
         //instantiate a new bullt
-        GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/Bullet") as GameObject, gunbarrel.position, enemy.transform.rotation);
-        //calculate the direction to the player
-        Vector3 shootDirection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
-        //add force rigidbody of the bullet
-        bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
-        shotTimer = 0;
+        if (enemy.bulletPrefab != null)
+        {
+            GameObject bullet = GameObject.Instantiate(enemy.bulletPrefab, gunbarrel.position, enemy.transform.rotation);
+            //calculate the direction to the player
+            Vector3 shootDirection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
+            //add force rigidbody of the bullet
+            bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
+            shotTimer = 0;
+        }
+        else
+        {
+            Debug.LogWarning("Prefab bullet not assigned!");
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

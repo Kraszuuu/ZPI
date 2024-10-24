@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Weapon Values")]
     public Transform gunBarrel;
+    public GameObject bulletPrefab;
     [Range(0.1f, 10)]
     public float fireRate;
 
@@ -89,8 +90,8 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        // Mo¿esz dodaæ animacjê œmierci, usuniêcie obiektu itd.
+        // Moï¿½esz dodaï¿½ animacjï¿½ ï¿½mierci, usuniï¿½cie obiektu itd.
         Debug.Log("Enemy died!");
-        Destroy(gameObject); // Usuniêcie przeciwnika z gry
+        Destroy(gameObject); // Usuniï¿½cie przeciwnika z gry
     }
 }
