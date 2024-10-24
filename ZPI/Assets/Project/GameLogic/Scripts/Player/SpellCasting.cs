@@ -20,7 +20,7 @@ public class SpellCasting : MonoBehaviour
     public LineRenderer lineRenderer;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
-
+    public event Action<DollarPoint[]> OnDrawFinished;
     private RecognitionManager recognitionManager;
 
     private int _strokeIndex;
@@ -37,7 +37,7 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
-        if (!GameOverManager.isGameOver)
+        if (!GameOverManager.isGameOver && !gameFreezer.IsGamePaused())
         {
             // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
             if (Input.GetMouseButton(0)) // Lewy przycisk myszy
@@ -59,10 +59,10 @@ public class SpellCasting : MonoBehaviour
         }
     }
 
-    void RecognizeSpell(string name, float distance)
+    void RecognizeSpell(string name)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (name == null || distance > 2f)
+        if (name == null)
         {
             Debug.Log("Unrecognized spell pattern");
         }
@@ -156,9 +156,8 @@ public class SpellCasting : MonoBehaviour
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        Debug.Log("Spell: " + result + " points: " + points);
         inputManager.isCastSpelling = false;
-        RecognizeSpell(result, points);
+        RecognizeSpell(result);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
 

@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
+    private PauseManager pauseManager;
     public bool isCastSpelling = false;
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
+        pauseManager = FindObjectOfType<PauseManager>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
 
@@ -30,6 +32,8 @@ public class InputManager : MonoBehaviour
         onFoot.Sprint.canceled += ctx => motor.Sprint();
 
         onFoot.Dash.performed += OnDashPerformed;
+
+        onFoot.Pause.performed += ctx => TogglePause();
     }
 
     // Update is called once per frame
@@ -67,5 +71,12 @@ public class InputManager : MonoBehaviour
             motor.StartDash(Vector3.right); // Dash w prawo
         }
     }
-
+    private void TogglePause()
+    {
+        Debug.Log(pauseManager);
+        if (pauseManager != null)
+        {
+            pauseManager.PauseGame();  // W³¹czamy/wy³¹czamy pauzê
+        }
+    }
 }
