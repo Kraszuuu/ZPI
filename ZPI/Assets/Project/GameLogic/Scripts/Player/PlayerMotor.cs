@@ -140,10 +140,10 @@ public class PlayerMotor : MonoBehaviour
     {
         _dashTime -= Time.deltaTime;
 
-        if (_dashTime > 0.25)
+        if (_dashTime > 0.2)
         {
             _dashTimer += Time.deltaTime;
-            float p = _dashTimer / 0.5f;
+            float p = _dashTimer / 0.4f;
             p *= p;
 
             float targetHeight = 0.8f;
@@ -157,7 +157,7 @@ public class PlayerMotor : MonoBehaviour
         {
             _dashTimer -= Time.deltaTime;
 
-            float p = (_dashTimer / 0.5f);
+            float p = (_dashTimer / 0.4f);
             p = 1 - p;
             p *= p;
 

@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour
     //Just for debugging purposes
     [SerializeField]
     private string currentState;
+
+    private EnemySpawner spawner;
     void Start()
     {
         stateMachine = GetComponent<StateMachine>();
@@ -88,10 +90,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void SetSpawner(EnemySpawner spawner)
+    {
+        this.spawner = spawner;
+    }
+
     private void Die()
     {
         // Mo�esz doda� animacj� �mierci, usuni�cie obiektu itd.
         Debug.Log("Enemy died!");
+        if (spawner != null)
+        {
+            spawner.CurrentEnemies.Remove(this.gameObject);
+        }
         Destroy(gameObject); // Usuni�cie przeciwnika z gry
     }
 }

@@ -2,23 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PatrolState : BaseState
 {
-    private Vector3 targetPosition;
-    public int waypointIndex;
-    public float waitTimer;
-    private float cycleTime; // Czas cyklu patrolowania, inicjowany w Enter()
-    public float minCycleTime = 2f; // Minimalny czas cyklu
-    public float maxCycleTime = 8f; // Maksymalny czas cyklu
-    public LayerMask wallLayer; // Warstwa dla œcian
+    private Vector3 currentTarget;
+    private float patrolRadius = 10f;
+    private float maxNavMeshDistance = 5f;
 
     public override void Enter()
     {
-        // Inicjalizuj cykl czasowy losowo w ustalonym zakresie
-        cycleTime = Random.Range(minCycleTime, maxCycleTime);
-        ChooseRandomPoint(); // Wybierz losowy punkt na pocz¹tku patrolu
-        waitTimer = 0; // Zresetuj timer
+        currentTarget = GetNewRandomDestination();
     }
 
     public override void Exit()
@@ -34,17 +28,28 @@ public class PatrolState : BaseState
         }
     }
 
-    public void PatrolCycle()
+    private void PatrolCycle()
     {
-        // Jeœli jest w ruchu, zresetuj timer
-        if (waitTimer < cycleTime)
+        if (enemy.Agent.remainingDistance < 3f)
         {
-            waitTimer += Time.deltaTime; // Zwiêksz timer czekania
+            enemy.Agent.SetDestination(currentTarget);
+            currentTarget = GetNewRandomDestination();
+        }
+    }
+
+    private Vector3 GetNewRandomDestination()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
+        randomDirection += enemy.transform.position;
+
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(randomDirection, out navHit, maxNavMeshDistance, NavMesh.AllAreas))
+        {
+            return navHit.position;
         }
         else
         {
-            // Jeœli czas oczekiwania min¹³, wybierz nowy cel
-            ChooseRandomPoint();
+            return GetNewRandomDestination();
         }
     }
 
