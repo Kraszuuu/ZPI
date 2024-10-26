@@ -60,10 +60,10 @@ public class SpellCasting : MonoBehaviour
         }
     }
 
-    void RecognizeSpell(string name)
+    void RecognizeSpell(string name, float distance)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (name != null && distance <= 2f)
+        if (name != null || distance > 2f)
         {
             if (playerVoiceCommands.recognizedSpell != null)
             {
@@ -168,7 +168,7 @@ public class SpellCasting : MonoBehaviour
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
         inputManager.isCastSpelling = false;
-        RecognizeSpell(result);
+        RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
 
