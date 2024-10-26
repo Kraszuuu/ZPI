@@ -52,20 +52,4 @@ public class PatrolState : BaseState
             return GetNewRandomDestination();
         }
     }
-
-    private void ChooseRandomPoint()
-    {
-        // Wybierz losowy punkt w promieniu widzenia
-        Vector2 randomDirection = Random.insideUnitCircle * enemy.sightDistance;
-        targetPosition = new Vector3(randomDirection.x + enemy.transform.position.x, enemy.transform.position.y, randomDirection.y + enemy.transform.position.z);
-
-        // Ustaw nowy cel
-        enemy.Agent.SetDestination(targetPosition);
-
-        // Zresetuj timer oczekiwania
-        waitTimer = 0;
-
-        // Losowo wybierz czas oczekiwania na nowy punkt
-        cycleTime = Random.Range(minCycleTime, maxCycleTime);
-    }
 }
