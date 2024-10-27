@@ -18,6 +18,7 @@ public class SpellCasting : MonoBehaviour
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public LineRenderer lineRenderer;
+    public ParticleSystem spellCastingParticleSystem;
     private PlayerVoiceCommands playerVoiceCommands;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
@@ -35,6 +36,9 @@ public class SpellCasting : MonoBehaviour
         lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
         playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
+        spellCastingParticleSystem.Stop();
+        lineRenderer.sortingOrder = 1;
+        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
     }
 
     void Update()
@@ -152,7 +156,7 @@ public class SpellCasting : MonoBehaviour
     private void HandleMouseInput()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0.5f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
+        mousePos.z = 0.8f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
         {
@@ -160,6 +164,13 @@ public class SpellCasting : MonoBehaviour
             _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = 1 });
             lineRenderer.positionCount = mousePositions.Count;
             lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
+            // Przenoszenie Particle System na aktualną pozycję myszy
+            spellCastingParticleSystem.transform.position = worldPos;
+
+            if (!spellCastingParticleSystem.isPlaying)
+            {
+                spellCastingParticleSystem.Play();
+            }
         }
     }
 
@@ -171,6 +182,7 @@ public class SpellCasting : MonoBehaviour
         RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
+        spellCastingParticleSystem.Stop();
 
         // Przywr�cenie normalnego up�ywu czasu
         gameFreezer.SetIsCastSpelling(false);
