@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ff19d29c9ffdf4fa5321d5380b7a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: {fileID: 0}
+  speed: 0
+  enemyType: 1
   sightDistance: 20
   fieldOfView: 85
   eyeHeight: 0.55
