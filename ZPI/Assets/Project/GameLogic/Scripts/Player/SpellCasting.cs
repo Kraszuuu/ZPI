@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro.Examples;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.UI;
 
 public class SpellCasting : MonoBehaviour
 {
@@ -20,10 +21,34 @@ public class SpellCasting : MonoBehaviour
     public LineRenderer lineRenderer;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
-
     private RecognitionManager recognitionManager;
-
     private int _strokeIndex;
+
+    [Header("--- Fireball ---")]
+    public Image FireballImage;
+    public float FireballCooldown = 0f;
+    public bool IsFireballUnlocked;
+
+    [Header("--- Extermination ---")]
+    public Image ExterminationImage;
+    public float ExterminationCooldown = 0f;
+    public bool IsExterminationUnlocked = true;
+
+    [Header("--- Freeze ---")]
+    public Image FreezingImage;
+    public float FreezingCooldown = 0f;
+    public bool IsFreezeUnlocked = false;
+
+    [Header("--- Green ball ---")]
+    public Image GreenBallImage;
+    public float GreenballCooldown = 0f;
+    public bool IsGreenballUnlocked = true;
+
+    [Header("--- Lightning ---")]
+    public Image LightningImage;
+    public float LightningCooldown = 0f;
+    public bool IsLightningUnlocked = true;
+
 
     private void Start()
     {
@@ -33,6 +58,8 @@ public class SpellCasting : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
+
+        UnlockSpell("Fireball");
     }
 
     void Update()
@@ -57,6 +84,7 @@ public class SpellCasting : MonoBehaviour
                 FinalizeSpellCasting();
             }
         }
+        updateCooldowns();
     }
 
     void RecognizeSpell(string name, float distance)
@@ -68,7 +96,13 @@ public class SpellCasting : MonoBehaviour
         }
         else if (name.Equals("I"))
         {
-            CastFireSpellInDirection();
+            if (FireballImage.fillAmount <= 0)
+            {
+                CastFireSpellInDirection();
+                FireballImage.fillAmount = 1;
+                FireballCooldown = 3f;
+            }
+            
         }
         else if (name.Equals("Z"))
         {
@@ -167,7 +201,63 @@ public class SpellCasting : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    private void updateCooldowns()
+    {
+        if (FireballImage.fillAmount > 0 && IsFireballUnlocked)
+        {
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+        }
+        if (ExterminationCooldown > 0 && IsExterminationUnlocked)
+        {
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+        }
+        if (FreezingCooldown > 0 && IsFreezeUnlocked)
+        {
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+        }
+        if (GreenballCooldown > 0 && IsGreenballUnlocked)
+        {
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+        }
+        if (LightningCooldown > 0 && IsLightningUnlocked)
+        {
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+        }
+    }
 
+    public void UnlockSpell(string spell)
+    {
+        if (spell.Equals("Fireball"))
+        {
+            FireballImage.fillAmount = 0;
+            FireballImage.color = new Color(1f, 0.5f, 0f, 0.7f);
+            IsFireballUnlocked = true;
+        }
+        if (spell.Equals("Extermination"))
+        {
+            ExterminationImage.fillAmount = 0;
+            ExterminationImage.color = new Color(0.5f, 0f, 0.5f, 0.7f);
+            IsExterminationUnlocked = true;
+        }
+        if (spell.Equals("Freezing"))
+        {
+            FreezingImage.fillAmount = 0;
+            FreezingImage.color = new Color(0f, 0f, 0.55f, 0.7f);
+            IsFreezeUnlocked = true;
+        }
+        if (spell.Equals("Greenball"))
+        {
+            GreenBallImage.fillAmount = 0;
+            GreenBallImage.color = new Color(0f, 1f, 0f, 0.7f);
+            IsGreenballUnlocked = true;
+        }
+        if (spell.Equals("Lightning"))
+        {
+            LightningImage.fillAmount = 0;
+            LightningImage.color = new Color(0.68f, 0.85f, 0.9f, 0.7f);
+            IsLightningUnlocked = true;
+        }
+    }
 
 
 
