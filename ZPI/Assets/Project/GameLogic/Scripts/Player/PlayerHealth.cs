@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private float Health;
+    private float health;
     private float lerpTimer;
     [Header("Health Bar")]
-    public float MaxHealth = 100f;
+    public float maxHealth = 100f;
     public float chipSpeed = 2f;
     public Image frontHealthBar;
     public Image backHealthBar;
-    public Slider healthSlider;
 
     [Header("Damage Overlay")]
     public Image overlay;
@@ -22,26 +21,20 @@ public class PlayerHealth : MonoBehaviour
 
     private float durationTimer;
     // Start is called before the first frame update
-
-    [Header("=== SLIDERS ===")]
-    public Slider HealthSlider;
-    public Slider EaseHealthSlider;
-    private float _lerpSpeed = 0.05f;
-
     void Start()
     {
-        Health = MaxHealth;
+        health = maxHealth;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Health = Mathf.Clamp(Health, 0, MaxHealth);
+        health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealthUI();
         if (overlay.color.a > 0)
         {
-            if (Health < 30)
+            if (health < 30)
             {
                 return;
             }
@@ -57,46 +50,36 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        if (HealthSlider.value != Health)
+        float fillF = frontHealthBar.fillAmount;
+        float fillB = backHealthBar.fillAmount;
+        float hFraction = health / maxHealth;
+        if (fillB > hFraction)
         {
-            HealthSlider.value = Health;
+            frontHealthBar.fillAmount = hFraction;
+            backHealthBar.color = Color.red;
+            lerpTimer += Time.deltaTime;
+            float percentComplete = lerpTimer / chipSpeed;
+            percentComplete = percentComplete * percentComplete;
+            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
         }
-
-        if (HealthSlider.value != EaseHealthSlider.value)
+        if (fillF < hFraction)
         {
-            EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, Health, _lerpSpeed);
+            backHealthBar.color = Color.green;
+            backHealthBar.fillAmount = hFraction;
+            lerpTimer += Time.deltaTime;
+            float percentComplete = lerpTimer/ chipSpeed;
+            percentComplete = percentComplete * percentComplete;
+            frontHealthBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
         }
-
-    //    float fillF = frontHealthBar.fillAmount;
-    //    float fillB = backHealthBar.fillAmount;
-    //    float hFraction = Health / MaxHealth;
-    //    if (fillB > hFraction)
-    //    {
-    //        frontHealthBar.fillAmount = hFraction;
-    //        backHealthBar.color = Color.red;
-    //        lerpTimer += Time.deltaTime;
-    //        float percentComplete = lerpTimer / chipSpeed;
-    //        percentComplete = percentComplete * percentComplete;
-    //        backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
-    //    }
-    //    if (fillF < hFraction)
-    //    {
-    //        backHealthBar.color = Color.green;
-    //        backHealthBar.fillAmount = hFraction;
-    //        lerpTimer += Time.deltaTime;
-    //        float percentComplete = lerpTimer/ chipSpeed;
-    //        percentComplete = percentComplete * percentComplete;
-    //        frontHealthBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
-    //    }
     }
 
     public void TakeDamage(float damage)
     {
-        Health -= damage;
+        health -= damage;
         lerpTimer = 0f;
         durationTimer = 0f;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
-        if (Health <= 0)
+        if (health <= 0)
         {
             GameOverManager.Instance.EndGame();
         }
@@ -104,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void RestoreHealth(float healAmount)
     {
-        Health += healAmount;
+        health += healAmount;
         lerpTimer = 0f;
     }
 }

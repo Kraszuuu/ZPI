@@ -10,11 +10,11 @@ public class UIController : MonoBehaviour
 
     public void MusicVolume()
     {
-        AudioManager.Instance.MusicVolume(_musicSlider.value);  
+        AudioManager.instance.MusicVolume(_musicSlider.value);  
     }
 
     public void SFXVolume()
     {
-        AudioManager.Instance.MusicVolume(_sfxSlider.value);
+        AudioManager.instance.MusicVolume(_sfxSlider.value);
     }
 }

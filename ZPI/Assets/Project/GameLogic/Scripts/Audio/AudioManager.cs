@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public static AudioManager instance;
 
-    public Sound[] MusicSounds, SfxSounds;
-    public AudioSource MusicSource, SfxSource;
+    public Sound[] musicSounds, sfxSounds;
+    public AudioSource musicSource, sfxSource;
 
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -26,12 +26,12 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic("MenuTheme");
+        PlayMusic("Theme2");
     }
 
     public void PlayMusic(string name)
     {
-        Sound s = Array.Find(MusicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.name == name);
 
         if (s == null )
         {
@@ -39,15 +39,15 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            MusicSource.clip = s.clip;
-            MusicSource.Play();
+            musicSource.clip = s.clip;
+            musicSource.Play();
         }
 
     }
 
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(SfxSounds, x => x.name == name);
+        Sound s = Array.Find(sfxSounds, x => x.name == name);
 
         if (s == null)
         {
@@ -55,29 +55,18 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            SfxSource.PlayOneShot(s.clip);
+            sfxSource.PlayOneShot(s.clip);
         }
     }
 
     public void MusicVolume(float volume)
     {
         Debug.Log("Bagno");
-        MusicSource.volume = volume;
+        musicSource.volume = volume;
     }
 
     public void SFXVolume(float volume)
     {
-        SfxSource.volume = volume;
-    }
-
-    public void ToggleMusic()
-    {
-        MusicSource.mute = !MusicSource.mute;
-    }
-
-    public void ToggleSFX()
-    {
-        SfxSource.mute = !SfxSource.mute;
+        sfxSource.volume = volume;
     }
 }
-
