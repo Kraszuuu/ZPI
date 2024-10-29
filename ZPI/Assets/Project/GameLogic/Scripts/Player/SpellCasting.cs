@@ -18,6 +18,8 @@ public class SpellCasting : MonoBehaviour
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public LineRenderer lineRenderer;
+    public ParticleSystem spellCastingParticleSystem;
+    private PlayerVoiceCommands playerVoiceCommands;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
     public event Action<DollarPoint[]> OnDrawFinished;
@@ -33,10 +35,16 @@ public class SpellCasting : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
+        playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
+        spellCastingParticleSystem.Stop();
+        lineRenderer.sortingOrder = 1;
+        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
     }
 
     void Update()
     {
+        if (GameOverManager.isGameOver) return;
+
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
@@ -44,7 +52,6 @@ public class SpellCasting : MonoBehaviour
             {
                 inputManager.isCastSpelling = true;
                 gameFreezer.SetIsCastSpelling(true);
-                Cursor.lockState = CursorLockMode.Locked;
                 Cursor.lockState = CursorLockMode.Confined;
             }
             HandleMouseInput();
@@ -57,25 +64,35 @@ public class SpellCasting : MonoBehaviour
         }
     }
 
-    void RecognizeSpell(string name)
+    void RecognizeSpell(string name, float distance)
     {
         // Przyk�ad: proste rozpoznawanie linii pionowej
-        if (name == null)
+        if (name != null || distance > 2f)
+        {
+            if (playerVoiceCommands.recognizedSpell != null)
+            {
+                Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
+            }
+
+            if (name.Equals("I"))
+            {
+                CastFireSpellInDirection();
+            }
+            else if (name.Equals("Z"))
+            {
+                CastSpell("IceBeam");
+            }
+            Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
+        }
+        else
         {
             Debug.Log("Unrecognized spell pattern");
         }
-        else if (name.Equals("I"))
-        {
-            CastFireSpellInDirection();
-        }
-        else if (name.Equals("Z"))
-        {
-            CastSpell("IceBeam");
-        }
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
+        playerVoiceCommands.recognizedSpell = null;
     }
 
-    void CastFireSpellInDirection()
+    public void CastFireSpellInDirection()
     {
         fireball = null;
         prefabScript = null;
@@ -139,7 +156,7 @@ public class SpellCasting : MonoBehaviour
     private void HandleMouseInput()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0.5f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
+        mousePos.z = 0.8f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
         {
@@ -147,6 +164,13 @@ public class SpellCasting : MonoBehaviour
             _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = 1 });
             lineRenderer.positionCount = mousePositions.Count;
             lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
+            // Przenoszenie Particle System na aktualną pozycję myszy
+            spellCastingParticleSystem.transform.position = worldPos;
+
+            if (!spellCastingParticleSystem.isPlaying)
+            {
+                spellCastingParticleSystem.Play();
+            }
         }
     }
 
@@ -154,17 +178,16 @@ public class SpellCasting : MonoBehaviour
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        Debug.Log("AAAAAAAAAAA " + result);
         inputManager.isCastSpelling = false;
-        RecognizeSpell(result);
+        RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
+        spellCastingParticleSystem.Stop();
 
         // Przywr�cenie normalnego up�ywu czasu
         gameFreezer.SetIsCastSpelling(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
-
 
 
 

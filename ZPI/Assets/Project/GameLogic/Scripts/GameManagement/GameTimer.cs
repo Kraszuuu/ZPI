@@ -29,6 +29,6 @@ public class GameTimer : MonoBehaviour
 
     private void LogCurrentGameTime()
     {
-        Debug.Log($"Czas gry: {totalGameTime} sekund");
+        //Debug.Log($"Czas gry: {totalGameTime} sekund");
     }
 }

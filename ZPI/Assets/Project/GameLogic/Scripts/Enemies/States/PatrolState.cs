@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PatrolState : BaseState
 {
-    public int waypointIndex;
-    public float waitTimer;
+    private Vector3 currentTarget;
+    private float patrolRadius = 10f;
+    private float maxNavMeshDistance = 5f;
+
     public override void Enter()
     {
+        currentTarget = GetNewRandomDestination();
     }
 
     public override void Exit()
@@ -23,23 +28,28 @@ public class PatrolState : BaseState
         }
     }
 
-    public void PatrolCycle()
+    private void PatrolCycle()
     {
-        if (enemy.Agent.remainingDistance < 0.2f)
+        if (enemy.Agent.remainingDistance < 3f)
         {
-            waitTimer += Time.deltaTime;
-            if (waitTimer > 3)
-            {
-                if (waypointIndex < enemy.path.waypoints.Count - 1)
-                {
-                    waypointIndex++;
-                }
-                else
-                {
-                    waypointIndex = 0;
-                }
-                enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
-            }
+            enemy.Agent.SetDestination(currentTarget);
+            currentTarget = GetNewRandomDestination();
+        }
+    }
+
+    private Vector3 GetNewRandomDestination()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
+        randomDirection += enemy.transform.position;
+
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(randomDirection, out navHit, maxNavMeshDistance, NavMesh.AllAreas))
+        {
+            return navHit.position;
+        }
+        else
+        {
+            return GetNewRandomDestination();
         }
     }
 }

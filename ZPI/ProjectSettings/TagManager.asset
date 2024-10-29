@@ -14,8 +14,9 @@ TagManager:
   - UI
   - Interactable
   - FireLayer
+  - WallLayer
+  - FloorLayer
   - Hands
-  - 
   - 
   - 
   - 

@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "fc4ae056-33f3-42a5-93b7-da4aff72c439",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "2084c284-4335-47ba-ac3f-03e968594380",
@@ -54,6 +63,15 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "5fdecfac-8e10-4267-9836-4dcebc35fe6f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "140a647a-4146-43bb-947d-ddbcbb8625aa",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -163,11 +181,44 @@
                 {
                     "name": "",
                     "id": "66bfc6f6-004b-4a72-a238-de9cb965029f",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7033f503-67d3-42d9-94b7-269013d3b962",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "245fb7f7-9481-43d7-bda0-45090f02c2d3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92e73ca3-298d-42d1-9f98-650ad9088c71",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

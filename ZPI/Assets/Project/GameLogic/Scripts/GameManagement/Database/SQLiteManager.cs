@@ -13,7 +13,6 @@ public class SQLiteManager : MonoBehaviour
     {
         // Ustaw �cie�k� bazy danych
         dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
-        Debug.Log("INICJALIZUJE BAZKE");
         CreateDatabase();
     }
 
@@ -21,11 +20,11 @@ public class SQLiteManager : MonoBehaviour
     {
         using (var connection = new SQLiteConnection(dbPath))
         {
-            connection.CreateTable<MyData>();
+            connection.CreateTable<Score>();
         }
     }
 
-    public void InsertData(MyData data)
+    public void InsertData(Score data)
     {
         using (var connection = new SQLiteConnection(dbPath))
         {
@@ -33,25 +32,25 @@ public class SQLiteManager : MonoBehaviour
         }
     }
 
-    public List<MyData> GetData()
+    public List<Score> GetData()
     {
         using (var connection = new SQLiteConnection(dbPath))
         {
-            return connection.Table<MyData>().ToList();
+            return connection.Table<Score>().ToList();
         }
     }
 
-    public List<MyData> GetTopScores(int limit = 10)
+    public List<Score> GetTopScores(int limit = 10)
     {
         if (string.IsNullOrEmpty(dbPath))
         {
             dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
         }
-        List<MyData> topScores = new List<MyData>();
+        List<Score> topScores = new List<Score>();
         using (var connection = new SQLiteConnection(dbPath))
         {
-            topScores = connection.Table<MyData>()
-                        .OrderBy(d => d.Time)
+            topScores = connection.Table<Score>()
+                        .OrderByDescending(d => d.Time)
                         .Take(limit)
                         .ToList();
         }
@@ -59,7 +58,7 @@ public class SQLiteManager : MonoBehaviour
     }
 }
 
-public class MyData
+public class Score
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
