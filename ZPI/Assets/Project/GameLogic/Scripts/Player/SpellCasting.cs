@@ -202,7 +202,6 @@ public class SpellCasting : MonoBehaviour
 
 
 
-
     //bool IsVerticalLine()
     //{
     //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
