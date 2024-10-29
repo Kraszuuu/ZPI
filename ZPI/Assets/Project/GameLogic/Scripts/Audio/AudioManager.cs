@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager Instance;
 
-    public Sound[] musicSounds, sfxSounds;
-    public AudioSource musicSource, sfxSource;
+    public Sound[] MusicSounds, SfxSounds;
+    public AudioSource MusicSource, SfxSource;
 
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -26,12 +26,12 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic("Theme2");
+        PlayMusic("MenuTheme");
     }
 
     public void PlayMusic(string name)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(MusicSounds, x => x.name == name);
 
         if (s == null )
         {
@@ -39,15 +39,15 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            musicSource.clip = s.clip;
-            musicSource.Play();
+            MusicSource.clip = s.clip;
+            MusicSource.Play();
         }
 
     }
 
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(SfxSounds, x => x.name == name);
 
         if (s == null)
         {
@@ -55,18 +55,18 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            sfxSource.PlayOneShot(s.clip);
+            SfxSource.PlayOneShot(s.clip);
         }
     }
 
     public void MusicVolume(float volume)
     {
         Debug.Log("Bagno");
-        musicSource.volume = volume;
+        MusicSource.volume = volume;
     }
 
     public void SFXVolume(float volume)
     {
-        sfxSource.volume = volume;
+        SfxSource.volume = volume;
     }
 }
