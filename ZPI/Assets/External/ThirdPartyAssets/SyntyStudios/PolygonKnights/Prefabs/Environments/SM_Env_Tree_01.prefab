@@ -11,7 +11,14 @@ GameObject:
   - component: {fileID: 410432}
   - component: {fileID: 3312090}
   - component: {fileID: 2381544}
+<<<<<<< Updated upstream
   - component: {fileID: 2577372916448828304}
+=======
+  - component: {fileID: 2464532858909507127}
+  - component: {fileID: 64332606391190674}
+  - component: {fileID: 64023214256522874}
+  - component: {fileID: 64806759154804300}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: SM_Env_Tree_01
   m_TagString: Untagged
@@ -84,7 +91,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!64 &2577372916448828304
+=======
+--- !u!136 &2464532858909507127
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186820}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 10.642273
+  m_Direction: 1
+  m_Center: {x: -0.01, y: 4.32, z: -0.04}
+--- !u!64 &64332606391190674
+>>>>>>> Stashed changes
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,4 +139,52 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
+<<<<<<< Updated upstream
   m_Mesh: {fileID: 4300000, guid: 2290675b2cccbe54798045d5872bcbb5, type: 3}
+=======
+  m_Mesh: {fileID: 43366914991663566, guid: 1a9fc30876ff9a842a8434072aa0037e, type: 2}
+--- !u!64 &64023214256522874
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186820}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 43454849517226266, guid: 1a9fc30876ff9a842a8434072aa0037e, type: 2}
+--- !u!64 &64806759154804300
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186820}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 43138102095017344, guid: 1a9fc30876ff9a842a8434072aa0037e, type: 2}
+>>>>>>> Stashed changes
