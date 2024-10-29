@@ -258,7 +258,7 @@ public class SpellCasting : MonoBehaviour
             IsLightningUnlocked = true;
         }
     }
-
+    // test1
 
 
 
