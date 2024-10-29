@@ -3179,6 +3179,21 @@ MonoBehaviour:
   spellCastDistance: 10
   lineRenderer: {fileID: 0}
   spellCastingParticleSystem: {fileID: 0}
+  FireballImage: {fileID: 2004614305}
+  FireballCooldown: 0
+  IsFireballUnlocked: 0
+  ExterminationImage: {fileID: 0}
+  ExterminationCooldown: 0
+  IsExterminationUnlocked: 1
+  FreezingImage: {fileID: 0}
+  FreezingCooldown: 0
+  IsFreezeUnlocked: 0
+  GreenBallImage: {fileID: 0}
+  GreenballCooldown: 0
+  IsGreenballUnlocked: 1
+  LightningImage: {fileID: 0}
+  LightningCooldown: 0
+  IsLightningUnlocked: 1
 --- !u!114 &939752300
 MonoBehaviour:
   m_ObjectHideFlags: 0
