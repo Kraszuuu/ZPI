@@ -14,7 +14,7 @@ public class PlayerInteract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponent<PlayerLook>().cam;
+        cam = Camera.main;
         playerUI = GetComponent<PlayerUI>();
         inputManager = GetComponent<InputManager>();
     }
