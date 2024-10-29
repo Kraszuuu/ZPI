@@ -20,7 +20,12 @@ public class PlayerHealth : MonoBehaviour
     public float fadeSpeed;
 
     private float durationTimer;
-    // Start is called before the first frame update
+
+    [Header("=== SLIDERS ===")]
+    public Slider HealthSlider;
+    public Slider EaseHealthSlider;
+    private float _lerpSpeed = 0.05f;
+
     void Start()
     {
         health = maxHealth;
@@ -50,27 +55,36 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        float fillF = frontHealthBar.fillAmount;
-        float fillB = backHealthBar.fillAmount;
-        float hFraction = health / maxHealth;
-        if (fillB > hFraction)
+        if (HealthSlider.value != health)
         {
-            frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.red;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+            HealthSlider.value = health;
         }
-        if (fillF < hFraction)
+
+        if (HealthSlider.value != EaseHealthSlider.value)
         {
-            backHealthBar.color = Color.green;
-            backHealthBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer/ chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontHealthBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
+            EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, health, _lerpSpeed);
         }
+        //float fillF = frontHealthBar.fillAmount;
+        //float fillB = backHealthBar.fillAmount;
+        //float hFraction = health / maxHealth;
+        //if (fillB > hFraction)
+        //{
+        //    frontHealthBar.fillAmount = hFraction;
+        //    backHealthBar.color = Color.red;
+        //    lerpTimer += Time.deltaTime;
+        //    float percentComplete = lerpTimer / chipSpeed;
+        //    percentComplete = percentComplete * percentComplete;
+        //    backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+        //}
+        //if (fillF < hFraction)
+        //{
+        //    backHealthBar.color = Color.green;
+        //    backHealthBar.fillAmount = hFraction;
+        //    lerpTimer += Time.deltaTime;
+        //    float percentComplete = lerpTimer/ chipSpeed;
+        //    percentComplete = percentComplete * percentComplete;
+        //    frontHealthBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
+        //}
     }
 
     public void TakeDamage(float damage)
