@@ -41,11 +41,6 @@ public class ChainLightningShoot : MonoBehaviour
                 StopShooting();
             }
         }
-
-        if (Input.GetKeyUp(KeyCode.Y))
-        {
-            StopShooting();
-        }
     }
 
     void StartShooting()
@@ -68,21 +63,24 @@ public class ChainLightningShoot : MonoBehaviour
                     {
                         StartCoroutine(ChainReaction(currentClosestEnemy));
                     }
+
+                    // Uruchomienie coroutine, aby po 3 sekundach wywo³aæ StopShooting()
+                    StartCoroutine(StopShootingAfterDelay(3f));
                 }
             }
         }
+    }
+
+    IEnumerator StopShootingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StopShooting();
     }
 
     void NewLineRenderer(Transform startPos, Transform endPos, bool fromPlayer = false)
     {
         GameObject lineR = Instantiate(lineRendererPrefab);
         spawnedLineRenderers.Add(lineR);
-        Enemy enemy = endPos.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            //enemy.TakeDamage(60);  // Zadajemy obra¿enia
-            Debug.Log("GOWNO SMIERDZACE");
-        }
         StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos, fromPlayer));
     }
 
@@ -126,10 +124,6 @@ public class ChainLightningShoot : MonoBehaviour
             NewLineRenderer(closestEnemy.transform, nextEnemy.transform);
 
             Enemy enemyComponent = nextEnemy.GetComponent<Enemy>();
-            if (enemyComponent != null)
-            {
-                enemyComponent.TakeDamage(60); // Okreœl wczeœniej `damageAmount` jako iloœæ obra¿eñ
-            }
             StartCoroutine(ChainReaction(nextEnemy));
         }
     }
@@ -138,6 +132,11 @@ public class ChainLightningShoot : MonoBehaviour
     {
         shooting = false;
         shot = false;
+
+        foreach (var enemy in enemiesInChain)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(60);
+        }
 
         foreach (var lineRenderer in spawnedLineRenderers)
         {
