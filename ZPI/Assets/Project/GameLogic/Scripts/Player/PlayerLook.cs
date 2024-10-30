@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
-    [Header("Camera")]
-    [Tooltip("Main player camera")]
-    public Camera cam;
+    [Header("FPV Settings")]
     [Tooltip("Mouse sensitivity setting")]
     public float Sensitivity = 1.0f;
     [Tooltip("How far in degrees can you move the camera up")]
-    public float TopClamp = 90.0f;
+    public float TopClamp = 89.0f;
     [Tooltip("How far in degrees can you move the camera down")]
-    public float BottomClamp = -90.0f;
+    public float BottomClamp = -89.0f;
 
+    private Camera cam;
     private const float _threshold = 0.002f;
     private float _rotationVelocity;
     private float _cameraPitchAngle;
 
     void Start()
     {
+        cam = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
     }
