@@ -38,7 +38,7 @@ public class PrimaryAttack : MonoBehaviour
             _destination = hit.point;
         else
             _destination = ray.GetPoint(1000);
-        AudioManager.Instance.PlaySFX("PrimaryAttack");
+        //AudioManager.Instance.PlaySFX("PrimaryAttack");
         InstantiateProjectile(FirePoint);
     }
 
