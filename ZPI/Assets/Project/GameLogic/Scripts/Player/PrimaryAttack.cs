@@ -38,13 +38,14 @@ public class PrimaryAttack : MonoBehaviour
             _destination = hit.point;
         else
             _destination = ray.GetPoint(1000);
-
+        AudioManager.Instance.PlaySFX("PrimaryAttack");
         InstantiateProjectile(FirePoint);
     }
 
     void InstantiateProjectile(Transform firePoint)
     {
-        var projectileObj = Instantiate(Projectile, firePoint.position, Quaternion.identity) as GameObject;
+        Vector3 spawnPosition = firePoint.position + firePoint.forward * 2f + firePoint.right * 1f;
+        var projectileObj = Instantiate(Projectile, spawnPosition, Quaternion.identity) as GameObject;
         projectileObj.GetComponent<Rigidbody>().velocity = (_destination - firePoint.position).normalized * ProjectileSpeed;
         iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-ArcRange, ArcRange), Random.Range(-ArcRange, ArcRange), 0), Random.Range(0.5f, 2));
     }
