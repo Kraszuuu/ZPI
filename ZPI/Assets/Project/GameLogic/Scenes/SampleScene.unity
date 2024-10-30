@@ -8348,6 +8348,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780535195}
   m_CullTransparentMesh: 1
+--- !u!1 &782201346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 782201347}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &782201347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782201346}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.324, y: 0.36, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2569627551059570508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &795321033
 GameObject:
   m_ObjectHideFlags: 0
@@ -19497,7 +19528,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 782201347}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4977454392104243776, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       insertIndex: -1
@@ -19526,6 +19560,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4977454392104243776, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 939752305}
+    - targetCorrespondingSourceObject: {fileID: 4977454392104243776, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2569627551059570509}
     - targetCorrespondingSourceObject: {fileID: 5730793301270126740, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1864202598}
@@ -19535,6 +19572,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3846728291997511376, guid: 19ce35fe61cf89247a310e279238fcd8, type: 3}
   m_PrefabInstance: {fileID: 2569627551059570507}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2569627551059570509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939752280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81956d4074ba5ce48833e6fc93d7c61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 1864202597}
+  Projectile: {fileID: 4030826607351020814, guid: f49df8c513dc47f439e6526725ad9cfd, type: 3}
+  FirePoint: {fileID: 782201347}
+  ProjectileSpeed: 30
+  FireRate: 4
+  ArcRange: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
