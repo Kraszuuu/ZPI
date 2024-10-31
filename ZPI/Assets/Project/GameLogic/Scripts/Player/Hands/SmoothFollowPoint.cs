@@ -31,6 +31,9 @@ public class SmoothFollowPoint : MonoBehaviour
     public float SpeedThreshold = 3.0f;
     public CharacterController CharacterController;
 
+    [Header("Jumping Noise Settings")]
+    [Range(0, 0.1f)] public float JumpNoiseAmplitude = 0.03f;
+
     private Vector3 _velocity = Vector3.zero;  // Prędkość punktu, wymagana przez SmoothDamp
     private Camera _mainCamera;
     private Transform _cameraTransform;
@@ -90,6 +93,7 @@ public class SmoothFollowPoint : MonoBehaviour
         if (!DebugMode)
         {
             Vector3 noiseMotion = CalculateNoiseMotion();
+            Vector3 noiseJumping = CalculateNoiseJumping();
             if (_inputManager.isCastSpelling)
             {
                 Vector3 targetPosition = CalculateTargetPositionForCasting();
@@ -98,7 +102,7 @@ public class SmoothFollowPoint : MonoBehaviour
             else
             {
                 Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
-                transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion, ref _velocity, _currentSmoothTime);
+                transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, _currentSmoothTime);
                 UpdateRotation();
             }
         }
@@ -136,6 +140,18 @@ public class SmoothFollowPoint : MonoBehaviour
 
         return _cameraTransform.TransformDirection(localMotion); // Konwersja na przestrzeń świata
     }
+
+    private Vector3 CalculateNoiseJumping()
+    {
+        float verticalSpeed = CharacterController.velocity.y;
+        if (CharacterController.isGrounded) return Vector3.zero;
+
+        float verticalOffset = -Mathf.Sign(verticalSpeed) * Mathf.Abs(verticalSpeed) * JumpNoiseAmplitude;
+        verticalOffset *= Mathf.Clamp01(Mathf.Abs(verticalSpeed) / 10.0f); // np. ograniczenie odchylenia
+        Vector3 localJumpingMotion = new Vector3(0, verticalOffset, 0);
+        return _cameraTransform.TransformDirection(localJumpingMotion);
+    }
+
 
     private void UpdateRotation()
     {

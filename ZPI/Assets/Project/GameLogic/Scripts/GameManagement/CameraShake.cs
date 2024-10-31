@@ -4,35 +4,50 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    public float shakeDuration = 0.2f;
-    public float shakeIntensity = 0.1f;
+    public Transform TargetPoint; // Dodaj tutaj referencję do punktu
+    public float ShakeDuration = 0.2f;
+    public float ShakeIntensity = 0.1f;
 
-    private Vector3 initialPosition;
-    private float currentShakeDuration = 0f;
+    private Vector3 _initialPosition;
+    private Vector3 _initialTargetPosition; // Dla punktu
+    private float _currentShakeDuration = 0f;
 
     void Start()
     {
-        initialPosition = transform.localPosition;
+        _initialPosition = transform.localPosition;
+        if (TargetPoint != null)
+        {
+            _initialTargetPosition = TargetPoint.localPosition;
+        }
     }
 
     void Update()
     {
-        if (currentShakeDuration > 0)
+        if (_currentShakeDuration > 0)
         {
-            Vector3 randomOffset = Random.insideUnitSphere * shakeIntensity;
-            transform.localPosition = initialPosition + randomOffset;
+            Vector3 randomOffset = Random.insideUnitSphere * ShakeIntensity;
+            transform.localPosition = _initialPosition + randomOffset;
 
-            currentShakeDuration -= Time.deltaTime;
+            if (TargetPoint != null)
+            {
+                TargetPoint.localPosition = _initialTargetPosition + randomOffset;
+            }
+
+            _currentShakeDuration -= Time.deltaTime;
         }
         else
         {
-            transform.localPosition = initialPosition;
+            transform.localPosition = _initialPosition;
+            if (TargetPoint != null)
+            {
+                TargetPoint.localPosition = _initialTargetPosition;
+            }
         }
     }
 
     public void Shake()
     {
-        currentShakeDuration = shakeDuration;
+        _currentShakeDuration = ShakeDuration;
         Debug.Log("Shake!");
     }
 }

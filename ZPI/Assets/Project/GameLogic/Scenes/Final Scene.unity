@@ -4233,25 +4233,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5565945584093297685, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 61.6
+    - target: {fileID: 4745713509762544699, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5565945584093297685, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 35.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5565945584093297685, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -15.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5874737613583730034, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 99.2
+    - target: {fileID: 4745713509762544699, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5995337581215257839, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
       propertyPath: m_Name
       value: Game Essentials (AIO)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451204639345471034, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6451204639345471034, guid: fd5b282118e6bf140ad4c47712ff54a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

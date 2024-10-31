@@ -13648,6 +13648,7 @@ GameObject:
   - component: {fileID: 2002555471449681562}
   - component: {fileID: 5728653273452432875}
   - component: {fileID: 2453107154900202512}
+  - component: {fileID: 8083575508087405043}
   - component: {fileID: 2168504688520886331}
   m_Layer: 0
   m_Name: Player
@@ -13831,9 +13832,10 @@ MonoBehaviour:
   chipSpeed: 2
   frontHealthBar: {fileID: 8886980373369039932}
   backHealthBar: {fileID: 3343950490065548784}
-  overlay: {fileID: 4276348387024469074}
   duration: 1
   fadeSpeed: 1.5
+  HealthSlider: {fileID: 0}
+  EaseHealthSlider: {fileID: 0}
 --- !u!114 &2002555471449681562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13852,6 +13854,21 @@ MonoBehaviour:
   spellCastDistance: 10
   lineRenderer: {fileID: 0}
   spellCastingParticleSystem: {fileID: 5321055627676186876}
+  FireballImage: {fileID: 4089126301667727093, guid: 5e4dbe5b5a7fb164a8e46572cfba0e30, type: 3}
+  FireballCooldown: 0
+  IsFireballUnlocked: 0
+  ExterminationImage: {fileID: 0}
+  ExterminationCooldown: 0
+  IsExterminationUnlocked: 1
+  FreezingImage: {fileID: 0}
+  FreezingCooldown: 0
+  IsFreezeUnlocked: 0
+  GreenBallImage: {fileID: 0}
+  GreenballCooldown: 0
+  IsGreenballUnlocked: 1
+  LightningImage: {fileID: 0}
+  LightningCooldown: 0
+  IsLightningUnlocked: 1
 --- !u!114 &5728653273452432875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13880,6 +13897,24 @@ MonoBehaviour:
   Sensitivity: 1
   TopClamp: 89
   BottomClamp: -89
+--- !u!114 &8083575508087405043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930491716707376504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81956d4074ba5ce48833e6fc93d7c61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 5353507663013573796}
+  Projectile: {fileID: 5726742315612413675, guid: 038784bdcd4c27e4e8af3d59303084c8, type: 3}
+  FirePoint: {fileID: 3086564207075106868}
+  ProjectileSpeed: 30
+  FireRate: 4
+  ArcRange: 1
 --- !u!120 &2168504688520886331
 LineRenderer:
   serializedVersion: 2
