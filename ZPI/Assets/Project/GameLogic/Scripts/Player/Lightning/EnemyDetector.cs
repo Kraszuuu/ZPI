@@ -8,14 +8,16 @@ public class EnemyDetector : MonoBehaviour
 
     public GameObject GetClosestEnemy(List<GameObject> exludedEnemies = null)
     {
+        enemiesInRange.RemoveAll(enemy => enemy == null);
         if (enemiesInRange.Count > 0)
         {
             GameObject bestTarget = null;
             float closestDistanceSqr = Mathf.Infinity;
             Vector3 currentPosition = transform.position;
-
+            Debug.Log("GOWNO");
             foreach (GameObject closestEnemy in enemiesInRange)
             {
+                Debug.Log(closestEnemy);
                 if (exludedEnemies != null && exludedEnemies.Contains(closestEnemy))
                 {
                     continue;

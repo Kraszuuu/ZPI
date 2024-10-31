@@ -1,3 +1,4 @@
+using DigitalRuby.LightningBolt;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,12 +19,17 @@ public class ChainLightningShoot : MonoBehaviour
     private EnemyDetector playerEnemyDetector;
     [SerializeField]
     private GameObject lineRendererPrefab;
+    private LightningBoltScript lightningBoltScript;
 
     private bool shooting;
     private bool shot;
     private GameObject currentClosestEnemy;
-    private List<GameObject> spawnedLineRenderers = new List<GameObject>();
     private List<GameObject> enemiesInChain = new List<GameObject>();
+
+    private void Start()
+    {
+        lightningBoltScript = GetComponent<LightningBoltScript>();
+    }
 
     void Update()
     {
@@ -57,7 +63,8 @@ public class ChainLightningShoot : MonoBehaviour
                 if (currentClosestEnemy != null)
                 {
                     enemiesInChain.Add(currentClosestEnemy);
-                    NewLineRenderer(playerFirePoint, currentClosestEnemy.transform, true);
+                    lightningBoltScript.StartObject = this.gameObject;
+                    lightningBoltScript.EndObject = currentClosestEnemy;
 
                     if (maximumEnemiesInChain > 1)
                     {
@@ -65,7 +72,7 @@ public class ChainLightningShoot : MonoBehaviour
                     }
 
                     // Uruchomienie coroutine, aby po 3 sekundach wywo³aæ StopShooting()
-                    StartCoroutine(StopShootingAfterDelay(3f));
+                    StartCoroutine(StopShootingAfterDelay(1f));
                 }
             }
         }
@@ -75,32 +82,6 @@ public class ChainLightningShoot : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         StopShooting();
-    }
-
-    void NewLineRenderer(Transform startPos, Transform endPos, bool fromPlayer = false)
-    {
-        GameObject lineR = Instantiate(lineRendererPrefab);
-        spawnedLineRenderers.Add(lineR);
-        StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos, fromPlayer));
-    }
-
-    IEnumerator UpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos, bool fromPlayer = false)
-    {
-        if (shooting && shot && lineR != null)
-        {
-            lineR.GetComponent<LineRendererController>().SetPosition(startPos, endPos);
-
-            yield return new WaitForSeconds(refreshRate);
-
-            if (fromPlayer)
-            {
-                StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos, true));
-            }
-            else
-            {
-                StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
-            }
-        }
     }
 
     IEnumerator ChainReaction(GameObject closestEnemy)
@@ -121,7 +102,9 @@ public class ChainLightningShoot : MonoBehaviour
         if (nextEnemy != null)
         {
             enemiesInChain.Add(nextEnemy);
-            NewLineRenderer(closestEnemy.transform, nextEnemy.transform);
+            LightningBoltScript lightning = closestEnemy.GetComponent<LightningBoltScript>();
+            lightning.StartObject = closestEnemy;
+            lightning.EndObject = nextEnemy;
 
             Enemy enemyComponent = nextEnemy.GetComponent<Enemy>();
             StartCoroutine(ChainReaction(nextEnemy));
@@ -135,15 +118,14 @@ public class ChainLightningShoot : MonoBehaviour
 
         foreach (var enemy in enemiesInChain)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(60);
+            if (enemy != null)
+            {
+                enemy.GetComponent<Enemy>().TakeDamage(60);
+                enemy.GetComponent<LightningBoltScript>().ResetGameObjects();
+            }
         }
 
-        foreach (var lineRenderer in spawnedLineRenderers)
-        {
-            Destroy(lineRenderer);
-        }
-
-        spawnedLineRenderers.Clear();
+        lightningBoltScript.ResetGameObjects();
         enemiesInChain.Clear();
     }
 }
