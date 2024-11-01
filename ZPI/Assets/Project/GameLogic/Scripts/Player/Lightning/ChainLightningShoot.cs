@@ -14,11 +14,11 @@ public class ChainLightningShoot : MonoBehaviour
     [SerializeField]
     private float delayBetweenEachChain = 0.3f;
     [SerializeField]
-    private Transform playerFirePoint;
-    [SerializeField]
     private EnemyDetector playerEnemyDetector;
     [SerializeField]
     private GameObject lineRendererPrefab;
+    [SerializeField]
+    private float spellDuration = 1f;
     private LightningBoltScript lightningBoltScript;
 
     private bool shooting;
@@ -53,7 +53,7 @@ public class ChainLightningShoot : MonoBehaviour
     {
         shooting = true;
 
-        if (playerEnemyDetector != null && playerFirePoint != null && lineRendererPrefab != null)
+        if (playerEnemyDetector != null && lineRendererPrefab != null)
         {
             if (!shot)
             {
@@ -72,7 +72,7 @@ public class ChainLightningShoot : MonoBehaviour
                     }
 
                     // Uruchomienie coroutine, aby po 3 sekundach wywo³aæ StopShooting()
-                    StartCoroutine(StopShootingAfterDelay(1f));
+                    StartCoroutine(StopShootingAfterDelay(spellDuration));
                 }
             }
         }

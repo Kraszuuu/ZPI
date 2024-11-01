@@ -210,8 +210,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.23999786
+        time: 0.0029640198
+        value: 0.28173828
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -282,8 +282,8 @@ MonoBehaviour:
   Duration: 0.09
   ChaosFactor: 0.03
   ManualMode: 0
-  Rows: 8
-  Columns: 8
+  Rows: 9
+  Columns: 9
   AnimationMode: 0
 --- !u!1 &210427144868107778
 GameObject:
