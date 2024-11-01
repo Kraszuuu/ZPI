@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:ZPI/Assets/New Terrain.asset.meta
 guid: d30e173e3d1aebb4d961064ab43d2196
 NativeFormatImporter:
+========
+guid: b3e57d3ed9bb7bf4692efd7741944c0a
+DefaultImporter:
+>>>>>>>> main:ZPI/Assets/Project/GameLogic/Scenes/KoziScene.unity.meta
   externalObjects: {}
   mainObjectFileID: 15600000
   userData: 

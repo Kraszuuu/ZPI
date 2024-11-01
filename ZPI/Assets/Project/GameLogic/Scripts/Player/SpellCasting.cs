@@ -18,7 +18,9 @@ public class SpellCasting : MonoBehaviour
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
-    public LineRenderer lineRenderer;
+    public GameObject lineRendererPrefab;
+    private GameObject lineRendererInstance;
+    private LineRenderer lineRenderer;
     public ParticleSystem spellCastingParticleSystem;
     private PlayerVoiceCommands playerVoiceCommands;
 
@@ -58,7 +60,8 @@ public class SpellCasting : MonoBehaviour
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
-        lineRenderer = GetComponent<LineRenderer>();
+        lineRendererInstance = Instantiate(lineRendererPrefab);
+        lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
         playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
