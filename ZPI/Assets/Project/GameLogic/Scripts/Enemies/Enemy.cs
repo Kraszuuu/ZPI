@@ -36,7 +36,6 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
-    //Just for debugging purposes
     [SerializeField]
     private string currentState;
 

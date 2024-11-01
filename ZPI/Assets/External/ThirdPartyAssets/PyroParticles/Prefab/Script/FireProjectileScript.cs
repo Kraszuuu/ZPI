@@ -103,13 +103,26 @@ namespace DigitalRuby.PyroParticles
                 {
                     CollisionDelegate(this, c.contacts[0].point);
                 }
+                Transform hitTransform = c.transform;
+                bool isEnemy = false;
 
-                Transform hitTransform = c.transform.root;
-                Debug.Log(hitTransform);
-                if (hitTransform.CompareTag("Enemy"))
+                while (hitTransform != null)
                 {
-                    Debug.Log("Hit Enemy");
-                    hitTransform.GetComponent<Enemy>().TakeDamage(50);
+                    if (hitTransform.CompareTag("Enemy"))
+                    {
+                        isEnemy = true;
+                        break;
+                    }
+                    hitTransform = hitTransform.parent;
+                }
+
+                if (isEnemy)
+                {
+                    var enemyComponent = hitTransform.GetComponent<Enemy>();
+                    if (enemyComponent != null)
+                    {
+                        enemyComponent.TakeDamage(50);
+                    }
                 }
             }
         }
