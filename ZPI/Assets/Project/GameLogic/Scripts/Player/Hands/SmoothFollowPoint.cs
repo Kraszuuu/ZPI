@@ -11,12 +11,12 @@ public class SmoothFollowPoint : MonoBehaviour
     public float RotationSmoothTime = 0.15f; // Czas amortyzacji rotacji
     public float HorizontalRotationSmoothTime = 0.025f; // Czas amortyzacji poziomego obrotu (lewo-prawo)
     public Vector3 UnarmedOffset = new(0.34f, -0.16f, 0.44f);           // Offset w lokalnych współrzędnych względem kamery
-    public Quaternion UnarmedRotationOffset = new(0.4f, 0f, 0f, 1f);     // Offset rotacji między punktem a kamerą
+    public Quaternion UnarmedRotationOffset = new(0.4f, 0f, 0f, 0f);     // Offset rotacji między punktem a kamerą
 
     [Header("Wand Settings")]
     public float WandSmoothTime = 0.15f;
     public Vector3 WandOffset;               // Offset przy trzymaniu różdżki
-    public Quaternion WandRotationOffset = new(0.4f, 0f, 0f, 1f);
+    public Quaternion WandRotationOffset = new(0.4f, 0f, 0f, 0f);
     public GameObject WandObject;            // Referencja do obiektu różdżki
 
     [Header("Spell Casting Settings")]

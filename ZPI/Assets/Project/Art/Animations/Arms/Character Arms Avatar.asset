@@ -6,7 +6,7 @@ Avatar:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character_FPSHands_02Avatar
+  m_Name: Character Arms Avatar
   m_AvatarSize: 17460
   m_Avatar:
     serializedVersion: 3
