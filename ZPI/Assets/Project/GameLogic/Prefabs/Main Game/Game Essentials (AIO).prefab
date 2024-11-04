@@ -150,6 +150,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1669029282642943724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6410390870517872350}
+  m_Layer: 10
+  m_Name: Wand Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6410390870517872350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669029282642943724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2150799677613557356}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1870678066839012255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2758,6 +2789,37 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7399303178798276667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4231311218717237288}
+  m_Layer: 10
+  m_Name: Wand Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4231311218717237288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7399303178798276667}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.344, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2150799677613557356}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7737956975306511216
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,9 +3476,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5960246783732867966, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4231311218717237288}
+    - targetCorrespondingSourceObject: {fileID: 5960246783732867966, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6410390870517872350}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+--- !u!4 &2150799677613557356 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5960246783732867966, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+  m_PrefabInstance: {fileID: 5723547600001541394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6773179570956644231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1337862489952225941, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
