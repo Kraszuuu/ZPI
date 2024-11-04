@@ -13,18 +13,11 @@ public class PrimaryAttack : MonoBehaviour
     public float FireRate = 4;
     public float ArcRange = 1;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButton("Fire2") && Time.time >= _timeToFire)
         {
-            _timeToFire = Time.time + 1/FireRate;
+            _timeToFire = Time.time + 1 / FireRate;
             ShootProjectile();
         }
     }
@@ -34,19 +27,25 @@ public class PrimaryAttack : MonoBehaviour
         Ray ray = Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
+        // Określenie celu na podstawie trafienia lub punktu przed graczem
         if (Physics.Raycast(ray, out hit))
             _destination = hit.point;
         else
             _destination = ray.GetPoint(1000);
-        //AudioManager.Instance.PlaySFX("PrimaryAttack");
-        InstantiateProjectile(FirePoint);
+
+        InstantiateProjectile();
     }
 
-    void InstantiateProjectile(Transform firePoint)
+    void InstantiateProjectile()
     {
-        Vector3 spawnPosition = firePoint.position + firePoint.forward * 2f + firePoint.right * 1f;
-        var projectileObj = Instantiate(Projectile, spawnPosition, Quaternion.identity) as GameObject;
-        projectileObj.GetComponent<Rigidbody>().velocity = (_destination - firePoint.position).normalized * ProjectileSpeed;
+        // Tworzenie pocisku dokładnie w FirePoint
+        var projectileObj = Instantiate(Projectile, FirePoint.position, Quaternion.identity) as GameObject;
+
+        // Ustawienie kierunku pocisku
+        Vector3 direction = (_destination - FirePoint.position).normalized;
+        projectileObj.GetComponent<Rigidbody>().velocity = direction * ProjectileSpeed;
+
+        // Opcjonalny efekt dla pocisku
         iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-ArcRange, ArcRange), Random.Range(-ArcRange, ArcRange), 0), Random.Range(0.5f, 2));
     }
 }
