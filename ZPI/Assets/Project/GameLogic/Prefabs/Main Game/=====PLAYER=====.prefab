@@ -6965,6 +6965,7 @@ MonoBehaviour:
   ExterminationImage: {fileID: 0}
   ExterminationCooldown: 0
   IsExterminationUnlocked: 1
+  meteorPrefab: {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
   FreezingImage: {fileID: 0}
   FreezingCooldown: 0
   IsFreezeUnlocked: 0
@@ -6974,6 +6975,7 @@ MonoBehaviour:
   LightningImage: {fileID: 0}
   LightningCooldown: 0
   IsLightningUnlocked: 1
+  boxHalfExtents: {x: 1, y: 1, z: 1}
 --- !u!114 &1983907215974032557
 MonoBehaviour:
   m_ObjectHideFlags: 0
