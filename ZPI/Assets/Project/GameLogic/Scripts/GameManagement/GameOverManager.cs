@@ -14,7 +14,6 @@ public class GameOverManager : MonoBehaviour
     public TextMeshProUGUI MessageTextMesh;
     public TextMeshProUGUI ErrorMessageTextMesh;
 
-    public static bool isGameOver = false;
     public GameObject EndGamePanel;
 
     private GameFreezer gameFreezer;
@@ -30,10 +29,11 @@ public class GameOverManager : MonoBehaviour
 
     public void EndGame()
     {
-        if (!isGameOver)
+        if (!GameState.Instance.IsGameOver)
         {
-            isGameOver = true;
-            gameFreezer.SetIsGamePaused(true);
+            GameState.Instance.IsGameOver = true;
+            GameState.Instance.IsGamePaused = true;
+            gameFreezer.UpdateTimeScale();
             FulfillEndGamePanel();
             EndGamePanel.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;

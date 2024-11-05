@@ -5,8 +5,6 @@ using UnityEngine.LowLevel;
 
 public class GameFreezer : MonoBehaviour
 {
-    private bool isCastSpelling;
-    private bool isGamePaused;
     private InputManager inputManager;
 
     private void Start()
@@ -14,31 +12,9 @@ public class GameFreezer : MonoBehaviour
         inputManager = GameObject.Find("Player").GetComponent<InputManager>();
     }
 
-    public void SetIsCastSpelling(bool castSpelling)
+    public void UpdateTimeScale()
     {
-        this.isCastSpelling = castSpelling;
-        UpdateTimeScale();
-    }
-
-    public void SetIsGamePaused(bool gamePaused)
-    {
-        this.isGamePaused = gamePaused;
-        UpdateTimeScale();
-    }
-
-    public bool IsCastSpelling()
-    {
-        return isCastSpelling;
-    }
-
-    public bool IsGamePaused()
-    {
-        return isGamePaused;
-    }
-
-    private void UpdateTimeScale()
-    {
-        if (isCastSpelling || isGamePaused)
+        if (GameState.Instance.IsSpellCasting || GameState.Instance.IsGamePaused)
         {
             Time.timeScale = 0.1f;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
