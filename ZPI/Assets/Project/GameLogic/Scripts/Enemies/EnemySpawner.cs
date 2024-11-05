@@ -37,7 +37,6 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         CurrentEnemies.RemoveAll(enemy => enemy == null);
-
         if (CurrentEnemies.Count == 0 && waveInProgress)
         {
             waveInProgress = false;
@@ -47,7 +46,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnWave()
     {
-        Debug.Log(currentWave);
         if (currentWave < waves.Count)
         {
             waveInProgress = true;
