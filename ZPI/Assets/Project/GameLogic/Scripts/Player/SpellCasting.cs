@@ -36,6 +36,7 @@ public class SpellCasting : MonoBehaviour
     public Image ExterminationImage;
     public float ExterminationCooldown = 0f;
     public bool IsExterminationUnlocked = true;
+    public GameObject meteorPrefab;
 
     [Header("--- Freeze ---")]
     public Image FreezingImage;
@@ -53,6 +54,8 @@ public class SpellCasting : MonoBehaviour
     public bool IsLightningUnlocked = true;
 
     private int _strokeIndex;
+
+    public Vector3 boxHalfExtents = new Vector3(0.01f, 0.01f, 0.01f);
 
     private void Start()
     {
@@ -113,7 +116,8 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Z"))
             {
-                CastSpell("IceBeam");
+                CastMeteorRain();
+                CastSpell("Meteor Rain!!!");
             }
             Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
         }
@@ -123,6 +127,58 @@ public class SpellCasting : MonoBehaviour
         }
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
         playerVoiceCommands.recognizedSpell = null;
+    }
+
+    public void CastMeteorRain()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        // Wykonanie BoxCast z praktycznie nieskończonym zasięgiem
+        if (Physics.BoxCast(ray.origin, boxHalfExtents, ray.direction, out hit, Quaternion.identity, Mathf.Infinity))
+        {
+            DrawBoxCast(ray.origin, ray.direction);
+            // Jeśli wykryto przeszkodę, możemy uzyskać szczegóły trafienia
+            Debug.Log("Hit: " + hit.collider.name);
+            SpawnMeteor(hit.point, hit.collider); // Materializowanie meteorytu na napotkanym obiekcie
+        }
+    }
+
+    void DrawBoxCast(Vector3 position, Vector3 direction)
+    {
+        // Oblicz krawędzie boxa
+        Vector3 frontBottomLeft = position + Quaternion.LookRotation(direction) * new Vector3(-boxHalfExtents.x, -boxHalfExtents.y, 0);
+        Vector3 frontBottomRight = position + Quaternion.LookRotation(direction) * new Vector3(boxHalfExtents.x, -boxHalfExtents.y, 0);
+        Vector3 frontTopLeft = position + Quaternion.LookRotation(direction) * new Vector3(-boxHalfExtents.x, boxHalfExtents.y, 0);
+        Vector3 frontTopRight = position + Quaternion.LookRotation(direction) * new Vector3(boxHalfExtents.x, boxHalfExtents.y, 0);
+
+        Vector3 backBottomLeft = frontBottomLeft + direction.normalized * 300f;
+        Vector3 backBottomRight = frontBottomRight + direction.normalized * 300f;
+        Vector3 backTopLeft = frontTopLeft + direction.normalized * 300f;
+        Vector3 backTopRight = frontTopRight + direction.normalized * 300f;
+
+        // Rysowanie krawędzi boxa
+        Debug.DrawLine(frontBottomLeft, frontBottomRight, Color.red);
+        Debug.DrawLine(frontBottomLeft, frontTopLeft, Color.red);
+        Debug.DrawLine(frontBottomRight, frontTopRight, Color.red);
+        Debug.DrawLine(backBottomLeft, backBottomRight, Color.red);
+        Debug.DrawLine(backBottomLeft, backTopLeft, Color.red);
+        Debug.DrawLine(backBottomRight, backTopRight, Color.red);
+        Debug.DrawLine(frontBottomLeft, backBottomLeft, Color.red);
+        Debug.DrawLine(frontBottomRight, backBottomRight, Color.red);
+        Debug.DrawLine(frontTopLeft, backTopLeft, Color.red);
+        Debug.DrawLine(frontTopRight, backTopRight, Color.red);
+    }
+
+    void SpawnMeteor(Vector3 hitPoint, Collider collider)
+    {
+        // Możesz ustawić spawnPosition na konkretnej wartości
+        Vector3 spawnPosition = new Vector3(hitPoint.x, 0f, hitPoint.z);
+
+        // Tworzenie instancji meteorytu
+        GameObject meteor = Instantiate(meteorPrefab, spawnPosition, Quaternion.identity);
+
+
     }
 
     public void CastFireSpellInDirection()
