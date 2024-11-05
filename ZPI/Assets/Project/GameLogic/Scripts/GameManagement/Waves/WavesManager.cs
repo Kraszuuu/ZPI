@@ -23,10 +23,8 @@ public class WavesManager : MonoBehaviour
     private void OnSpawnerWaveCleared()
     {
         spawnersCleared++;
-        Debug.Log("ROZJEBANED");
         if (spawnersCleared >= EnemySpawners.Count)
         {
-            Debug.Log("SMIERDZISZ");
             spawnersCleared = 0;
             currentWave++;
 
@@ -58,6 +56,7 @@ public class WavesManager : MonoBehaviour
     private void ShowUpgradeMenu()
     {
         GameState.Instance.IsGamePaused = true;
+        GameState.Instance.IsUpgrading = true;
         upgradeMenu.Show();
         Cursor.lockState = CursorLockMode.Confined;
         upgradeMenu.OnUpgradeSelected += OnUpgradeSelected;
@@ -66,6 +65,7 @@ public class WavesManager : MonoBehaviour
     private void OnUpgradeSelected()
     {
         GameState.Instance.IsGamePaused = false;
+        GameState.Instance.IsUpgrading = false;
         upgradeMenu.OnUpgradeSelected -= OnUpgradeSelected;
         StartCoroutine(DelayedStartNextWave());
     }

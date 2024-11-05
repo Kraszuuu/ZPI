@@ -71,7 +71,7 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
-        if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused) return;
+        if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused || GameState.Instance.IsUpgrading) return;
 
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {

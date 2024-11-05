@@ -10,6 +10,7 @@ public class GameState : MonoBehaviour
     public bool IsGamePaused { get; set; }
     public bool IsGameOver { get; set; }
     public bool IsTimeSlowed { get; set; }
+    public bool IsUpgrading { get; set; }
 
     private void Awake()
     {
