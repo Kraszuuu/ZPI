@@ -5838,7 +5838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnarmedSmoothTime: 0.15
-  RotationSmoothTime: 0.15
+  RotationSmoothTime: 0.075
   HorizontalRotationSmoothTime: 0.025
   UnarmedOffset: {x: 0.3, y: -0.17, z: 0.44}
   UnarmedRotationOffset: {x: -0.62598205, y: 0.16704163, z: -0.6686536, w: 0.36489165}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14271,70 +14271,6 @@ PrefabInstance:
       propertyPath: EaseHealthSlider
       value: 
       objectReference: {fileID: 2077123892}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: _isSwinging
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: RotationSpeed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SwingHoldTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SwingSmoothTime
-      value: 0.075
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SwingRotationOffset.w
-      value: 0.35045636
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SwingRotationOffset.x
-      value: -0.6771605
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SwingRotationOffset.y
-      value: 0.19552281
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SwingRotationOffset.z
-      value: -0.6167697
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: LeftSwingRotationOffset.w
-      value: -0.45640332
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: LeftSwingRotationOffset.x
-      value: -0.058948323
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: LeftSwingRotationOffset.y
-      value: -0.52555126
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: LeftSwingRotationOffset.z
-      value: 0.7155535
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: RightSwingRotationOffset.w
-      value: 0.16815893
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: RightSwingRotationOffset.x
-      value: 0.22483411
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: RightSwingRotationOffset.y
-      value: -0.6907305
-      objectReference: {fileID: 0}
-    - target: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: RightSwingRotationOffset.z
-      value: 0.6663809
-      objectReference: {fileID: 0}
     - target: {fileID: 4873898937191214487, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: m_Name
       value: =====PLAYER=====

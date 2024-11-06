@@ -216,14 +216,8 @@ public class SmoothFollowPoint : MonoBehaviour
         // Tworzymy nową docelową rotację z zaktualizowanymi wartościami pitch i yaw
         _targetRotation = Quaternion.Euler(_currentPitch, _currentYaw, _currentRotationOffset.z) * _currentRotationOffset;
 
-        // Obliczamy różnicę kątową między bieżącą a docelową rotacją
-        float angleDifference = Quaternion.Angle(_currentRotation, _targetRotation);
-
-        // Dynamiczne skalowanie RotationSmoothTime, odwrotnie proporcjonalne do różnicy kątowej
-        float dynamicSmoothTime = Mathf.Lerp(RotationSmoothTime * 0.1f, RotationSmoothTime, 1 - (angleDifference / 180f));
-
-        // Płynne przejście do docelowej rotacji z dynamicznym RotationSmoothTime
-        _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, Time.deltaTime / dynamicSmoothTime);
+        // Płynne przejście do docelowej rotacji
+        _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, Time.deltaTime / RotationSmoothTime);
 
         // Aktualizujemy rotację obiektu na wynik interpolacji
         transform.rotation = _currentRotation;
