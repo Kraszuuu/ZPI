@@ -27,6 +27,7 @@ public class SpellCasting : MonoBehaviour
     public event Action<DollarPoint[]> OnDrawFinished;
     private RecognitionManager recognitionManager;
 
+
     [Header("--- Fireball ---")]
     public Image FireballImage;
     public float FireballCooldown = 0f;
@@ -55,7 +56,7 @@ public class SpellCasting : MonoBehaviour
 
     private int _strokeIndex;
 
-    public Vector3 boxHalfExtents = new Vector3(0.01f, 0.01f, 0.01f);
+    public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
 
     private void Start()
     {
@@ -70,12 +71,16 @@ public class SpellCasting : MonoBehaviour
         spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
 
         UnlockSpell("Fireball");
+
+
     }
 
     void Update()
     {
         if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused || GameState.Instance.IsUpgrading) return;
 
+
+        // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
             if (!GameState.Instance.IsSpellCasting)
@@ -135,39 +140,11 @@ public class SpellCasting : MonoBehaviour
         RaycastHit hit;
 
         // Wykonanie BoxCast z praktycznie nieskończonym zasięgiem
-        if (Physics.BoxCast(ray.origin, boxHalfExtents, ray.direction, out hit, Quaternion.identity, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            DrawBoxCast(ray.origin, ray.direction);
-            // Jeśli wykryto przeszkodę, możemy uzyskać szczegóły trafienia
             Debug.Log("Hit: " + hit.collider.name);
             SpawnMeteor(hit.point, hit.collider); // Materializowanie meteorytu na napotkanym obiekcie
         }
-    }
-
-    void DrawBoxCast(Vector3 position, Vector3 direction)
-    {
-        // Oblicz krawędzie boxa
-        Vector3 frontBottomLeft = position + Quaternion.LookRotation(direction) * new Vector3(-boxHalfExtents.x, -boxHalfExtents.y, 0);
-        Vector3 frontBottomRight = position + Quaternion.LookRotation(direction) * new Vector3(boxHalfExtents.x, -boxHalfExtents.y, 0);
-        Vector3 frontTopLeft = position + Quaternion.LookRotation(direction) * new Vector3(-boxHalfExtents.x, boxHalfExtents.y, 0);
-        Vector3 frontTopRight = position + Quaternion.LookRotation(direction) * new Vector3(boxHalfExtents.x, boxHalfExtents.y, 0);
-
-        Vector3 backBottomLeft = frontBottomLeft + direction.normalized * 300f;
-        Vector3 backBottomRight = frontBottomRight + direction.normalized * 300f;
-        Vector3 backTopLeft = frontTopLeft + direction.normalized * 300f;
-        Vector3 backTopRight = frontTopRight + direction.normalized * 300f;
-
-        // Rysowanie krawędzi boxa
-        Debug.DrawLine(frontBottomLeft, frontBottomRight, Color.red);
-        Debug.DrawLine(frontBottomLeft, frontTopLeft, Color.red);
-        Debug.DrawLine(frontBottomRight, frontTopRight, Color.red);
-        Debug.DrawLine(backBottomLeft, backBottomRight, Color.red);
-        Debug.DrawLine(backBottomLeft, backTopLeft, Color.red);
-        Debug.DrawLine(backBottomRight, backTopRight, Color.red);
-        Debug.DrawLine(frontBottomLeft, backBottomLeft, Color.red);
-        Debug.DrawLine(frontBottomRight, backBottomRight, Color.red);
-        Debug.DrawLine(frontTopLeft, backTopLeft, Color.red);
-        Debug.DrawLine(frontTopRight, backTopRight, Color.red);
     }
 
     void SpawnMeteor(Vector3 hitPoint, Collider collider)
@@ -177,8 +154,28 @@ public class SpellCasting : MonoBehaviour
 
         // Tworzenie instancji meteorytu
         GameObject meteor = Instantiate(meteorPrefab, spawnPosition, Quaternion.identity);
+        Destroy(meteor, 4);
+        DealDamageToEnemiesInRadius(spawnPosition);
+    }
 
+    void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
+    {
+        // Wykonaj OverlapSphere, aby znaleźć obiekty w promieniu damageRadius
+        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.001f);
+        
 
+        // Iteracja przez wszystkie obiekty w promieniu
+        foreach (Collider hitCollider in hitColliders)
+        {
+            // Sprawdź, czy obiekt jest przeciwnikiem (zakładamy, że ma komponent Enemy)
+            Enemy enemy = hitCollider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                // Zadaj obrażenia przeciwnikowi
+                enemy.TakeDamage(100);
+                Debug.Log("Przeciwnik " + enemy.name + " otrzymał obrażenia: " + 100);
+            }
+        }
     }
 
     public void CastFireSpellInDirection()
@@ -235,7 +232,6 @@ public class SpellCasting : MonoBehaviour
     }
 
     
-
     void CastSpell(string spellName)
     {
         Debug.Log("Casting spell: " + spellName);
