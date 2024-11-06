@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float bulletDamage = 10f;
+    public bool isFriendly = false;
+
     private void OnCollisionEnter(Collision collision)
     {
         Transform hitTransform = collision.transform;
+        if (isFriendly)
+        {
+            if (hitTransform.CompareTag("Enemy"))
+            {
+                hitTransform.GetComponent<Enemy>().TakeDamage((int)bulletDamage);
+            }
+        };
         if (hitTransform.CompareTag("Player"))
         {
-            hitTransform.GetComponent<PlayerHealth>().TakeDamage(10);
+            hitTransform.GetComponent<PlayerHealth>().TakeDamage(bulletDamage);
         }
         Destroy(gameObject);
     }
