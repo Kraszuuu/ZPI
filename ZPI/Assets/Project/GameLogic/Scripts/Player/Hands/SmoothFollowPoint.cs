@@ -130,27 +130,28 @@ public class SmoothFollowPoint : MonoBehaviour
         Vector3 noiseMotion = CalculateNoiseMotion();
         Vector3 noiseJumping = CalculateNoiseJumping();
 
-        if (_swingTimer <= 0)
+        if (_inputManager.isCastSpelling)
+        {
+            _isSwinging = false;
+            _isLeftSwing = false;
+            _swingTimer = 0f;
+
+            Vector3 targetPosition = CalculateTargetPositionForCasting();
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, CastingSmoothTime);
+        }
+        else if (_swingTimer <= 0)
         {
             _isSwinging = false;
             _isLeftSwing = false;
 
-            if (_inputManager.isCastSpelling)
-            {
-                Vector3 targetPosition = CalculateTargetPositionForCasting();
-                transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, CastingSmoothTime);
-            }
-            else
-            {
-                Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
-                transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, _currentSmoothTime);
-                UpdateRotation();
-            }
+            Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, _currentSmoothTime);
+            UpdateRotation();
         }
         else
         {
             Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, SwingSmoothTime);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, SwingSmoothTime);
             UpdateRotation();
             _swingTimer -= Time.deltaTime;
         }
@@ -215,8 +216,14 @@ public class SmoothFollowPoint : MonoBehaviour
         // Tworzymy nową docelową rotację z zaktualizowanymi wartościami pitch i yaw
         _targetRotation = Quaternion.Euler(_currentPitch, _currentYaw, _currentRotationOffset.z) * _currentRotationOffset;
 
-        // Płynne przejście do docelowej rotacji
-        _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, Time.deltaTime / RotationSmoothTime);
+        // Obliczamy różnicę kątową między bieżącą a docelową rotacją
+        float angleDifference = Quaternion.Angle(_currentRotation, _targetRotation);
+
+        // Dynamiczne skalowanie RotationSmoothTime, odwrotnie proporcjonalne do różnicy kątowej
+        float dynamicSmoothTime = Mathf.Lerp(RotationSmoothTime * 0.1f, RotationSmoothTime, 1 - (angleDifference / 180f));
+
+        // Płynne przejście do docelowej rotacji z dynamicznym RotationSmoothTime
+        _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, Time.deltaTime / dynamicSmoothTime);
 
         // Aktualizujemy rotację obiektu na wynik interpolacji
         transform.rotation = _currentRotation;
