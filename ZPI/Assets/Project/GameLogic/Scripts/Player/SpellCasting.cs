@@ -10,8 +10,9 @@ using UnityEngine.UI;
 public class SpellCasting : MonoBehaviour
 {
     public CameraShake cameraShake;
-    private List<Vector3> mousePositions = new List<Vector3>();
     private GameFreezer gameFreezer;
+    private List<Vector3> mousePositions = new List<Vector3>();
+    private InputManager inputManager;
     private FireBaseScript prefabScript;
     private GameObject fireball;
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
@@ -57,6 +58,8 @@ public class SpellCasting : MonoBehaviour
     private void Start()
     {
         gameFreezer = FindObjectOfType<GameFreezer>();
+        // Pobieramy referencj� do skryptu obracaj�cego kamer�
+        inputManager = FindObjectOfType<InputManager>();
         lineRendererInstance = Instantiate(lineRendererPrefab);
         lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
@@ -71,19 +74,21 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
-        if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused || GameState.Instance.IsUpgrading) return;
+        if (GameOverManager.isGameOver) return;
 
+        // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
-            if (!GameState.Instance.IsSpellCasting)
+            if (!inputManager.isCastSpelling)
             {
-                GameState.Instance.IsSpellCasting = true;
-                gameFreezer.UpdateTimeScale();
+                inputManager.isCastSpelling = true;
+                gameFreezer.SetIsCastSpelling(true);
                 Cursor.lockState = CursorLockMode.Confined;
             }
             HandleMouseInput();
         }
 
+        // Gdy przycisk myszy zostanie puszczony, analizujemy gest
         if (Input.GetMouseButtonUp(0))
         {
             FinalizeSpellCasting();
@@ -211,13 +216,14 @@ public class SpellCasting : MonoBehaviour
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        GameState.Instance.IsSpellCasting = false;
+        inputManager.isCastSpelling = false;
         RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
         spellCastingParticleSystem.Stop();
 
-        gameFreezer.UpdateTimeScale();
+        // Przywr�cenie normalnego up�ywu czasu
+        gameFreezer.SetIsCastSpelling(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
 

@@ -13,6 +13,7 @@ public class ChainLightningShoot : MonoBehaviour
     private int maximumEnemiesInChain = 3;
     [SerializeField]
     private float delayBetweenEachChain = 0.3f;
+    [SerializeField]
     private EnemyDetector playerEnemyDetector;
     [SerializeField]
     private GameObject lineRendererPrefab;
@@ -27,7 +28,6 @@ public class ChainLightningShoot : MonoBehaviour
 
     private void Start()
     {
-        playerEnemyDetector = GetComponent<EnemyDetector>();
         lightningBoltScript = GetComponent<LightningBoltScript>();
     }
 

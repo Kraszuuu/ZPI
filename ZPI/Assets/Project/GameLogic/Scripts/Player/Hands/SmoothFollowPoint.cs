@@ -94,7 +94,7 @@ public class SmoothFollowPoint : MonoBehaviour
         {
             Vector3 noiseMotion = CalculateNoiseMotion();
             Vector3 noiseJumping = CalculateNoiseJumping();
-            if (GameState.Instance.IsSpellCasting)
+            if (_inputManager.isCastSpelling)
             {
                 Vector3 targetPosition = CalculateTargetPositionForCasting();
                 transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, CastingSmoothTime);
