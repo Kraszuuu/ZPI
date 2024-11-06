@@ -96,6 +96,37 @@ Transform:
   - {fileID: 282749026115622214}
   m_Father: {fileID: 7179384518059874690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &773104517644572235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3237799604944636022}
+  m_Layer: 10
+  m_Name: Wand Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3237799604944636022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773104517644572235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.344, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5960246783732867966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &964875498439860573
 GameObject:
   m_ObjectHideFlags: 0
@@ -5806,9 +5837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc27b904a3810c4fb995c3e708c08df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 0
   UnarmedSmoothTime: 0.15
-  RotationSmoothTime: 0.15
+  RotationSmoothTime: 0.075
   HorizontalRotationSmoothTime: 0.025
   UnarmedOffset: {x: 0.3, y: -0.17, z: 0.44}
   UnarmedRotationOffset: {x: -0.62598205, y: 0.16704163, z: -0.6686536, w: 0.36489165}
@@ -5825,6 +5855,16 @@ MonoBehaviour:
   SpeedThreshold: 3
   CharacterController: {fileID: 120337885820885851}
   JumpNoiseAmplitude: 0.03
+  SwingSmoothTime: 0.075
+  SwingHoldTime: 1
+  LeftSwingOffset: {x: -0.09, y: -0.21, z: 0.41}
+  LeftSwingRotationOffset: {x: -0.058948323, y: -0.52555126, z: 0.7155535, w: -0.45640332}
+  RightSwingOffset: {x: 0.37, y: -0.23, z: 0.41}
+  RightSwingRotationOffset: {x: 0.22483411, y: -0.6907305, z: 0.6663809, w: 0.16815893}
+  RotationSpeed: 8
+  _isSwinging: 0
+  _isLeftSwing: 0
+  _swingTimer: 0
   animator: {fileID: 6938930104941906118}
   _currentTargetOffset: {x: 0, y: 0, z: 0}
   _currentRotationOffset: {x: 0, y: 0, z: 0, w: 1}
@@ -6771,7 +6811,7 @@ Transform:
   m_GameObject: {fileID: 6021588089235170061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 99.2, y: -0.6, z: 0}
+  m_LocalPosition: {x: 96.17, y: -1, z: -8.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7016,7 +7056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 1196581131723404189}
   Projectile: {fileID: 5726742315612413675, guid: 038784bdcd4c27e4e8af3d59303084c8, type: 3}
-  FirePoint: {fileID: 6084023302756754371}
+  FirePoint: {fileID: 3237799604944636022}
   ProjectileSpeed: 30
   FireRate: 4
   ArcRange: 1
@@ -7369,6 +7409,37 @@ MonoBehaviour:
   - {fileID: 6870450287927373075}
   - {fileID: 2465294347493523909}
   - {fileID: 8649222624617201547}
+--- !u!1 &6104469292381088937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6439821059619784647}
+  m_Layer: 10
+  m_Name: Wand Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6439821059619784647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104469292381088937}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5960246783732867966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6210715685188734646
 GameObject:
   m_ObjectHideFlags: 0
@@ -13078,7 +13149,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 490798, guid: a5132481e1eaddb4e93b7cd8def7b311, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3237799604944636022}
+    - targetCorrespondingSourceObject: {fileID: 490798, guid: a5132481e1eaddb4e93b7cd8def7b311, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6439821059619784647}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5132481e1eaddb4e93b7cd8def7b311, type: 3}
 --- !u!1 &5960246783732483656 stripped

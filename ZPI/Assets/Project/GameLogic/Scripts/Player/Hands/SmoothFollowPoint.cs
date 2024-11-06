@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class SmoothFollowPoint : MonoBehaviour
 {
-    public bool DebugMode = false;          // Tryb debugowania
     [Header("Unarmed Settings")]
     public float UnarmedSmoothTime = 0.15f;         // Czas amortyzacji pozycji
     public float RotationSmoothTime = 0.15f; // Czas amortyzacji rotacji
@@ -34,6 +33,19 @@ public class SmoothFollowPoint : MonoBehaviour
     [Header("Jumping Noise Settings")]
     [Range(0, 0.1f)] public float JumpNoiseAmplitude = 0.03f;
 
+    [Header("Wand Swing Settings")]
+    public float SwingSmoothTime = 0.075f;        // Szybkość machnięcia w lewo
+    public float SwingHoldTime = 3f;     // Czas zatrzymania w miejscu po machnięciu
+    public Vector3 LeftSwingOffset = new(-0.09f, -0.21f, 0.41f);  // Offset machnięcia w lewo
+    public Quaternion LeftSwingRotationOffset = new(53.7f, 41.9f, 267f, 0f);
+    public Vector3 RightSwingOffset = new(0.37f, -0.23f, 0.41f);  // Offset machnięcia w prawo
+    public Quaternion RightSwingRotationOffset = new(85f, 129.4f, 277.1f, 0f);
+    public float RotationSpeed = 5.0f;
+
+    public bool _isSwinging = false;      // Czy ręka aktualnie macha
+    public bool _isLeftSwing = false;      // Czy ręka aktualnie machnela w lewo
+    public float _swingTimer = 0f;        // Timer do zatrzymania w miejscu
+
     private Vector3 _velocity = Vector3.zero;  // Prędkość punktu, wymagana przez SmoothDamp
     private Camera _mainCamera;
     private Transform _cameraTransform;
@@ -47,6 +59,9 @@ public class SmoothFollowPoint : MonoBehaviour
     private float _currentPitch;            // Bieżąca wartość obrotu w pionie (X)
     [SerializeField] private Vector3 _currentTargetOffset;
     [SerializeField] private Quaternion _currentRotationOffset;
+
+    private Quaternion _targetRotation;
+    private Quaternion _currentRotation;
 
     void Start()
     {
@@ -77,34 +92,68 @@ public class SmoothFollowPoint : MonoBehaviour
             else Debug.Log("Animation is in progress");
         }
 
-        if (WandObject.activeSelf)
+        if (!_isSwinging)
         {
-            _currentSmoothTime = WandSmoothTime;
-            _currentTargetOffset = WandOffset;
-            _currentRotationOffset = WandRotationOffset;
-        }
-        else
-        {
-            _currentSmoothTime = UnarmedSmoothTime;
-            _currentTargetOffset = UnarmedOffset;
-            _currentRotationOffset = UnarmedRotationOffset;
-        }
-
-        if (!DebugMode)
-        {
-            Vector3 noiseMotion = CalculateNoiseMotion();
-            Vector3 noiseJumping = CalculateNoiseJumping();
-            if (_inputManager.isCastSpelling)
+            if (WandObject.activeSelf)
             {
-                Vector3 targetPosition = CalculateTargetPositionForCasting();
-                transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, CastingSmoothTime);
+                _currentSmoothTime = WandSmoothTime;
+                _currentTargetOffset = WandOffset;
+                _currentRotationOffset = WandRotationOffset;
             }
             else
             {
-                Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
-                transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, _currentSmoothTime);
-                UpdateRotation();
+                _currentSmoothTime = UnarmedSmoothTime;
+                _currentTargetOffset = UnarmedOffset;
+                _currentRotationOffset = UnarmedRotationOffset;
             }
+        }
+
+        // Sprawdzenie, czy nastąpiło wciśnięcie prawego przycisku myszy do rzucenia zaklęcia
+        if (Mouse.current.rightButton.wasPressedThisFrame && _isWandEquipped)
+        {
+            _isSwinging = true;
+            _swingTimer = SwingHoldTime;
+            _isLeftSwing = !_isLeftSwing;
+
+            if (_isLeftSwing)
+            {
+                _currentTargetOffset = LeftSwingOffset;
+                _currentRotationOffset = LeftSwingRotationOffset;
+            }
+            else
+            {
+                _currentTargetOffset = RightSwingOffset;
+                _currentRotationOffset = RightSwingRotationOffset;
+            }
+        }
+
+        Vector3 noiseMotion = CalculateNoiseMotion();
+        Vector3 noiseJumping = CalculateNoiseJumping();
+
+        if (_inputManager.isCastSpelling)
+        {
+            _isSwinging = false;
+            _isLeftSwing = false;
+            _swingTimer = 0f;
+
+            Vector3 targetPosition = CalculateTargetPositionForCasting();
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, CastingSmoothTime);
+        }
+        else if (_swingTimer <= 0)
+        {
+            _isSwinging = false;
+            _isLeftSwing = false;
+
+            Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, _currentSmoothTime);
+            UpdateRotation();
+        }
+        else
+        {
+            Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, SwingSmoothTime);
+            UpdateRotation();
+            _swingTimer -= Time.deltaTime;
         }
     }
 
@@ -155,15 +204,23 @@ public class SmoothFollowPoint : MonoBehaviour
 
     private void UpdateRotation()
     {
+        // Ustawienie docelowych kątów pitch i yaw na podstawie pozycji kamery
         float targetPitch = _cameraTransform.eulerAngles.x;
-        _currentPitch = Mathf.LerpAngle(_currentPitch, targetPitch, Time.deltaTime / RotationSmoothTime);
-
         float targetYaw = _cameraTransform.eulerAngles.y;
+
+        // Płynne przejście pitch (góra-dół) i yaw (lewo-prawo)
+        _currentPitch = Mathf.LerpAngle(_currentPitch, targetPitch, Time.deltaTime / RotationSmoothTime);
         _currentYaw = Mathf.LerpAngle(_currentYaw, targetYaw, Time.deltaTime / HorizontalRotationSmoothTime);
         _currentYaw = Mathf.Repeat(_currentYaw, 360f);
 
-        Quaternion interpolatedRotation = Quaternion.Euler(_currentPitch, _currentYaw, _currentRotationOffset.z);
-        transform.rotation = interpolatedRotation * _currentRotationOffset;
+        // Tworzymy nową docelową rotację z zaktualizowanymi wartościami pitch i yaw
+        _targetRotation = Quaternion.Euler(_currentPitch, _currentYaw, _currentRotationOffset.z) * _currentRotationOffset;
+
+        // Płynne przejście do docelowej rotacji
+        _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, Time.deltaTime / RotationSmoothTime);
+
+        // Aktualizujemy rotację obiektu na wynik interpolacji
+        transform.rotation = _currentRotation;
     }
 
     private Vector3 CalculateTargetPositionForCasting()
