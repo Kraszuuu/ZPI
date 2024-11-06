@@ -11,7 +11,6 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
     private PauseManager pauseManager;
-    public bool isCastSpelling = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -45,7 +44,7 @@ public class InputManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!isCastSpelling)
+        if (!GameState.Instance.IsSpellCasting)
         {
             look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
         }
