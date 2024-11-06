@@ -3430,6 +3430,22 @@ PrefabInstance:
       propertyPath: promptText
       value: 
       objectReference: {fileID: 8556451540268303471}
+    - target: {fileID: 1929153570168815667, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: JumpHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929153570168815667, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: WalkingSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929153570168815667, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: SprintingSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929153570168815667, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: MovementSharpnessOnGround
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3037187737646001077, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: FireballImage
       value: 
@@ -3474,6 +3490,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -8.87
       objectReference: {fileID: 0}
+    - target: {fileID: 8067842822974537490, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: FirePoint
+      value: 
+      objectReference: {fileID: 4231311218717237288}
+    - target: {fileID: 8067842822974537490, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: DelayedFire
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8067842822974537490, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: SmoothFollowPoint
+      value: 
+      objectReference: {fileID: 8146966541703786727}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -3495,3 +3523,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1337862489952225941, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
   m_PrefabInstance: {fileID: 5723547600001541394}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8146966541703786727 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4495145276475872757, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+  m_PrefabInstance: {fileID: 5723547600001541394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc27b904a3810c4fb995c3e708c08df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

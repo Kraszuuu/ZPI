@@ -5,35 +5,35 @@ using UnityEngine;
 public class PrimaryAttack : MonoBehaviour
 {
     public Camera Camera;
-    private Vector3 _destination;
     public GameObject Projectile;
     public Transform FirePoint;
+    public SmoothFollowPoint SmoothFollowPoint;
     public float ProjectileSpeed = 30f;
-    private float _timeToFire;
     public float FireRate = 4;
     public float ArcRange = 1;
+    [Range(0, 0.2f)] public float DelayedFire = 0.05f;
 
-    void Update()
+    private Vector3 _destination;
+    private float _timeToFire;
+
+    public void ShootProjectile()
     {
-        if (Input.GetButton("Fire2") && Time.time >= _timeToFire)
+        if (Time.time >= _timeToFire && SmoothFollowPoint._isWandEquipped)
         {
             _timeToFire = Time.time + 1 / FireRate;
-            ShootProjectile();
+
+            Ray ray = Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+            // Określenie celu na podstawie trafienia lub punktu przed graczem
+            if (Physics.Raycast(ray, out RaycastHit hit))
+                _destination = hit.point;
+            else
+                _destination = ray.GetPoint(1000);
+
+            SmoothFollowPoint.TogglePrimaryAttack();
+
+            Invoke(nameof(InstantiateProjectile), 0.1f); // delikatne opóźnienie
         }
-    }
-
-    void ShootProjectile()
-    {
-        Ray ray = Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-
-        // Określenie celu na podstawie trafienia lub punktu przed graczem
-        if (Physics.Raycast(ray, out hit))
-            _destination = hit.point;
-        else
-            _destination = ray.GetPoint(1000);
-
-        InstantiateProjectile();
     }
 
     void InstantiateProjectile()

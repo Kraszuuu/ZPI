@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     [Header("Movement")]
-    public float WalkingSpeed = 5f;
-    public float SprintingSpeed = 12f;
+    public float WalkingSpeed = 4f;
+    public float SprintingSpeed = 8f;
+    public float CrouchingSpeed = 2f;
     public float MovementSharpnessOnGround = 15f;
     public float SprintHoldToLockThreshold = 2f;
 
     [Header("Movement in air")]
-    public float MaxSpeedInAir = 12f;
     public float AccelerationSpeedInAir = 2f;
 
     [Header("Jumping")]
@@ -72,7 +72,11 @@ public class PlayerMotor : MonoBehaviour
             PerformDash();
         }
 
-        _dashCooldownTime -= Time.deltaTime;
+        if (_dashCooldownTime > 0)
+        {
+            _dashCooldownTime -= Time.deltaTime;
+        }
+
     }
 
     // receive the inputs from InputManager.cs and apply them to the character _controller.
@@ -129,11 +133,19 @@ public class PlayerMotor : MonoBehaviour
 
     public void StartDash(Vector3 direction)
     {
-        _isDashing = true;
-        _dashTime = DashDuration;
-        _dashCooldownTime = DashCooldown;
-        _dashDirection = transform.TransformDirection(direction);
-        _playerVelocity = direction * DashSpeed;
+        if (_dashCooldownTime <= 0f && !_isDashing && _isGrounded)
+        {
+            _isDashing = true;
+            _dashTime = DashDuration;
+            _dashCooldownTime = DashCooldown;
+            _dashDirection = transform.TransformDirection(direction);
+            _playerVelocity = direction * DashSpeed;
+
+            _isCrouching = false;
+            _isSprinting = false;
+            _sprintLocked = false;
+            _currentSpeed = WalkingSpeed;
+        }
     }
 
     private void PerformDash()
@@ -157,7 +169,7 @@ public class PlayerMotor : MonoBehaviour
         {
             _dashTimer -= Time.deltaTime;
 
-            float p = (_dashTimer / 0.4f);
+            float p = _dashTimer / 0.4f;
             p = 1 - p;
             p *= p;
 
@@ -189,7 +201,7 @@ public class PlayerMotor : MonoBehaviour
         // Limit air speed horizontally
         float verticalVelocity = _playerVelocity.y;
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_playerVelocity, Vector3.up);
-        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, MaxSpeedInAir);
+        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, _currentSpeed);
 
         _playerVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
     }
@@ -207,6 +219,7 @@ public class PlayerMotor : MonoBehaviour
         _isCrouching = !_isCrouching;
         _crouchTimer = 0;
         _lerpCrouch = true;
+        _currentSpeed = _isCrouching ? CrouchingSpeed : WalkingSpeed;
     }
 
     // Slowly change camera height while in process of _isCrouching/standing up
@@ -226,7 +239,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void Sprint()
     {
-        if (!_sprintLocked)
+        if (!_sprintLocked && !_isCrouching && _isGrounded)
         {
             _isSprinting = !_isSprinting;
             _currentSpeed = _isSprinting ? SprintingSpeed : WalkingSpeed;

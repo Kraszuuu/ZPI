@@ -11,7 +11,9 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
     private PauseManager pauseManager;
+    private PrimaryAttack primaryAttack;
     public bool isCastSpelling = false;
+    private Vector2 currentMoveInput;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,11 +24,12 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         pauseManager = FindObjectOfType<PauseManager>();
+        primaryAttack = GetComponent<PrimaryAttack>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
-        onFoot.Crouch.canceled += ctx => motor.Crouch();
+        // onFoot.Crouch.canceled += ctx => motor.Crouch();
 
         onFoot.Sprint.performed += ctx => motor.Sprint();
         onFoot.Sprint.canceled += ctx => motor.Sprint();
@@ -34,13 +37,16 @@ public class InputManager : MonoBehaviour
         onFoot.Dash.performed += OnDashPerformed;
 
         onFoot.Pause.performed += ctx => TogglePause();
+
+        onFoot.BasicAttack.performed += ctx => primaryAttack.ShootProjectile();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //tell the playermotor to move using the value from our movement action
-        motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        currentMoveInput = onFoot.Movement.ReadValue<Vector2>();
+        motor.ProcessMove(currentMoveInput);
     }
 
     private void LateUpdate()
@@ -62,13 +68,12 @@ public class InputManager : MonoBehaviour
     }
     private void OnDashPerformed(InputAction.CallbackContext context)
     {
-        if (context.control.displayName == "Q")
+        Vector3 dashDirection = new Vector3(currentMoveInput.x, 0, currentMoveInput.y).normalized;
+
+        // JeÅ›li nie ma kierunku, nie dashuj
+        if (dashDirection != Vector3.zero)
         {
-            motor.StartDash(Vector3.left); // Dash w lewo
-        }
-        else if (context.control.displayName == "E")
-        {
-            motor.StartDash(Vector3.right); // Dash w prawo
+            motor.StartDash(dashDirection);
         }
     }
     private void TogglePause()
@@ -76,7 +81,7 @@ public class InputManager : MonoBehaviour
         Debug.Log(pauseManager);
         if (pauseManager != null)
         {
-            pauseManager.PauseGame();  // W³¹czamy/wy³¹czamy pauzê
+            pauseManager.PauseGame();
         }
     }
 }
