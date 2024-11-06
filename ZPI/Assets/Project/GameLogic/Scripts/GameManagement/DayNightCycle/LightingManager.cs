@@ -7,10 +7,10 @@ public class LightingManager : MonoBehaviour
     //Scene References
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private LightingPreset Preset;
-    [SerializeField] private float DayLength = 120f;
+    [SerializeField] private float DayLength = 300f;
     //Variables
     [SerializeField] 
-    [Range(0, 120f)]
+    [Range(0, 300f)]
     private float TimeOfDay;
 
 

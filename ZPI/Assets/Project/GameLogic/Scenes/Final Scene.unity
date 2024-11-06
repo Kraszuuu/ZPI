@@ -7044,7 +7044,7 @@ GameObject:
   - component: {fileID: 1328463679}
   - component: {fileID: 1328463678}
   m_Layer: 0
-  m_Name: gowno
+  m_Name: Ligting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
