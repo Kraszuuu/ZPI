@@ -50,7 +50,7 @@ public class SmoothFollowPoint : MonoBehaviour
     private Camera _mainCamera;
     private Transform _cameraTransform;
     private InputManager _inputManager;
-    private bool _isWandEquipped = false;    // Czy gracz trzyma różdżkę
+    public bool _isWandEquipped = false;    // Czy gracz trzyma różdżkę
 
     public Animator animator;
 
@@ -108,25 +108,6 @@ public class SmoothFollowPoint : MonoBehaviour
             }
         }
 
-        // Sprawdzenie, czy nastąpiło wciśnięcie prawego przycisku myszy do rzucenia zaklęcia
-        if (Mouse.current.rightButton.wasPressedThisFrame && _isWandEquipped)
-        {
-            _isSwinging = true;
-            _swingTimer = SwingHoldTime;
-            _isLeftSwing = !_isLeftSwing;
-
-            if (_isLeftSwing)
-            {
-                _currentTargetOffset = LeftSwingOffset;
-                _currentRotationOffset = LeftSwingRotationOffset;
-            }
-            else
-            {
-                _currentTargetOffset = RightSwingOffset;
-                _currentRotationOffset = RightSwingRotationOffset;
-            }
-        }
-
         Vector3 noiseMotion = CalculateNoiseMotion();
         Vector3 noiseJumping = CalculateNoiseJumping();
 
@@ -168,6 +149,28 @@ public class SmoothFollowPoint : MonoBehaviour
         else
         {
             animator.SetBool("isHoldingWand", false);
+        }
+    }
+
+    public void TogglePrimaryAttack()
+    {
+        // Sprawdzenie, czy nastąpiło wciśnięcie prawego przycisku myszy do rzucenia zaklęcia
+        if (_isWandEquipped)
+        {
+            _isSwinging = true;
+            _swingTimer = SwingHoldTime;
+            _isLeftSwing = !_isLeftSwing;
+
+            if (_isLeftSwing)
+            {
+                _currentTargetOffset = LeftSwingOffset;
+                _currentRotationOffset = LeftSwingRotationOffset;
+            }
+            else
+            {
+                _currentTargetOffset = RightSwingOffset;
+                _currentRotationOffset = RightSwingRotationOffset;
+            }
         }
     }
 

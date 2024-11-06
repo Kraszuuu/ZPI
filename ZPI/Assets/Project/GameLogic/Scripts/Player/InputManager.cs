@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
     private PauseManager pauseManager;
+    private PrimaryAttack primaryAttack;
     public bool isCastSpelling = false;
     private Vector2 currentMoveInput;
 
@@ -23,6 +24,7 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         pauseManager = FindObjectOfType<PauseManager>();
+        primaryAttack = GetComponent<PrimaryAttack>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
 
@@ -35,6 +37,8 @@ public class InputManager : MonoBehaviour
         onFoot.Dash.performed += OnDashPerformed;
 
         onFoot.Pause.performed += ctx => TogglePause();
+
+        onFoot.BasicAttack.performed += ctx => primaryAttack.ShootProjectile();
     }
 
     // Update is called once per frame
