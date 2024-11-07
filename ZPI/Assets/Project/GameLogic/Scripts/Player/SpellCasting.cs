@@ -83,6 +83,7 @@ public class SpellCasting : MonoBehaviour
         if (GameOverManager.isGameOver) return;
 
 
+
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
