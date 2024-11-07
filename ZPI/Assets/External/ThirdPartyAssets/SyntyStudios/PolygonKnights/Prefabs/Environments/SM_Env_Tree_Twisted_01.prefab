@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3301562}
   - component: {fileID: 2347296}
   - component: {fileID: 7287839526992561470}
+  - component: {fileID: 2190338246267252868}
   m_Layer: 0
   m_Name: SM_Env_Tree_Twisted_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &403594
 Transform:
@@ -107,3 +108,19 @@ CapsuleCollider:
   m_Height: 15.045227
   m_Direction: 1
   m_Center: {x: 0.01, y: 6.32, z: 0.066856384}
+--- !u!208 &2190338246267252868
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136664}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 5.0080004, y: 7.5230002, z: 4.5020003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.84700006, y: 7.5230002, z: 0.067}
+  m_TimeToStationary: 0.5

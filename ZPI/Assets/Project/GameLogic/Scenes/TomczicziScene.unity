@@ -140,6 +140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Wall_Gate_01_Lite
       objectReference: {fileID: 0}
+    - target: {fileID: 100148, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 432356, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -461,6 +465,10 @@ PrefabInstance:
     - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_Top_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -885,6 +893,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_01
       objectReference: {fileID: 0}
+    - target: {fileID: 176788, guid: a403260d581bded4d85f723fd39eb456, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 429872, guid: a403260d581bded4d85f723fd39eb456, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1091,6 +1103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_02
       objectReference: {fileID: 0}
+    - target: {fileID: 112350, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 422034, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1157,6 +1173,10 @@ PrefabInstance:
     - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_Top_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2352,7 +2372,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &362604948
 Transform:
@@ -2464,7 +2484,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &374603570
 Transform:
@@ -2961,6 +2981,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_Top_01
       objectReference: {fileID: 0}
+    - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3160,6 +3184,10 @@ PrefabInstance:
     - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_Top_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 125690, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3396,6 +3424,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Iron_Gate_01
       objectReference: {fileID: 0}
+    - target: {fileID: 169488, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 496004, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -3467,7 +3499,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &652600876
 Transform:
@@ -4322,6 +4354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_01
       objectReference: {fileID: 0}
+    - target: {fileID: 176788, guid: a403260d581bded4d85f723fd39eb456, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 429872, guid: a403260d581bded4d85f723fd39eb456, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4423,6 +4459,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Wall_Gate_01_Lite
       objectReference: {fileID: 0}
+    - target: {fileID: 100148, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 432356, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -4485,69 +4525,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 492156, guid: 091ea372da794714aacb7b7a6fbd5f58, type: 3}
   m_PrefabInstance: {fileID: 776493096}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &840520488
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 840520490}
-  - component: {fileID: 840520489}
-  m_Layer: 0
-  m_Name: NavMesh Surface
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &840520489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840520488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 2a284bf90b8baba4c936a97c231ed6db, type: 2}
-  m_BuildHeightMesh: 0
---- !u!4 &840520490
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840520488}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -34.525734, y: -277.50146, z: 281.933}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &853615167 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 450684, guid: 4a6556da5abedc44594c45ac4a2cf5fe, type: 3}
@@ -4564,6 +4541,10 @@ PrefabInstance:
     - target: {fileID: 169488, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Iron_Gate_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 169488, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 496004, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
       propertyPath: m_LocalScale.x
@@ -5034,7 +5015,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &939087551
 Transform:
@@ -5478,7 +5459,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1024951610
 Transform:
@@ -6161,7 +6142,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1216207572
 Transform:
@@ -6881,12 +6862,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1314794325}
   - component: {fileID: 1314794327}
+  - component: {fileID: 1314794328}
   - component: {fileID: 1314794326}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1314794325
@@ -6963,6 +6945,18 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &1314794328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314794324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59d92c836a1c4343a2890fe050ed4e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1330231743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7112,6 +7106,10 @@ PrefabInstance:
     - target: {fileID: 169488, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Iron_Gate_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 169488, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 496004, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
       propertyPath: m_LocalScale.x
@@ -7544,7 +7542,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1439127513
 Transform:
@@ -7662,6 +7660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451463734}
+  - component: {fileID: 1451463735}
   m_Layer: 0
   m_Name: Spawner (3)
   m_TagString: Untagged
@@ -7693,6 +7692,22 @@ Transform:
   - {fileID: 1428349004}
   m_Father: {fileID: 1498376797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &1451463735
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451463733}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &1455505521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
@@ -7983,6 +7998,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_02
       objectReference: {fileID: 0}
+    - target: {fileID: 112350, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 422034, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8028,6 +8047,69 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
+--- !u!1 &1510797624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1510797626}
+  - component: {fileID: 1510797625}
+  m_Layer: 0
+  m_Name: NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1510797625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510797624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 791fb6ae7ab3055448e99a87ef92864b, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &1510797626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510797624}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 32.8822, y: -0.89056695, z: -172.9324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1538865541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8039,6 +8121,10 @@ PrefabInstance:
     - target: {fileID: 100148, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Wall_Gate_01_Lite
+      objectReference: {fileID: 0}
+    - target: {fileID: 100148, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 432356, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
       propertyPath: m_LocalScale.x
@@ -8424,6 +8510,10 @@ PrefabInstance:
     - target: {fileID: 176788, guid: a403260d581bded4d85f723fd39eb456, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 176788, guid: a403260d581bded4d85f723fd39eb456, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 429872, guid: a403260d581bded4d85f723fd39eb456, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8984,6 +9074,10 @@ PrefabInstance:
     - target: {fileID: 100148, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Wall_Gate_01_Lite
+      objectReference: {fileID: 0}
+    - target: {fileID: 100148, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 432356, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
       propertyPath: m_LocalScale.x
@@ -10626,6 +10720,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Iron_Gate_01
       objectReference: {fileID: 0}
+    - target: {fileID: 169488, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 496004, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -10694,6 +10792,10 @@ PrefabInstance:
     - target: {fileID: 112350, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 112350, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 422034, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10823,7 +10925,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1926750578
 Transform:
@@ -10932,7 +11034,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1936231529
 Transform:
@@ -11419,6 +11521,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_02
       objectReference: {fileID: 0}
+    - target: {fileID: 112350, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 422034, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11520,7 +11626,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2067040907
 Transform:
@@ -11772,6 +11878,10 @@ PrefabInstance:
     - target: {fileID: 176788, guid: a403260d581bded4d85f723fd39eb456, type: 3}
       propertyPath: m_Name
       value: SM_Bld_Castle_Tower_Round_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 176788, guid: a403260d581bded4d85f723fd39eb456, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 429872, guid: a403260d581bded4d85f723fd39eb456, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12144,7 +12254,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1331793439}
-  - {fileID: 840520490}
   - {fileID: 1498376797}
   - {fileID: 1262266060}
   - {fileID: 1255874865}
+  - {fileID: 1510797626}
