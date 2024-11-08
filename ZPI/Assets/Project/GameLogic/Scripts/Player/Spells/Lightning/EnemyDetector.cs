@@ -14,7 +14,6 @@ public class EnemyDetector : MonoBehaviour
             GameObject bestTarget = null;
             float closestDistanceSqr = Mathf.Infinity;
             Vector3 currentPosition = transform.position;
-            Debug.Log("GOWNO");
             foreach (GameObject closestEnemy in enemiesInRange)
             {
                 Debug.Log(closestEnemy);
@@ -46,7 +45,7 @@ public class EnemyDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Cubert"))
         {
             if (enemiesInRange.Count == 0)
             {

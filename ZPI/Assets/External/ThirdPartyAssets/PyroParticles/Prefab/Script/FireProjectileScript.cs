@@ -61,6 +61,9 @@ namespace DigitalRuby.PyroParticles
 
         protected override void Start()
         {
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("FireLayer"), LayerMask.NameToLayer("Player"));
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("FireLayer"), LayerMask.NameToLayer("Hands"));
+            Physics.IgnoreLayerCollision(LayerMask.NameToLayer("FireLayer"), LayerMask.NameToLayer("FireLayer"));
             base.Start();
 
             StartCoroutine(SendCollisionAfterDelay());
@@ -68,6 +71,7 @@ namespace DigitalRuby.PyroParticles
 
         public void HandleCollision(GameObject obj, Collision c)
         {
+            Debug.Log("ProjectileCollisionLayers: " + ProjectileCollisionLayers.value);
             if (collided)
             {
                 // already collided, don't do anything
@@ -105,6 +109,9 @@ namespace DigitalRuby.PyroParticles
                 }
                 Transform hitTransform = c.transform;
                 bool isEnemy = false;
+                Debug.Log(hitTransform);
+                Debug.Log(hitTransform.tag);
+                Debug.Log(hitTransform.gameObject.layer.ToString());
 
                 while (hitTransform != null)
                 {

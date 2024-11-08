@@ -18,7 +18,11 @@ public class SpellCasting : MonoBehaviour
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
+    public float minDistance = 20f;
+    public GameObject fireballPrefab;
+    public float spellCastDistance = 10f;
     public GameObject lineRendererPrefab;
+    private FireballScript fireballScript; 
     private GameObject lineRendererInstance;
     private LineRenderer lineRenderer;
     public ParticleSystem spellCastingParticleSystem;
@@ -61,6 +65,7 @@ public class SpellCasting : MonoBehaviour
 
     private void Start()
     {
+        fireballScript = GetComponent<FireballScript>();
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
@@ -119,7 +124,7 @@ public class SpellCasting : MonoBehaviour
             {
                 if (FireballImage.fillAmount <= 0)
                 {
-                    CastFireSpellInDirection();
+                    CastFireball();
                     FireballImage.fillAmount = 1;
                     FireballCooldown = 3f;
                 }
@@ -182,65 +187,16 @@ public class SpellCasting : MonoBehaviour
             }
         }
     }
-
-    public void CastFireSpellInDirection()
-    {
-        fireball = null;
-        prefabScript = null;
-        Vector3 pos;
-        float yRot = transform.rotation.eulerAngles.y;
-        Vector3 forwardY = Quaternion.Euler(0.0f, yRot, 0.0f) * Vector3.forward;
-        Vector3 forward = transform.forward;
-        Vector3 right = transform.right;
-        Vector3 up = transform.up;
-        Quaternion rotation = Quaternion.identity;
-
-        cameraShake.Shake();
-
-        // Instancjonowanie prefabrykatu ognistej kuli
-        fireball = Instantiate(fireballPrefab);
-        prefabScript = fireball.GetComponent<FireConstantBaseScript>();
-
-        if (prefabScript == null)
-        {
-            // temporary effect, like a fireball
-            prefabScript = fireball.GetComponent<FireBaseScript>();
-            if (prefabScript.IsProjectile)
-            {
-                // set the start point near the player
-                rotation = Camera.main.transform.rotation;
-                pos = transform.position + forward + up;
-            }
-            else
-            {
-                // set the start point in front of the player a ways
-                pos = transform.position + (forwardY * 10.0f);
-            }
-        }
-        else
-        {
-            // set the start point in front of the player a ways, rotated the same way as the player
-            pos = transform.position + (forwardY * 5.0f);
-            rotation = transform.rotation;
-            pos.y = 0.0f;
-        }
-
-        FireProjectileScript projectileScript = fireball.GetComponentInChildren<FireProjectileScript>();
-        if (projectileScript != null)
-        {
-            // make sure we don't collide with other fire layers
-            projectileScript.ProjectileCollisionLayers &= (~UnityEngine.LayerMask.NameToLayer("FireLayer"));
-        }
-
-        fireball.transform.position = pos;
-        fireball.transform.rotation = rotation;
-    }
-
     
     void CastSpell(string spellName)
     {
         Debug.Log("Casting spell: " + spellName);
         // Tu dodaj logik� odpowiedniego zakl�cia
+    }
+
+    public void CastFireball()
+    {
+        fireballScript.CastFireBallInDirection();
     }
 
     private void HandleMouseInput()

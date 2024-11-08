@@ -45,6 +45,6 @@ public class PlayerVoiceCommands : MonoBehaviour
 
     private void AddWords()
     {
-        actions.Add("Fireball", spellCasting.CastFireSpellInDirection);
+        actions.Add("Fireball", spellCasting.CastFireball);
     }
 }
