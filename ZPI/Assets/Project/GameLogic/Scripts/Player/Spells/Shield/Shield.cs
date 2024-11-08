@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    public GameObject shieldObject; // Referencja do sfery tarczy
-    public string enemyTag = "Enemy"; // Tag przeciwnika
-    public string bulletTag = "Bullet"; // Tag pocisków przeciwnika
+    public GameObject shieldObject;
 
     private void Start()
     {
@@ -19,6 +17,7 @@ public class Shield : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
+            Debug.Log(shieldObject);
             shieldObject.SetActive(!shieldObject.activeSelf);
         }
     }
@@ -27,10 +26,6 @@ public class Shield : MonoBehaviour
     {
         if (shieldObject.activeSelf)
         {
-            if (other.tag == enemyTag || other.tag == bulletTag)
-            {
-                //Destroy(other.gameObject);
-            }
         }
     }
 }

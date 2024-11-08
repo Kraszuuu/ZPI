@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1677577149553386504}
   - component: {fileID: 4753861231381660023}
   - component: {fileID: 8102637893256245593}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4901,7 +4901,7 @@ GameObject:
   - component: {fileID: 3870054472383708979}
   - component: {fileID: 3251254881169174145}
   - component: {fileID: -4551787444292123933}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: vfx_ProjectileTut 1
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -5010,7 +5010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4764060815060323250}
   - component: {fileID: 3230835166836751035}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

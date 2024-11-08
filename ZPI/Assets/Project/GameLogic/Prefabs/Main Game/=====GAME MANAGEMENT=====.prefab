@@ -46,6 +46,8 @@ GameObject:
   - component: {fileID: 7143071049123541340}
   - component: {fileID: 6085989848260890887}
   - component: {fileID: 5565138245899974421}
+  - component: {fileID: 2857039648638573413}
+  - component: {fileID: 7410333482102173234}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -122,6 +124,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 0}
+--- !u!114 &2857039648638573413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424592966547128191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4cdfc7d16f74e4fa541a7fc09c75fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemySpawners: []
+  delayBetweenWaves: 5
+  upgradeWavesInterval: 3
+  upgradeMenu: {fileID: 0}
+--- !u!114 &7410333482102173234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424592966547128191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050ada90b0892af438f75226c0b02a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5344107072983093022
 GameObject:
   m_ObjectHideFlags: 0

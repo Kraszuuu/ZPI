@@ -45,7 +45,7 @@ public class EnemyDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Cubert"))
+        if (other.CompareTag("Enemy"))
         {
             if (enemiesInRange.Count == 0)
             {

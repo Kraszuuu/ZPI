@@ -30,6 +30,7 @@ public class WavesManager : MonoBehaviour
 
             if (currentWave % upgradeWavesInterval == 0)
             {
+                Debug.Log("CHYBA CIE POJEBALO");
                 ShowUpgradeMenu();
             }
             else

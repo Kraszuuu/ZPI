@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3219163651781161659}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.5, y: 0.81, z: -148.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemySpawn:
+    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
+    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
     - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
   - enemySpawn:
     - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}

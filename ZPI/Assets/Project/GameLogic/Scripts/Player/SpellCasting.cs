@@ -18,9 +18,6 @@ public class SpellCasting : MonoBehaviour
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
-    public float minDistance = 20f;
-    public GameObject fireballPrefab;
-    public float spellCastDistance = 10f;
     public GameObject lineRendererPrefab;
     private FireballScript fireballScript; 
     private GameObject lineRendererInstance;
