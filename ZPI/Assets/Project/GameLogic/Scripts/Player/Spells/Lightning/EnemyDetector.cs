@@ -14,7 +14,6 @@ public class EnemyDetector : MonoBehaviour
             GameObject bestTarget = null;
             float closestDistanceSqr = Mathf.Infinity;
             Vector3 currentPosition = transform.position;
-            Debug.Log("GOWNO");
             foreach (GameObject closestEnemy in enemiesInRange)
             {
                 Debug.Log(closestEnemy);

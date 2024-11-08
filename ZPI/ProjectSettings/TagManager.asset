@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Bullet
+  - Cubert
   layers:
   - Default
   - TransparentFX
@@ -18,9 +19,8 @@ TagManager:
   - WallLayer
   - FloorLayer
   - Hands
-  - 
-  - 
-  - 
+  - Shield
+  - Player
   - 
   - 
   - 
