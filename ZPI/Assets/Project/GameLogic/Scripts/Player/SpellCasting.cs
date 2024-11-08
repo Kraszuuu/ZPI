@@ -80,7 +80,7 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
-        if (GameOverManager.isGameOver) return;
+        if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused || GameState.Instance.IsUpgrading) return;
 
 
 
