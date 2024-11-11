@@ -58,6 +58,7 @@ public class SpellCasting : MonoBehaviour
     private int _strokeIndex;
 
     public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
+    public LayerMask Layer;
 
     private void Start()
     {
@@ -80,9 +81,29 @@ public class SpellCasting : MonoBehaviour
 
     void Update()
     {
+        float rayLength = 1000f;
+        Vector3 origin = transform.position;
+        // Kierunek Raycasta (np. w przód od obiektu)
+        Vector3 direction = transform.forward;
+
+        // Zmienna, w której zapisujemy trafienie
+        RaycastHit hit;
+
+        // Wykonujemy Raycast
+        if (Physics.Raycast(origin, direction, out hit, rayLength))
+        {
+            // Jeśli trafiono obiekt, rysujemy linię do punktu trafienia
+            Debug.DrawLine(origin, hit.point, Color.red);
+
+            // Opcjonalnie: wyświetl trafiony obiekt w logach
+           // Debug.Log("Hit object: " + hit.collider.name);
+        }
+        else
+        {
+            // Jeśli Raycast nie trafił, rysujemy linię do maksymalnej odległości
+            Debug.DrawLine(origin, origin + direction * rayLength, Color.green);
+        }
         if (GameOverManager.isGameOver) return;
-
-
 
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
@@ -145,28 +166,32 @@ public class SpellCasting : MonoBehaviour
         RaycastHit hit;
 
         // Wykonanie BoxCast z praktycznie nieskończonym zasięgiem
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
         {
+            SpawnMeteor(hit.point);
             Debug.Log("Hit: " + hit.collider.name);
-            SpawnMeteor(hit.point, hit.collider); // Materializowanie meteorytu na napotkanym obiekcie
+            
         }
     }
 
-    void SpawnMeteor(Vector3 hitPoint, Collider collider)
+    void SpawnMeteor(Vector3 hitPoint)
     {
         // Możesz ustawić spawnPosition na konkretnej wartości
-        Vector3 spawnPosition = new Vector3(hitPoint.x, 0f, hitPoint.z);
+        Vector3 spawnPosition = hitPoint;
 
         // Tworzenie instancji meteorytu
-        GameObject meteor = Instantiate(meteorPrefab, spawnPosition, Quaternion.identity);
+        GameObject meteor = Instantiate(meteorPrefab, new Vector3(hitPoint.x, 0.01f, hitPoint.z), Quaternion.identity);
+        Debug.Log("hitpoint: " + hitPoint);
+        Debug.Log("meteori position: " + meteor.transform.position);
+        DealDamageToEnemiesInRadius(new Vector3(hitPoint.x, hitPoint.y, hitPoint.z));
         Destroy(meteor, 4);
-        DealDamageToEnemiesInRadius(spawnPosition);
     }
 
     void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
     {
         // Wykonaj OverlapSphere, aby znaleźć obiekty w promieniu damageRadius
-        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.001f);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.01f);
         
 
         // Iteracja przez wszystkie obiekty w promieniu
@@ -181,6 +206,16 @@ public class SpellCasting : MonoBehaviour
                 Debug.Log("Przeciwnik " + enemy.name + " otrzymał obrażenia: " + 100);
             }
         }
+    }
+    public Vector3 explosionCenter = new Vector3(68f, 1f, -175f);
+    public float explosionRadius = 5f;
+    void OnDrawGizmos()
+    {
+        // Ustawienie koloru Gizmo na dowolny, np. czerwony
+        Gizmos.color = Color.red;
+
+        // Rysowanie sfery Gizmo o pozycji i promieniu takim, jak w Physics.OverlapSphere
+        Gizmos.DrawWireSphere(explosionCenter, explosionRadius);
     }
 
     public void CastFireSpellInDirection()

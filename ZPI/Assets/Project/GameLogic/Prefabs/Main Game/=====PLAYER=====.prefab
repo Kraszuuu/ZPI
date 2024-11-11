@@ -5865,6 +5865,7 @@ MonoBehaviour:
   _isSwinging: 0
   _isLeftSwing: 0
   _swingTimer: 0
+  _isWandEquipped: 0
   animator: {fileID: 6938930104941906118}
   _currentTargetOffset: {x: 0, y: 0, z: 0}
   _currentRotationOffset: {x: 0, y: 0, z: 0, w: 1}
@@ -6922,9 +6923,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WalkingSpeed: 5
   SprintingSpeed: 12
+  CrouchingSpeed: 2
   MovementSharpnessOnGround: 10
   SprintHoldToLockThreshold: 1
-  MaxSpeedInAir: 12
   AccelerationSpeedInAir: 7
   GravityForce: -18
   JumpHeight: 2.5
@@ -7016,6 +7017,9 @@ MonoBehaviour:
   LightningCooldown: 0
   IsLightningUnlocked: 1
   boxHalfExtents: {x: 1, y: 1, z: 1}
+  Layer:
+    serializedVersion: 2
+    m_Bits: 2035
 --- !u!114 &1983907215974032557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7059,9 +7063,11 @@ MonoBehaviour:
   Camera: {fileID: 1196581131723404189}
   Projectile: {fileID: 5726742315612413675, guid: 038784bdcd4c27e4e8af3d59303084c8, type: 3}
   FirePoint: {fileID: 3237799604944636022}
+  SmoothFollowPoint: {fileID: 0}
   ProjectileSpeed: 30
   FireRate: 4
   ArcRange: 1
+  DelayedFire: 0.05
 --- !u!120 &3051308216173288887
 LineRenderer:
   serializedVersion: 2
