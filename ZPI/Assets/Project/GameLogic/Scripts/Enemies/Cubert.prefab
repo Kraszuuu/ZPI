@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6921918435537837051}
   - component: {fileID: 1602897960674545839}
   - component: {fileID: 2196454102205054617}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cubert
   m_TagString: Enemy
   m_Icon: {fileID: 0}

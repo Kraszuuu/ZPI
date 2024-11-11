@@ -7116,6 +7116,9 @@ MonoBehaviour:
   LightningCooldown: 0
   IsLightningUnlocked: 1
   boxHalfExtents: {x: 1, y: 1, z: 1}
+  Layer:
+    serializedVersion: 2
+    m_Bits: 2035
 --- !u!114 &1983907215974032557
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -75,6 +75,8 @@ public class Enemy : MonoBehaviour
         if (!Physics.Raycast(ray, out hitInfo, sightDistance) || hitInfo.transform.gameObject != player) return false;
 
         Debug.DrawRay(ray.origin, ray.direction * sightDistance, Color.yellow);
+
+        DetectionManager.Instance.ReportPlayerDetected(player.transform.position);
         return true;
     }
 

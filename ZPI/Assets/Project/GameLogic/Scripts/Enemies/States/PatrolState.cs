@@ -26,10 +26,22 @@ public class PatrolState : BaseState
         {
             stateMachine.ChangeState(new AttackState());
         }
+        if (enemy.Agent.remainingDistance < 5f)
+        {
+            DetectionManager.Instance.ResetDetection();
+            currentTarget = GetNewRandomDestination();
+        }
     }
 
     private void PatrolCycle()
     {
+        if (DetectionManager.Instance.PlayerDetected)
+        {
+              
+            currentTarget = DetectionManager.Instance.LastKnownPlayerPosition;
+            enemy.Agent.SetDestination(currentTarget);
+            
+        }
         if (enemy.Agent.remainingDistance < 3f)
         {
             enemy.Agent.SetDestination(currentTarget);

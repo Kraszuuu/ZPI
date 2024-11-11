@@ -8,7 +8,7 @@ public class AttackState : BaseState
     private float moveTimer;
     private float losePlayerTimer;
     private float attackTimer;
-    private float stopDistance = 1.5f;
+    private float stopDistance = 5f;
 
     public override void Enter()
     {
@@ -29,6 +29,18 @@ public class AttackState : BaseState
             moveTimer += Time.deltaTime;
             attackTimer += Time.deltaTime;
             enemy.transform.LookAt(enemy.Player.transform);
+            
+            float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+
+            if (distanceToPlayer > stopDistance)
+            {
+                enemy.Agent.SetDestination(enemy.Player.transform.position);
+            }
+            else
+            {
+                enemy.Agent.ResetPath();
+            }
+
             //move the enemy to a random position after a random time
             if (attackTimer > enemy.fireRate)
             {
@@ -43,7 +55,7 @@ public class AttackState : BaseState
         else //lost sight of player
         {
             losePlayerTimer += Time.deltaTime;
-            if (losePlayerTimer > 6)
+            if (losePlayerTimer > 2)
             {
                 //change to the search state
                 stateMachine.ChangeState(new PatrolState());
@@ -53,6 +65,9 @@ public class AttackState : BaseState
 
     public void AttackPlayer()
     {
+        // Oblicz odleg³oœæ miêdzy przeciwnikiem a graczem
+        float distance = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+
         if (enemy.enemyType == EnemyType.Ranged)
         {
             //store reference to the gun barrel
@@ -75,8 +90,7 @@ public class AttackState : BaseState
         }
         else if (enemy.enemyType == EnemyType.Melee)
         {
-            // Oblicz odleg³oœæ miêdzy przeciwnikiem a graczem
-            float distance = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+            
 
             // Jeœli przeciwnik jest dalej ni¿ stopDistance, to siê porusza
             if (distance > stopDistance)

@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3375508}
   - component: {fileID: 2355198}
   - component: {fileID: -4567320914606011402}
+  - component: {fileID: 2993633027796443877}
   m_Layer: 0
   m_Name: SM_Env_Tree_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &467750
 Transform:
@@ -107,3 +108,19 @@ CapsuleCollider:
   m_Height: 8.835114
   m_Direction: 1
   m_Center: {x: -0.1, y: 3, z: 0.09}
+--- !u!208 &2993633027796443877
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160654}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 3.104, y: 5.8900003, z: 3.1790001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.554, y: 5.8900003, z: 0.77300006}
+  m_TimeToStationary: 0.5
