@@ -14199,6 +14199,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1196581131723404189, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 15351
+      objectReference: {fileID: 0}
     - target: {fileID: 1337862489952225941, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: m_LocalPosition.x
       value: -107.1253
@@ -14243,6 +14247,10 @@ PrefabInstance:
       propertyPath: promptText
       value: 
       objectReference: {fileID: 1419170672}
+    - target: {fileID: 2184977769775873836, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3037187737646001077, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: FireballImage
       value: 
@@ -14274,6 +14282,10 @@ PrefabInstance:
     - target: {fileID: 4873898937191214487, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: m_Name
       value: =====PLAYER=====
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021588089235170061, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

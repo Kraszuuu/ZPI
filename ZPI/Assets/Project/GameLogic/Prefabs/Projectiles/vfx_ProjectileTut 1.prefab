@@ -4900,7 +4900,6 @@ GameObject:
   - component: {fileID: 3727611723593302598}
   - component: {fileID: 3870054472383708979}
   - component: {fileID: 3251254881169174145}
-  - component: {fileID: -4551787444292123933}
   m_Layer: 7
   m_Name: vfx_ProjectileTut 1
   m_TagString: Bullet
@@ -4985,21 +4984,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de011014b8fd09f43b39f317400ac121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsFriendly: 1
+  DirectDamage: 10
+  HasAreaDamage: 0
+  AreaDamage: 5
+  ExplosionRadius: 5
+  ShowExplosionRadiusGizmo: 0
   ImpactVFX: {fileID: 5069862900857759715, guid: c5e4245eba41aec469d6544b57157b10, type: 3}
---- !u!114 &-4551787444292123933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5726742315612413675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ce56972ce2d7ed46b9a37928fda3698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletDamage: 10
-  isFriendly: 1
+  RetainEffectsAfterImpact: 1
+  ScaleWithTime: 0
+  InitialScaleFactor: 1
+  GrowthSpeed: 0
 --- !u!1 &8251861623440702899
 GameObject:
   m_ObjectHideFlags: 0

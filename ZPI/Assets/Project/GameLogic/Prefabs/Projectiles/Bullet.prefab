@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8424800730891418700}
   - component: {fileID: 5095596484460741873}
   - component: {fileID: 7239321270106809608}
-  - component: {fileID: 1224246582569263013}
+  - component: {fileID: 4026669461555804204}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -136,7 +136,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1224246582569263013
+--- !u!114 &4026669461555804204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,6 +145,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6260881243706939861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ce56972ce2d7ed46b9a37928fda3698, type: 3}
+  m_Script: {fileID: 11500000, guid: de011014b8fd09f43b39f317400ac121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsFriendly: 0
+  DirectDamage: 10
+  HasAreaDamage: 0
+  AreaDamage: 5
+  ExplosionRadius: 5
+  ShowExplosionRadiusGizmo: 0
+  ImpactVFX: {fileID: 0}
+  RetainEffectsAfterImpact: 0
+  ScaleWithTime: 0
+  InitialScaleFactor: 1
+  GrowthSpeed: 0

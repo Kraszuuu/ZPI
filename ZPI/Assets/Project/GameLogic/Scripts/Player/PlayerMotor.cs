@@ -110,7 +110,16 @@ public class PlayerMotor : MonoBehaviour
             {
                 Vector3 targetVelocity = transform.TransformDirection(moveDirection) * _currentSpeed;
 
-                _playerVelocity = Vector3.Lerp(_playerVelocity, targetVelocity, MovementSharpnessOnGround * Time.deltaTime);
+                if (Vector3.Distance(_playerVelocity, targetVelocity) < 0.01f)
+                {
+                    // Ustawiamy bezpośrednio, gdy różnica jest bardzo mała
+                    _playerVelocity = targetVelocity;
+                }
+                else
+                {
+                    // W przeciwnym razie interpolujemy jak zwykle
+                    _playerVelocity = Vector3.Lerp(_playerVelocity, targetVelocity, MovementSharpnessOnGround * Time.deltaTime);
+                }
 
                 if (_playerVelocity.y < 0)
                 {
@@ -178,7 +187,7 @@ public class PlayerMotor : MonoBehaviour
 
             Vector3 dashMovement = _dashDirection;
 
-            _controller.Move(dashMovement * DashSpeed * Time.deltaTime);
+            _controller.Move(DashSpeed * Time.deltaTime * dashMovement);
         }
         else if (_dashTime <= 0)
         {

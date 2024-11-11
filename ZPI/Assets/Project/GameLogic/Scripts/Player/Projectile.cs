@@ -4,30 +4,167 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private bool _collided;
+    public bool IsFriendly = false;
+
+    [Header("Direct Damage Settings")]
+    public float DirectDamage = 10f;
+
+    [Header("Area Damage Settings")]
+    public bool HasAreaDamage = true;
+    public float AreaDamage = 5f;      // Obrażenia obszarowe
+    public float ExplosionRadius = 5f; // Promień obrażeń obszarowych
+    public bool ShowExplosionRadiusGizmo = true; // Opcja pokazywania strefy rażenia
+
+    [Header("VFX Settings")]
     public GameObject ImpactVFX;
-    public bool universalBulletVfx = false;
+    public bool RetainEffectsAfterImpact = false;
 
-    void OnCollisionEnter(Collision collision)
+    [Header("Scale Settings")]
+    public bool ScaleWithTime = false;
+    public float InitialScaleFactor = 1f;
+    public float GrowthSpeed = 0f;
+
+    private bool _collided;
+    private Vector3 _targetScale;
+    private float _scaleFactor;
+    private readonly List<(Transform, ParticleSystem, float)> _childTransforms = new();
+
+    void Start()
     {
-        if (!collision.gameObject.CompareTag("Bullet") && !collision.gameObject.CompareTag("Player") && !_collided)
+        if (ScaleWithTime && !_collided)
         {
-            _collided = true;
-            var impact = Instantiate(ImpactVFX, collision.contacts[0].point, Quaternion.identity) as GameObject;
+            _targetScale = transform.localScale;
+            transform.localScale = _targetScale * InitialScaleFactor;
+            _scaleFactor = InitialScaleFactor;
 
-            if (universalBulletVfx)
+            foreach (Transform child in transform)
             {
-                foreach (Transform child in transform)
-                {
-                    child.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
-                    Destroy(child.gameObject, 5f);
-                    child.transform.parent = null; // Odłączenie dziecka od sfery
-                }
-
+                ParticleSystem particleSystem = child.GetComponent<ParticleSystem>();
+                float initialParticleScale = particleSystem != null ? particleSystem.main.startSizeMultiplier : 1f;
+                _childTransforms.Add((child, particleSystem, initialParticleScale));
             }
+            ScaleChildren();
+        }
+    }
 
-            Destroy(impact, 2);
-            Destroy(gameObject);
+    void Update()
+    {
+        if (ScaleWithTime && !_collided)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, _targetScale, GrowthSpeed * Time.deltaTime);
+            _scaleFactor = transform.localScale.x / _targetScale.x;
+            ScaleChildren();
+        }
+    }
+
+    private void ScaleChildren()
+    {
+        if (Mathf.Abs(_scaleFactor - 1f) < 0.001f) return;
+        foreach (var (_, particleSystem, targetParticleScale) in _childTransforms)
+        {
+            if (particleSystem != null)
+            {
+                var mainModule = particleSystem.main;
+                float calculatedParticleScale = _scaleFactor * targetParticleScale;
+                mainModule.startSizeMultiplier = calculatedParticleScale;
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (_collided) return;
+
+        _collided = true;
+        Transform hitTransform = collision.transform;
+
+        // Obrażenia bezpośrednie
+        if (IsFriendly && hitTransform.CompareTag("Enemy"))
+        {
+            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage);
+        }
+        else if (!IsFriendly && hitTransform.CompareTag("Player"))
+        {
+            hitTransform.GetComponent<PlayerHealth>().TakeDamage(DirectDamage);
+        }
+
+        // Obrażenia obszarowe
+        if (HasAreaDamage)
+        {
+            LayerMask detectionLayer = LayerMask.GetMask("Enemy", "Player");
+            LayerMask obstacleLayer = ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Player"));
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, detectionLayer);
+
+            Debug.Log("Number of hitColliders: " + hitColliders.Length);
+
+            foreach (var hitCollider in hitColliders)
+            {
+                Vector3 directionToTarget = (hitCollider.transform.position - transform.position).normalized;
+                float distanceToTarget = Vector3.Distance(transform.position, hitCollider.transform.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleLayer))
+                {
+                    // Jeśli nie ma przeszkód, zadaj obrażenia
+                    if (IsFriendly && hitCollider.CompareTag("Enemy"))
+                    {
+                        hitCollider.GetComponent<Enemy>().TakeDamage((int)AreaDamage);
+                        Debug.Log("Hit enemy at distance: " + distanceToTarget);
+                    }
+                    else if (!IsFriendly && hitCollider.CompareTag("Player"))
+                    {
+                        hitCollider.GetComponent<PlayerHealth>().TakeDamage(AreaDamage);
+                        Debug.Log("Hit player at distance: " + distanceToTarget);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Target blocked by obstacle: " + hitCollider.name);
+                }
+            }
+        }
+
+        // Tworzenie efektu kolizji
+        if (ImpactVFX != null)
+        {
+            var impact = Instantiate(ImpactVFX, collision.contacts[0].point, Quaternion.identity);
+            if (ScaleWithTime)
+            {
+                impact.transform.localScale *= _scaleFactor;
+                foreach (Transform child in impact.transform)
+                {
+                    if (child.TryGetComponent<ParticleSystem>(out var particleSystem))
+                    {
+                        var mainModule = particleSystem.main;
+                        mainModule.startSizeMultiplier *= _scaleFactor;
+                    }
+                }
+            }
+            Destroy(impact, 4);
+        }
+
+        if (RetainEffectsAfterImpact)
+        {
+            foreach (var (child, particleSystem, _) in _childTransforms)
+            {
+                if (particleSystem != null)
+                {
+                    var mainModule = particleSystem.main;
+                    mainModule.stopAction = ParticleSystemStopAction.Destroy;
+                    particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                    child.parent = null;
+                }
+            }
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (ShowExplosionRadiusGizmo)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
         }
     }
 }
