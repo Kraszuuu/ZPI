@@ -50,4 +50,21 @@ public class CameraShake : MonoBehaviour
         _currentShakeDuration = ShakeDuration;
         Debug.Log("Shake!");
     }
+
+    private void IgnoreMinimapLayer()
+    {
+        // Pobierz kamerę z obiektu, do którego podpięty jest ten skrypt
+        Camera cam = GetComponent<Camera>();
+
+        if (cam != null)
+        {
+            // Wyłącz renderowanie dla określonej warstwy
+            int layerMask = 1 << LayerMask.NameToLayer("MinimapElement");
+            cam.cullingMask &= ~layerMask;
+        }
+        else
+        {
+            Debug.LogWarning("Brak komponentu Camera na obiekcie.");
+        }
+    }
 }
