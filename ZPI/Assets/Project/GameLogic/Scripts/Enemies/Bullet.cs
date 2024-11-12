@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float bulletDamage = 10f;
+    public float enemyDamage = 10f;
+    public float playerDamage = 10f;
     public bool isFriendly = false;
 
     private void OnCollisionEnter(Collision collision)
@@ -14,13 +15,18 @@ public class Bullet : MonoBehaviour
         {
             if (hitTransform.CompareTag("Enemy"))
             {
-                hitTransform.GetComponent<Enemy>().TakeDamage((int)bulletDamage);
+                hitTransform.GetComponent<Enemy>().TakeDamage((int)enemyDamage);
             }
         };
         if (hitTransform.CompareTag("Player"))
         {
-            hitTransform.GetComponent<PlayerHealth>().TakeDamage(bulletDamage);
+            hitTransform.GetComponent<PlayerHealth>().TakeDamage(playerDamage);
         }
         Destroy(gameObject);
+    }
+
+    public void BuffBaseSpell(int amount)
+    {
+        enemyDamage += amount;
     }
 }
