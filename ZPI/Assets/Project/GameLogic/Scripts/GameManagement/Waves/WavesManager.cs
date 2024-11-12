@@ -22,6 +22,7 @@ public class WavesManager : MonoBehaviour
 
     private void OnSpawnerWaveCleared()
     {
+        Debug.Log("SPAWNER CLEARED");
         spawnersCleared++;
         if (spawnersCleared >= EnemySpawners.Count)
         {
@@ -30,7 +31,6 @@ public class WavesManager : MonoBehaviour
 
             if (currentWave % upgradeWavesInterval == 0)
             {
-                Debug.Log("CHYBA CIE POJEBALO");
                 ShowUpgradeMenu();
             }
             else
