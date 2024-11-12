@@ -6,6 +6,7 @@ using TMPro.Examples;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class SpellCasting : MonoBehaviour
 {
@@ -180,36 +181,36 @@ public class SpellCasting : MonoBehaviour
 
     void SpawnMeteor(Vector3 hitPoint)
     {
-        // Możesz ustawić spawnPosition na konkretnej wartości
-        Vector3 spawnPosition = hitPoint;
-
         // Tworzenie instancji meteorytu
         GameObject meteor = Instantiate(meteorPrefab, new Vector3(hitPoint.x, 0.01f, hitPoint.z), Quaternion.identity);
-        Debug.Log("hitpoint: " + hitPoint);
-        Debug.Log("meteori position: " + meteor.transform.position);
-        DealDamageToEnemiesInRadius(new Vector3(hitPoint.x, hitPoint.y, hitPoint.z));
-        Destroy(meteor, 4);
+
+        MeteroAOEDamage meteroAOE = meteor.transform.GetChild(0).GetComponent<MeteroAOEDamage>();   
+        meteroAOE.Initialize(hitPoint);
+
+
+        // Zniszcz meteor po 5 sekundach
+        Destroy(meteor, 5);
     }
 
-    void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
-    {
-        // Wykonaj OverlapSphere, aby znaleźć obiekty w promieniu damageRadius
-        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.01f);
+    //void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
+    //{
+    //    // Wykonaj OverlapSphere, aby znaleźć obiekty w promieniu damageRadius
+    //    Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.01f);
         
 
-        // Iteracja przez wszystkie obiekty w promieniu
-        foreach (Collider hitCollider in hitColliders)
-        {
-            // Sprawdź, czy obiekt jest przeciwnikiem (zakładamy, że ma komponent Enemy)
-            Enemy enemy = hitCollider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                // Zadaj obrażenia przeciwnikowi
-                enemy.TakeDamage(100);
-                Debug.Log("Przeciwnik " + enemy.name + " otrzymał obrażenia: " + 100);
-            }
-        }
-    }
+    //    // Iteracja przez wszystkie obiekty w promieniu
+    //    foreach (Collider hitCollider in hitColliders)
+    //    {
+    //        // Sprawdź, czy obiekt jest przeciwnikiem (zakładamy, że ma komponent Enemy)
+    //        Enemy enemy = hitCollider.GetComponent<Enemy>();
+    //        if (enemy != null)
+    //        {
+    //            // Zadaj obrażenia przeciwnikowi
+    //            enemy.TakeDamage(20);
+    //            Debug.Log("Przeciwnik " + enemy.name + " otrzymał obrażenia: " + 100);
+    //        }
+    //    }
+    //}
     
     void CastSpell(string spellName)
     {

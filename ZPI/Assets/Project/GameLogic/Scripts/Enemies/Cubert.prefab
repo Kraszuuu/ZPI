@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 5310755460713104974}
   - component: {fileID: 6159460086255665260}
   - component: {fileID: 2643179231349547116}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 4827660490287139542}
   - component: {fileID: 714774972891930880}
   - component: {fileID: 4146355942689155935}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 5799052329918795557}
   - component: {fileID: 3896758146090700587}
   - component: {fileID: 6042329803966335112}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +660,7 @@ GameObject:
   - component: {fileID: 8966283886923384250}
   - component: {fileID: 57006379503191173}
   - component: {fileID: 90728476530200022}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 9144671168400978217}
   - component: {fileID: 2629993886410163046}
   - component: {fileID: 6707897464188194054}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,7 +869,7 @@ GameObject:
   - component: {fileID: 6886968462663707632}
   - component: {fileID: 7511079243194590293}
   - component: {fileID: 5753420607752278175}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: AssaultRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 5393586952851321413}
   - component: {fileID: 5591263239904541092}
   - component: {fileID: 8691489015299865145}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1057,7 +1057,7 @@ GameObject:
   - component: {fileID: 7534967890576535501}
   - component: {fileID: 5952846236968232927}
   - component: {fileID: 674533122594524460}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
