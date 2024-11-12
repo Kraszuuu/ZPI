@@ -107,7 +107,7 @@ public class SpellCasting : MonoBehaviour
             // Jeśli Raycast nie trafił, rysujemy linię do maksymalnej odległości
             Debug.DrawLine(origin, origin + direction * rayLength, Color.green);
         }
-        if (GameOverManager.isGameOver) return;
+        if (GameState.Instance.IsGamePaused || GameState.Instance.IsGameOver) return;
 
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
