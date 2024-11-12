@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 3399068392102056833}
   - component: {fileID: 326460818152643107}
   m_Layer: 14
-  m_Name: GameObject
+  m_Name: MinimapPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7187,7 +7187,7 @@ MonoBehaviour:
   ExterminationImage: {fileID: 0}
   ExterminationCooldown: 0
   IsExterminationUnlocked: 1
-  meteorPrefab: {fileID: 7957833072274404953, guid: fbfabc6c6b9f3504fb00e00d0abb7168, type: 3}
+  meteorPrefab: {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
   FreezingImage: {fileID: 0}
   FreezingCooldown: 0
   IsFreezeUnlocked: 0
