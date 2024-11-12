@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5565138245899974421}
   - component: {fileID: 2857039648638573413}
   - component: {fileID: 7410333482102173234}
+  - component: {fileID: 7863127013059132137}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -124,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 0}
+  isEnabled: 1
 --- !u!114 &2857039648638573413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,9 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4cdfc7d16f74e4fa541a7fc09c75fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpawners: []
+  EnemySpawners:
+  - {fileID: 0}
   delayBetweenWaves: 5
-  upgradeWavesInterval: 3
+  upgradeWavesInterval: 1
   upgradeMenu: {fileID: 0}
 --- !u!114 &7410333482102173234
 MonoBehaviour:
@@ -150,6 +153,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 050ada90b0892af438f75226c0b02a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7863127013059132137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424592966547128191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be891504000eaa24a9e8e83a1a70508a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5344107072983093022

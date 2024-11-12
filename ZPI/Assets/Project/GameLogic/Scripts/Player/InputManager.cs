@@ -12,7 +12,6 @@ public class InputManager : MonoBehaviour
     private PlayerLook look;
     private PauseManager pauseManager;
     private PrimaryAttack primaryAttack;
-    public bool isCastSpelling = false;
     private Vector2 currentMoveInput;
 
     // Start is called before the first frame update
@@ -51,7 +50,7 @@ public class InputManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!isCastSpelling)
+        if (!GameState.Instance.IsSpellCasting)
         {
             look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
         }
@@ -78,7 +77,6 @@ public class InputManager : MonoBehaviour
     }
     private void TogglePause()
     {
-        Debug.Log(pauseManager);
         if (pauseManager != null)
         {
             pauseManager.PauseGame();

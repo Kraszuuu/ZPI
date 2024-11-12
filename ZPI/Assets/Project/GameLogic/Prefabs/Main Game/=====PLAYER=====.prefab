@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 3399068392102056833}
   - component: {fileID: 326460818152643107}
   m_Layer: 14
-  m_Name: GameObject
+  m_Name: MinimapPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6970,7 +6970,6 @@ GameObject:
   - component: {fileID: 8067842822974537490}
   - component: {fileID: 3051308216173288887}
   - component: {fileID: 2879453470745095847}
-  - component: {fileID: 2184977769775873836}
   - component: {fileID: 584368494836956286}
   - component: {fileID: 4772131044452376658}
   - component: {fileID: 7784175175093558518}
@@ -7091,7 +7090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a23f595214c2942b7149c367f5ab18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCastSpelling: 0
 --- !u!114 &1929153570168815667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7189,7 +7187,7 @@ MonoBehaviour:
   ExterminationImage: {fileID: 0}
   ExterminationCooldown: 0
   IsExterminationUnlocked: 1
-  meteorPrefab: {fileID: 7957833072274404953, guid: e719376f38db3a6479c0eb7a37b5d65c, type: 3}
+  meteorPrefab: {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
   FreezingImage: {fileID: 0}
   FreezingCooldown: 0
   IsFreezeUnlocked: 0
@@ -7376,27 +7374,6 @@ MonoBehaviour:
   Rows: 9
   Columns: 9
   AnimationMode: 0
---- !u!135 &2184977769775873836
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021588089235170061}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &584368494836956286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7426,6 +7403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf9db2bf25839648a630d360a6a5308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRadius: 10
 --- !u!114 &7784175175093558518
 MonoBehaviour:
   m_ObjectHideFlags: 0

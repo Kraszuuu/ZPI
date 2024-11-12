@@ -1,3 +1,4 @@
+using Radishmouse;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,16 @@ public class UpgradeMenu : MonoBehaviour
         public Button button;
     }
 
+    [System.Serializable]
+    public class SkillPath
+    {
+        public PlayerSkills.SkillType fromSkill;
+        public PlayerSkills.SkillType toSkill;
+        public UILineRenderer pathRenderer;
+    }
+
     public List<SkillButton> buttons;
+    public List<SkillPath> paths;
 
     private Dictionary<PlayerSkills.SkillType, Button> skillButtonMap;
 
@@ -50,6 +60,12 @@ public class UpgradeMenu : MonoBehaviour
             {
                 button.interactable = false;
             }
+        }
+
+        foreach (var path in paths)
+        {
+            bool isUnlocked = playerSkills.IsSkillUnlocked(path.toSkill);
+            path.pathRenderer.SetUnlocked(isUnlocked);
         }
     }
 

@@ -16,7 +16,7 @@ public class GameTimer : MonoBehaviour
 
     private void Update()
     {
-        if (!gameFreezer.IsCastSpelling() && !gameFreezer.IsGamePaused())
+        if (!GameState.Instance.IsGamePaused && !GameState.Instance.IsGameOver)
         {
             totalGameTime += Time.deltaTime;
         }

@@ -14,15 +14,12 @@ public class GameOverManager : MonoBehaviour
     public TextMeshProUGUI MessageTextMesh;
     public TextMeshProUGUI ErrorMessageTextMesh;
 
-    public static bool isGameOver = false;
     public GameObject EndGamePanel;
 
-    private GameFreezer gameFreezer;
     private GameTimer gameTimer;
     private SQLiteManager sqLiteManager;
     private void Start()
     {
-        gameFreezer = FindObjectOfType<GameFreezer>();
         gameTimer = FindObjectOfType<GameTimer>();
         sqLiteManager = FindObjectOfType<SQLiteManager>();
         SaveButton.onClick.AddListener(SaveScoreAndReturnToMainMenu);
@@ -30,10 +27,9 @@ public class GameOverManager : MonoBehaviour
 
     public void EndGame()
     {
-        if (!isGameOver)
+        if (!GameState.Instance.IsGameOver)
         {
-            isGameOver = true;
-            gameFreezer.SetIsGamePaused(true);
+            GameState.Instance.IsGameOver = true;
             FulfillEndGamePanel();
             EndGamePanel.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
