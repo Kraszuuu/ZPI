@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 0}
+  isEnabled: 1
 --- !u!114 &2857039648638573413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,9 +137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4cdfc7d16f74e4fa541a7fc09c75fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpawners: []
+  EnemySpawners:
+  - {fileID: 0}
   delayBetweenWaves: 5
-  upgradeWavesInterval: 3
+  upgradeWavesInterval: 1
   upgradeMenu: {fileID: 0}
 --- !u!114 &7410333482102173234
 MonoBehaviour:
