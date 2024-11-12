@@ -7,11 +7,13 @@ public class PlayerSkills : MonoBehaviour
     public enum SkillType
     {
         BASE_BUFF = 1,
-        HEALTH_BUFF = 2,
-        FIREBALL_UNLOCK = 3,
-        FIREBALL_BUFF = 4,
-        HEALTH_BUFF_2 = 5,
-        ELECTRIC_UNLOCK = 6
+        FIREBALL_UNLOCK = 2,
+        SHIELD_UNLOCK = 3,
+        METEOR_UNLOCK = 4,
+        FIREBALL_BUFF = 5,
+        HEALTH_BUFF = 6,
+        METEOR_BUFF = 7,
+        ELECTRIC_UNLOCK = 8
     }
 
     private List<SkillType> unlockedSkillTypeList;
@@ -53,11 +55,13 @@ public class PlayerSkills : MonoBehaviour
     {
         skillRequirements = new Dictionary<SkillType, List<SkillType>>
         {
-            { SkillType.HEALTH_BUFF, new List<SkillType> { SkillType.BASE_BUFF } },
             { SkillType.FIREBALL_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
-            { SkillType.FIREBALL_BUFF, new List<SkillType> { SkillType.FIREBALL_UNLOCK } },
-            { SkillType.HEALTH_BUFF_2, new List<SkillType>() { SkillType.HEALTH_BUFF } },
-            { SkillType.ELECTRIC_UNLOCK, new List<SkillType> { SkillType.FIREBALL_BUFF, SkillType.HEALTH_BUFF_2 } }
+            { SkillType.SHIELD_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
+            { SkillType.METEOR_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
+            { SkillType.FIREBALL_BUFF, new List<SkillType>() { SkillType.FIREBALL_UNLOCK } },
+            { SkillType.HEALTH_BUFF, new List<SkillType>() { SkillType.SHIELD_UNLOCK } },
+            { SkillType.METEOR_BUFF, new List<SkillType>() { SkillType.METEOR_UNLOCK } },
+            { SkillType.ELECTRIC_UNLOCK, new List<SkillType> { SkillType.FIREBALL_BUFF, SkillType.HEALTH_BUFF, SkillType.METEOR_BUFF } }
         };
     }
 }

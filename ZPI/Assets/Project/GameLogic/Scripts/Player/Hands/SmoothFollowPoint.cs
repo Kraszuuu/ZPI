@@ -111,7 +111,7 @@ public class SmoothFollowPoint : MonoBehaviour
         Vector3 noiseMotion = CalculateNoiseMotion();
         Vector3 noiseJumping = CalculateNoiseJumping();
 
-        if (_inputManager.isCastSpelling)
+        if (GameState.Instance.IsSpellCasting)
         {
             _isSwinging = false;
             _isLeftSwing = false;

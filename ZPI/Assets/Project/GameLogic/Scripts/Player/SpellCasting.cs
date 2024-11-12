@@ -112,10 +112,10 @@ public class SpellCasting : MonoBehaviour
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
         if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
-            if (!inputManager.isCastSpelling)
+            if (!GameState.Instance.IsSpellCasting)
             {
-                inputManager.isCastSpelling = true;
-                gameFreezer.SetIsCastSpelling(true);
+                GameState.Instance.IsSpellCasting = true;
+                gameFreezer.UpdateTimeScale();
                 Cursor.lockState = CursorLockMode.Confined;
             }
             HandleMouseInput();
@@ -248,14 +248,13 @@ public class SpellCasting : MonoBehaviour
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        inputManager.isCastSpelling = false;
         RecognizeSpell(result, points);
         mousePositions.Clear();
         lineRenderer.positionCount = 0;
         spellCastingParticleSystem.Stop();
 
-        // Przywr�cenie normalnego up�ywu czasu
-        gameFreezer.SetIsCastSpelling(false);
+        GameState.Instance.IsSpellCasting = false;
+        gameFreezer.UpdateTimeScale();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
