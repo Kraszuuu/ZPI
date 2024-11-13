@@ -6977,6 +6977,7 @@ GameObject:
   - component: {fileID: 5544275007056250367}
   - component: {fileID: 6548903247335484790}
   - component: {fileID: 3123051070601863000}
+  - component: {fileID: 17261954202372003}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -7478,6 +7479,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldObject: {fileID: 3390245879141812664}
+--- !u!114 &17261954202372003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021588089235170061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d1da9cd0f9d5844a542ce54cc94756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  radius: 0.01
+  meteorPrefab: {fileID: 7957833072274404953, guid: e719376f38db3a6479c0eb7a37b5d65c, type: 3}
+  Layer:
+    serializedVersion: 2
+    m_Bits: 24439
 --- !u!1 &6096824105370716556
 GameObject:
   m_ObjectHideFlags: 0

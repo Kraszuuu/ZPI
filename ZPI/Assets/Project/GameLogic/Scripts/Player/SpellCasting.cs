@@ -14,15 +14,14 @@ public class SpellCasting : MonoBehaviour
     private GameFreezer gameFreezer;
     private List<Vector3> mousePositions = new List<Vector3>();
     private InputManager inputManager;
-    private FireBaseScript prefabScript;
-    private GameObject fireball;
+    
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public GameObject lineRendererPrefab;
-    private FireballScript fireballScript; 
-    private GameObject lineRendererInstance;
-    private LineRenderer lineRenderer;
+    private List<GameObject> lineRendererInstances = new List<GameObject>();
+    private LineRenderer currentLineRenderer;
+    
     public ParticleSystem spellCastingParticleSystem;
     private PlayerVoiceCommands playerVoiceCommands;
 
@@ -35,12 +34,13 @@ public class SpellCasting : MonoBehaviour
     public Image FireballImage;
     public float FireballCooldown = 0f;
     public bool IsFireballUnlocked;
+    private FireballScript fireballScript;
 
     [Header("--- Extermination ---")]
     public Image ExterminationImage;
     public float ExterminationCooldown = 0f;
     public bool IsExterminationUnlocked = true;
-    public GameObject meteorPrefab;
+    public MeteroAOEDamage meteorsScript;
 
     [Header("--- Freeze ---")]
     public Image FreezingImage;
@@ -57,27 +57,25 @@ public class SpellCasting : MonoBehaviour
     public float LightningCooldown = 0f;
     public bool IsLightningUnlocked = true;
 
-    private int _strokeIndex;
+    private int _strokeIndex = 0;
 
     public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
     public LayerMask Layer;
 
     private void Start()
     {
+
+        meteorsScript = GetComponent<MeteroAOEDamage>();
         fireballScript = GetComponent<FireballScript>();
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
-        lineRendererInstance = Instantiate(lineRendererPrefab);
-        lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
         playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
-        spellCastingParticleSystem.Stop();
-        lineRenderer.sortingOrder = 1;
-        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        
 
         UnlockSpell("Fireball");
+        UnlockSpell("Extermination");
 
 
     }
@@ -85,32 +83,11 @@ public class SpellCasting : MonoBehaviour
     void Update()
     {
         if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused || GameState.Instance.IsUpgrading) return;
-        float rayLength = 1000f;
-        Vector3 origin = transform.position;
-        // Kierunek Raycasta (np. w przód od obiektu)
-        Vector3 direction = transform.forward;
-
-        // Zmienna, w której zapisujemy trafienie
-        RaycastHit hit;
-
-        // Wykonujemy Raycast
-        if (Physics.Raycast(origin, direction, out hit, rayLength))
-        {
-            // Jeśli trafiono obiekt, rysujemy linię do punktu trafienia
-            Debug.DrawLine(origin, hit.point, Color.red);
-
-            // Opcjonalnie: wyświetl trafiony obiekt w logach
-           // Debug.Log("Hit object: " + hit.collider.name);
-        }
-        else
-        {
-            // Jeśli Raycast nie trafił, rysujemy linię do maksymalnej odległości
-            Debug.DrawLine(origin, origin + direction * rayLength, Color.green);
-        }
+       
         if (GameOverManager.isGameOver) return;
 
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
-        if (Input.GetMouseButton(0)) // Lewy przycisk myszy
+        if (Input.GetMouseButton(1)) // Prawy przycisk myszy
         {
             if (!inputManager.isCastSpelling)
             {
@@ -118,16 +95,51 @@ public class SpellCasting : MonoBehaviour
                 gameFreezer.SetIsCastSpelling(true);
                 Cursor.lockState = CursorLockMode.Confined;
             }
-            HandleMouseInput();
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartNewStroke();
+            }
+            if (Input.GetMouseButton(0))
+            {
+                HandleMouseInput();
+                
+            }
+            
+            
         }
 
         // Gdy przycisk myszy zostanie puszczony, analizujemy gest
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(1))
         {
             FinalizeSpellCasting();
+            _strokeIndex = 0;
         }
 
         updateCooldowns();
+    }
+
+    private void StartNewStroke()
+    {
+        _strokeIndex++;
+        mousePositions.Clear(); // Czyścimy punkty dla nowej linii
+
+        // Tworzymy nowy LineRenderer dla nowego gestu
+        CreateNewLineRenderer();
+        Debug.Log("New Stroke index: " + _strokeIndex);
+    }
+
+    private void CreateNewLineRenderer()
+    {
+        spellCastingParticleSystem.Stop();
+        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        spellCastingParticleSystem.Play();
+        // Usunięcie poprzedniego LineRenderer, aby nie zaśmiecać sceny
+        GameObject newLineRendererInstance = Instantiate(lineRendererPrefab);
+        lineRendererInstances.Add(newLineRendererInstance);
+
+        currentLineRenderer = newLineRendererInstance.GetComponent<LineRenderer>();
+        currentLineRenderer.positionCount = 0;
+        currentLineRenderer.sortingOrder = 1;
     }
 
     void RecognizeSpell(string name, float distance)
@@ -140,7 +152,7 @@ public class SpellCasting : MonoBehaviour
                 Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
             }
 
-            if (name.Equals("I"))
+            if (name.Equals("Fireball"))
             {
                 if (FireballImage.fillAmount <= 0)
                 {
@@ -149,10 +161,14 @@ public class SpellCasting : MonoBehaviour
                     FireballCooldown = 3f;
                 }
             }
-            else if (name.Equals("Z"))
+            else if (name.Equals("Meteors"))
             {
-                CastMeteorRain();
-                CastSpell("Meteor Rain!!!");
+                if (ExterminationImage.fillAmount <= 0)
+                {
+                    meteorsScript.CastMeteorRain();
+                    ExterminationImage.fillAmount = 1;
+                    ExterminationCooldown = 5f;
+                }
             }
             Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
         }
@@ -164,54 +180,6 @@ public class SpellCasting : MonoBehaviour
         playerVoiceCommands.recognizedSpell = null;
     }
 
-    public void CastMeteorRain()
-    {
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-
-        // Wykonanie BoxCast z praktycznie nieskończonym zasięgiem
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
-        {
-            SpawnMeteor(hit.point);
-            Debug.Log("Hit: " + hit.collider.name);
-            
-        }
-    }
-
-    void SpawnMeteor(Vector3 hitPoint)
-    {
-        // Tworzenie instancji meteorytu
-        GameObject meteor = Instantiate(meteorPrefab, new Vector3(hitPoint.x, 0.01f, hitPoint.z), Quaternion.identity);
-
-        MeteroAOEDamage meteroAOE = meteor.transform.GetChild(0).GetComponent<MeteroAOEDamage>();   
-        meteroAOE.Initialize(hitPoint);
-
-
-        // Zniszcz meteor po 5 sekundach
-        Destroy(meteor, 5);
-    }
-
-    //void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
-    //{
-    //    // Wykonaj OverlapSphere, aby znaleźć obiekty w promieniu damageRadius
-    //    Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.01f);
-        
-
-    //    // Iteracja przez wszystkie obiekty w promieniu
-    //    foreach (Collider hitCollider in hitColliders)
-    //    {
-    //        // Sprawdź, czy obiekt jest przeciwnikiem (zakładamy, że ma komponent Enemy)
-    //        Enemy enemy = hitCollider.GetComponent<Enemy>();
-    //        if (enemy != null)
-    //        {
-    //            // Zadaj obrażenia przeciwnikowi
-    //            enemy.TakeDamage(20);
-    //            Debug.Log("Przeciwnik " + enemy.name + " otrzymał obrażenia: " + 100);
-    //        }
-    //    }
-    //}
-    
     void CastSpell(string spellName)
     {
         Debug.Log("Casting spell: " + spellName);
@@ -228,13 +196,15 @@ public class SpellCasting : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 0.8f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
         {
             mousePositions.Add(mousePos);
-            _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = 1 });
-            lineRenderer.positionCount = mousePositions.Count;
-            lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
-            // Przenoszenie Particle System na aktualną pozycję myszy
+            _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = _strokeIndex });
+
+            currentLineRenderer.positionCount = mousePositions.Count;
+            currentLineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
+
             spellCastingParticleSystem.transform.position = worldPos;
 
             if (!spellCastingParticleSystem.isPlaying)
@@ -250,11 +220,17 @@ public class SpellCasting : MonoBehaviour
         _drawPoints.Clear();
         inputManager.isCastSpelling = false;
         RecognizeSpell(result, points);
-        mousePositions.Clear();
-        lineRenderer.positionCount = 0;
-        spellCastingParticleSystem.Stop();
 
-        // Przywr�cenie normalnego up�ywu czasu
+        mousePositions.Clear();
+
+        // Usuwamy wszystkie LineRenderery
+        foreach (var line in lineRendererInstances)
+        {
+            Destroy(line);
+        }
+        lineRendererInstances.Clear();
+
+        spellCastingParticleSystem.Stop();
         gameFreezer.SetIsCastSpelling(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -268,19 +244,19 @@ public class SpellCasting : MonoBehaviour
         }
         if (ExterminationCooldown > 0 && IsExterminationUnlocked)
         {
-            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+            ExterminationImage.fillAmount -= 1 / ExterminationCooldown * Time.deltaTime;
         }
         if (FreezingCooldown > 0 && IsFreezeUnlocked)
         {
-            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+            FreezingImage.fillAmount -= 1 / FreezingCooldown* Time.deltaTime;
         }
         if (GreenballCooldown > 0 && IsGreenballUnlocked)
         {
-            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+            GreenBallImage.fillAmount -= 1 / GreenballCooldown * Time.deltaTime;
         }
         if (LightningCooldown > 0 && IsLightningUnlocked)
         {
-            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+            LightningImage.fillAmount -= 1 / LightningCooldown * Time.deltaTime;
         }
     }
 
@@ -317,97 +293,4 @@ public class SpellCasting : MonoBehaviour
             IsLightningUnlocked = true;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-    //bool IsVerticalLine()
-    //{
-    //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
-    //    if (mousePositions.Count < 2) return false;
-
-    //    float previousX = Math.Abs(mousePositions[0].x);
-    //    float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
-
-    //    foreach (var point in mousePositions)
-    //    {
-    //        //Debug.Log("POPRZEDNI: " + previousX);
-    //        //Debug.Log(point.x);
-    //        if (Math.Abs(previousX - Math.Abs(point.x)) > threshold)
-    //        {
-    //            return false;
-    //        }
-    //        previousX = Math.Abs(point.x);
-    //    }
-    //    return true;
-    //}
-
-    //bool IsHorizontalLine()
-    //{
-    //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
-    //    if (mousePositions.Count < 2) return false;
-
-    //    float previousY = Math.Abs(mousePositions[0].y);
-    //    float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
-
-    //    foreach (var point in mousePositions)
-    //    {
-    //        if (Math.Abs(previousY - Math.Abs(point.y)) > threshold)
-    //        {
-    //            return false;
-    //        }
-    //        previousY = Math.Abs(point.y);
-    //    }
-    //    return true;
-    //}
-
-    //// Funkcja do por�wnywania kierunk�w z wzorcem "Z"
-    //bool IsZShape()
-    //{
-    //    if (mousePositions.Count < 3) return false;
-
-    //    // Analiza kierunk�w mi�dzy punktami
-    //    List<Vector2> directions = new List<Vector2>();
-
-    //    for (int i = 1; i < mousePositions.Count; i++)
-    //    {
-    //        Vector2 direction = (mousePositions[i] - mousePositions[i - 1]).normalized;
-    //        directions.Add(direction);
-    //    }
-
-    //    // Sprawd�, czy ruch odpowiada wzorcowi litery Z
-    //    bool firstLine = false;
-    //    bool diagonalLine = false;
-    //    bool secondLine = false;
-
-    //    foreach (var dir in directions)
-    //    {
-    //        //Debug.Log(dir);
-    //        //Debug.Log("WSPOLRZEDNA IKSOWA: " + dir.x);
-    //        if (!firstLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Poziomy ruch w prawo
-    //        {
-    //            //Debug.Log("PIERWSZA LINIA");
-    //            firstLine = true;
-    //        }
-    //        else if (firstLine && !diagonalLine && dir.x < 0 && dir.y < 0) // Uko�ny ruch w lewo-d�
-    //        {
-    //            //Debug.Log("DRUGA LINIA");
-    //            diagonalLine = true;
-    //        }
-    //        else if (diagonalLine && !secondLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Drugi poziomy ruch w prawo
-    //        {
-    //            secondLine = true;
-    //            break; // Wzorzec rozpoznany, mo�na zako�czy� p�tl�
-    //        }
-    //    }
-
-    //    return firstLine && diagonalLine && secondLine;
-    //}
 }
