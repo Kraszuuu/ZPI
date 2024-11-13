@@ -255,6 +255,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void Crouch()
     {
+        if (_isSprinting) _isSprinting = false;
         _isCrouching = !_isCrouching;
         _crouchTimer = 0;
         _lerpCrouch = true;
