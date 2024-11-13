@@ -24,7 +24,7 @@ public class SpellCasting : MonoBehaviour
     private GameObject lineRendererInstance;
     private LineRenderer lineRenderer;
     public ParticleSystem spellCastingParticleSystem;
-    private PlayerVoiceCommands playerVoiceCommands;
+    private PlayerVoiceCommands _playerVoiceCommands;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
     public event Action<DollarPoint[]> OnDrawFinished;
@@ -59,6 +59,8 @@ public class SpellCasting : MonoBehaviour
 
     private int _strokeIndex;
 
+    private AudioManager _audioManager;
+
     public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
     public LayerMask Layer;
 
@@ -72,10 +74,11 @@ public class SpellCasting : MonoBehaviour
         lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
-        playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
+        _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         spellCastingParticleSystem.Stop();
         lineRenderer.sortingOrder = 1;
         spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        _audioManager = GetComponent<AudioManager>();
 
         UnlockSpell("Fireball");
 
@@ -136,7 +139,7 @@ public class SpellCasting : MonoBehaviour
         // Przyk�ad: proste rozpoznawanie linii pionowej
         if (name != null || distance > 2f)
         {
-            if (playerVoiceCommands.recognizedSpell != null)
+            if (_playerVoiceCommands.recognizedSpell != null)
             {
                 Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
             }
@@ -162,13 +165,14 @@ public class SpellCasting : MonoBehaviour
             Debug.Log("Unrecognized spell pattern");
         }
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
-        playerVoiceCommands.recognizedSpell = null;
+        _playerVoiceCommands.recognizedSpell = null;
     }
 
     public void CastMeteorRain()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
+
 
         // Wykonanie BoxCast z praktycznie nieskończonym zasięgiem
 

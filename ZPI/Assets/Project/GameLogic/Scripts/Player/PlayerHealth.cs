@@ -25,10 +25,12 @@ public class PlayerHealth : MonoBehaviour
     public Slider EaseHealthSlider;
     private float _lerpSpeed = 0.05f;
 
+    private AudioManager _audioManager;
+
     void Start()
     {
         health = maxHealth;
-      
+        _audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -81,6 +83,11 @@ public class PlayerHealth : MonoBehaviour
         if (health <= 0)
         {
             GameOverManager.Instance.EndGame();
+            _audioManager.TakeDamageSound();
+        }
+        else
+        {
+            _audioManager.PlayerDieSound();
         }
     }
 
@@ -88,5 +95,6 @@ public class PlayerHealth : MonoBehaviour
     {
         health += healAmount;
         lerpTimer = 0f;
+        _audioManager.PlayerHealSound();
     }
 }

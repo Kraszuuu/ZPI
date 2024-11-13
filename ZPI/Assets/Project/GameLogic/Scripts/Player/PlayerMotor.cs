@@ -43,11 +43,17 @@ public class PlayerMotor : MonoBehaviour
 
     public bool isEnabled = true;
 
+    // Sound related
+    private AudioManager _audioManager;
+    private float _stepSoundTimer = 0f;
+    private float _stepSoundInterval = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
         _currentSpeed = WalkingSpeed;
+        _audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -79,6 +85,20 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
+    private void PlayStepSound()
+    {
+        if (_stepSoundTimer <= 0f)
+        {
+            _audioManager.WalkSound();
+            _stepSoundTimer = _stepSoundInterval;
+        }
+
+        if (_stepSoundTimer > 0f)
+        {
+            _stepSoundTimer -= Time.deltaTime;
+        }
+    }
+
     // receive the inputs from InputManager.cs and apply them to the character _controller.
     public void ProcessMove(Vector2 input)
     {
@@ -108,6 +128,14 @@ public class PlayerMotor : MonoBehaviour
 
             if (_isGrounded)
             {
+                if (_controller.velocity.magnitude > 0.01f)
+                {
+                    if (_isSprinting) _stepSoundInterval = 0.25f;
+                    else if (_isCrouching) _stepSoundInterval = 1f;
+                    else _stepSoundInterval = 0.5f;
+                    PlayStepSound();
+                }
+
                 Vector3 targetVelocity = transform.TransformDirection(moveDirection) * _currentSpeed;
 
                 if (Vector3.Distance(_playerVelocity, targetVelocity) < 0.01f)
@@ -144,6 +172,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (_dashCooldownTime <= 0f && !_isDashing && _isGrounded)
         {
+            _audioManager.PlayerDashSound();
             _isDashing = true;
             _dashTime = DashDuration;
             _dashCooldownTime = DashCooldown;
@@ -219,6 +248,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (_isGrounded)
         {
+            _audioManager.JumpSound();
             _playerVelocity.y = Mathf.Sqrt(JumpHeight * -2.0f * GravityForce);
         }
     }
