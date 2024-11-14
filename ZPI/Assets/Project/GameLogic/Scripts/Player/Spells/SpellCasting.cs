@@ -34,28 +34,25 @@ public class SpellCasting : MonoBehaviour
     public Image FireballImage;
     public float FireballCooldown = 0f;
     public bool IsFireballUnlocked;
-    private FireballScript fireballScript;
+    private FireballScript _fireballScript;
 
-    [Header("--- Extermination ---")]
-    public Image ExterminationImage;
-    public float ExterminationCooldown = 0f;
-    public bool IsExterminationUnlocked = true;
-    public MeteroAOEDamage meteorsScript;
+    [Header("--- Meteors ---")]
+    public Image MeteorsImage;
+    public float MeteorsCooldown = 0f;
+    public bool IsMeteorsUnlocked = true;
+    private MeteroAOEDamage _meteorsScript;
 
-    [Header("--- Freeze ---")]
-    public Image FreezingImage;
-    public float FreezingCooldown = 0f;
-    public bool IsFreezeUnlocked = false;
-
-    [Header("--- Green ball ---")]
-    public Image GreenBallImage;
-    public float GreenballCooldown = 0f;
-    public bool IsGreenballUnlocked = true;
+    [Header("--- Shield ---")]
+    public Image ShieldImage;
+    public float ShieldCooldown = 0f;
+    public bool IsShieldUnlocked = false;
+    private Shield _shieldScript;
 
     [Header("--- Lightning ---")]
     public Image LightningImage;
     public float LightningCooldown = 0f;
     public bool IsLightningUnlocked = true;
+    private ChainLightningShoot _chainLightningShootScript;
 
     private int _strokeIndex = 0;
 
@@ -65,8 +62,11 @@ public class SpellCasting : MonoBehaviour
     private void Start()
     {
 
-        meteorsScript = GetComponent<MeteroAOEDamage>();
-        fireballScript = GetComponent<FireballScript>();
+        _meteorsScript = GetComponent<MeteroAOEDamage>();
+        _fireballScript = GetComponent<FireballScript>();
+        _shieldScript = GetComponent<Shield>();
+        _chainLightningShootScript = GetComponent<ChainLightningShoot>();
+
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
@@ -163,11 +163,29 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Meteors"))
             {
-                if (ExterminationImage.fillAmount <= 0)
+                if (MeteorsImage.fillAmount <= 0)
                 {
-                    meteorsScript.CastMeteorRain();
-                    ExterminationImage.fillAmount = 1;
-                    ExterminationCooldown = 5f;
+                    CastMeteorRain();
+                    MeteorsImage.fillAmount = 1;
+                    MeteorsCooldown = 5f;
+                }
+            }
+            else if (name.Equals("Shield"))
+            {
+                if (MeteorsImage.fillAmount <= 0)
+                {
+                    //_shieldScript.;
+                    ShieldImage.fillAmount = 1;
+                    ShieldCooldown = 5f;
+                }
+            }
+            else if (name.Equals("Lightning"))
+            {
+                if (MeteorsImage.fillAmount <= 0)
+                {
+                    //_chainLightningShootScript.StartShooting();
+                    LightningImage.fillAmount = 1;
+                    LightningCooldown = 5f;
                 }
             }
             Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
@@ -179,17 +197,17 @@ public class SpellCasting : MonoBehaviour
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
         playerVoiceCommands.recognizedSpell = null;
     }
-
-    void CastSpell(string spellName)
-    {
-        Debug.Log("Casting spell: " + spellName);
-        // Tu dodaj logik� odpowiedniego zakl�cia
-    }
-
+ 
     public void CastFireball()
     {
-        fireballScript.CastFireBallInDirection();
+        _fireballScript.CastFireBallInDirection();
     }
+
+    public void CastMeteorRain()
+    {
+        _meteorsScript.CastMeteorRain();
+    }
+
 
     private void HandleMouseInput()
     {
@@ -242,18 +260,15 @@ public class SpellCasting : MonoBehaviour
         {
             FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
         }
-        if (ExterminationCooldown > 0 && IsExterminationUnlocked)
+        if (MeteorsCooldown > 0 && IsMeteorsUnlocked)
         {
-            ExterminationImage.fillAmount -= 1 / ExterminationCooldown * Time.deltaTime;
+            MeteorsImage.fillAmount -= 1 / MeteorsCooldown * Time.deltaTime;
         }
-        if (FreezingCooldown > 0 && IsFreezeUnlocked)
+        if (ShieldCooldown > 0 && IsShieldUnlocked)
         {
-            FreezingImage.fillAmount -= 1 / FreezingCooldown* Time.deltaTime;
+            ShieldImage.fillAmount -= 1 / ShieldCooldown* Time.deltaTime;
         }
-        if (GreenballCooldown > 0 && IsGreenballUnlocked)
-        {
-            GreenBallImage.fillAmount -= 1 / GreenballCooldown * Time.deltaTime;
-        }
+
         if (LightningCooldown > 0 && IsLightningUnlocked)
         {
             LightningImage.fillAmount -= 1 / LightningCooldown * Time.deltaTime;
@@ -268,24 +283,19 @@ public class SpellCasting : MonoBehaviour
             FireballImage.color = new Color(1f, 0.5f, 0f, 0.7f);
             IsFireballUnlocked = true;
         }
-        if (spell.Equals("Extermination"))
+        if (spell.Equals("Meteros"))
         {
-            ExterminationImage.fillAmount = 0;
-            ExterminationImage.color = new Color(0.5f, 0f, 0.5f, 0.7f);
-            IsExterminationUnlocked = true;
+            MeteorsImage.fillAmount = 0;
+            MeteorsImage.color = new Color(0.5f, 0f, 0.5f, 0.7f);
+            IsMeteorsUnlocked = true;
         }
-        if (spell.Equals("Freezing"))
+        if (spell.Equals("Shield"))
         {
-            FreezingImage.fillAmount = 0;
-            FreezingImage.color = new Color(0f, 0f, 0.55f, 0.7f);
-            IsFreezeUnlocked = true;
+            ShieldImage.fillAmount = 0;
+            ShieldImage.color = new Color(0f, 0f, 0.55f, 0.7f);
+            IsShieldUnlocked = true;
         }
-        if (spell.Equals("Greenball"))
-        {
-            GreenBallImage.fillAmount = 0;
-            GreenBallImage.color = new Color(0f, 1f, 0f, 0.7f);
-            IsGreenballUnlocked = true;
-        }
+
         if (spell.Equals("Lightning"))
         {
             LightningImage.fillAmount = 0;
