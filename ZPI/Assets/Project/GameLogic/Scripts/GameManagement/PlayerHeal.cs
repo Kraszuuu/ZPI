@@ -6,13 +6,13 @@ public class PlayerHeal : Interactable
 {
     private Animator animator;
     private bool isHealing = false;
-    private PlayerHealth playerHealth;
+    private Health playerHealth;
     public int HealingAmount = 20;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        playerHealth = FindObjectOfType<PlayerHealth>();
+        playerHealth = FindObjectOfType<Health>();
     }
 
     protected override void Interact()

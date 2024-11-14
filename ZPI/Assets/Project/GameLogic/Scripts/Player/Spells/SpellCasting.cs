@@ -75,7 +75,7 @@ public class SpellCasting : MonoBehaviour
         
 
         UnlockSpell("Fireball");
-        UnlockSpell("Extermination");
+        UnlockSpell("Meteors");
 
 
     }
@@ -283,7 +283,7 @@ public class SpellCasting : MonoBehaviour
             FireballImage.color = new Color(1f, 0.5f, 0f, 0.7f);
             IsFireballUnlocked = true;
         }
-        if (spell.Equals("Meteros"))
+        if (spell.Equals("Meteors"))
         {
             MeteorsImage.fillAmount = 0;
             MeteorsImage.color = new Color(0.5f, 0f, 0.5f, 0.7f);
