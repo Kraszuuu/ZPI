@@ -52,27 +52,7 @@ public class PlayerHealth : MonoBehaviour
         {
             EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, health, _lerpSpeed);
         }
-        //float fillF = frontHealthBar.fillAmount;
-        //float fillB = backHealthBar.fillAmount;
-        //float hFraction = health / maxHealth;
-        //if (fillB > hFraction)
-        //{
-        //    frontHealthBar.fillAmount = hFraction;
-        //    backHealthBar.color = Color.red;
-        //    lerpTimer += Time.deltaTime;
-        //    float percentComplete = lerpTimer / chipSpeed;
-        //    percentComplete = percentComplete * percentComplete;
-        //    backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
-        //}
-        //if (fillF < hFraction)
-        //{
-        //    backHealthBar.color = Color.green;
-        //    backHealthBar.fillAmount = hFraction;
-        //    lerpTimer += Time.deltaTime;
-        //    float percentComplete = lerpTimer/ chipSpeed;
-        //    percentComplete = percentComplete * percentComplete;
-        //    frontHealthBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
-        //}
+
     }
 
     public void TakeDamage(float damage)
@@ -80,14 +60,17 @@ public class PlayerHealth : MonoBehaviour
         health -= damage;
         lerpTimer = 0f;
         durationTimer = 0f;
-        if (health <= 0)
+        if (CompareTag("Player"))
         {
-            GameOverManager.Instance.EndGame();
-            _audioManager.TakeDamageSound();
-        }
-        else
-        {
-            _audioManager.PlayerDieSound();
+            if (health <= 0)
+            {
+                GameOverManager.Instance.EndGame();
+                _audioManager.TakeDamageSound();
+            }
+            else
+            {
+                _audioManager.PlayerDieSound();
+            }
         }
     }
 
