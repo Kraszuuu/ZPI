@@ -40,8 +40,6 @@ public class Enemy : MonoBehaviour
     private string currentState;
 
     private EnemySpawner spawner;
-
-    private Health healthBar;
     void Start()
     {
         stateMachine = GetComponent<StateMachine>();
@@ -50,7 +48,6 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         currentHealth = maxHealth;
-        healthBar = GetComponent<Health>();
     }
 
     // Update is called once per frame
@@ -86,7 +83,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        healthBar.TakeDamage(damage);
         Debug.Log("Enemy took damage. Current health: " + currentHealth);
 
         if (currentHealth <= 0)

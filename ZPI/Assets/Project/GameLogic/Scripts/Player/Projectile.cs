@@ -85,7 +85,7 @@ public class Projectile : MonoBehaviour
         }
         else if (!IsFriendly && hitTransform.CompareTag("Player"))
         {
-            hitTransform.GetComponent<Health>().TakeDamage(DirectDamage);
+            hitTransform.GetComponent<PlayerHealth>().TakeDamage(DirectDamage);
         }
 
         // Obrażenia obszarowe
@@ -112,7 +112,7 @@ public class Projectile : MonoBehaviour
                     }
                     else if (!IsFriendly && hitCollider.CompareTag("Player"))
                     {
-                        hitCollider.GetComponent<Health>().TakeDamage(AreaDamage);
+                        hitCollider.GetComponent<PlayerHealth>().TakeDamage(AreaDamage);
                         Debug.Log("Hit player at distance: " + distanceToTarget);
                     }
                 }

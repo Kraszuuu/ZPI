@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     private float health;
     private float lerpTimer;
     [Header("Health Bar")]
     public float maxHealth = 100f;
     public float chipSpeed = 2f;
+    public Image frontHealthBar;
+    public Image backHealthBar;
 
     [Header("Damage Overlay")]
     public float duration;
@@ -49,7 +51,28 @@ public class Health : MonoBehaviour
         if (HealthSlider.value != EaseHealthSlider.value)
         {
             EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, health, _lerpSpeed);
-        }  
+        }
+        //float fillF = frontHealthBar.fillAmount;
+        //float fillB = backHealthBar.fillAmount;
+        //float hFraction = health / maxHealth;
+        //if (fillB > hFraction)
+        //{
+        //    frontHealthBar.fillAmount = hFraction;
+        //    backHealthBar.color = Color.red;
+        //    lerpTimer += Time.deltaTime;
+        //    float percentComplete = lerpTimer / chipSpeed;
+        //    percentComplete = percentComplete * percentComplete;
+        //    backHealthBar.fillAmount = Mathf.Lerp(fillB, hFraction, percentComplete);
+        //}
+        //if (fillF < hFraction)
+        //{
+        //    backHealthBar.color = Color.green;
+        //    backHealthBar.fillAmount = hFraction;
+        //    lerpTimer += Time.deltaTime;
+        //    float percentComplete = lerpTimer/ chipSpeed;
+        //    percentComplete = percentComplete * percentComplete;
+        //    frontHealthBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
+        //}
     }
 
     public void TakeDamage(float damage)
@@ -59,10 +82,7 @@ public class Health : MonoBehaviour
         durationTimer = 0f;
         if (health <= 0)
         {
-            if (CompareTag("Player"))
-            {
-                GameOverManager.Instance.EndGame();
-            }
+            GameOverManager.Instance.EndGame();
             _audioManager.TakeDamageSound();
         }
         else

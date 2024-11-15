@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
         };
         if (hitTransform.CompareTag("Player"))
         {
-            hitTransform.GetComponent<Health>().TakeDamage(bulletDamage);
+            hitTransform.GetComponent<PlayerHealth>().TakeDamage(playerDamage);
         }
         Destroy(gameObject);
     }
