@@ -35,25 +35,27 @@ public class SpellCasting : MonoBehaviour
     public Image FireballImage;
     public float FireballCooldown = 0f;
     public bool IsFireballUnlocked;
-    private FireballScript _fireballScript;
 
-    [Header("--- Meteors ---")]
-    public Image MeteorsImage;
-    public float MeteorsCooldown = 0f;
-    public bool IsMeteorsUnlocked = true;
-    private MeteroAOEDamage _meteorsScript;
+    [Header("--- Extermination ---")]
+    public Image ExterminationImage;
+    public float ExterminationCooldown = 0f;
+    public bool IsExterminationUnlocked = true;
+    public GameObject meteorPrefab;
 
-    [Header("--- Shield ---")]
-    public Image ShieldImage;
-    public float ShieldCooldown = 0f;
-    public bool IsShieldUnlocked = false;
-    private Shield _shieldScript;
+    [Header("--- Freeze ---")]
+    public Image FreezingImage;
+    public float FreezingCooldown = 0f;
+    public bool IsFreezeUnlocked = false;
+
+    [Header("--- Green ball ---")]
+    public Image GreenBallImage;
+    public float GreenballCooldown = 0f;
+    public bool IsGreenballUnlocked = true;
 
     [Header("--- Lightning ---")]
     public Image LightningImage;
     public float LightningCooldown = 0f;
     public bool IsLightningUnlocked = true;
-    private ChainLightningShoot _chainLightningShootScript;
 
     private int _strokeIndex;
 
@@ -64,12 +66,7 @@ public class SpellCasting : MonoBehaviour
 
     private void Start()
     {
-
-        _meteorsScript = GetComponent<MeteroAOEDamage>();
-        _fireballScript = GetComponent<FireballScript>();
-        _shieldScript = GetComponent<Shield>();
-        _chainLightningShootScript = GetComponent<ChainLightningShoot>();
-
+        fireballScript = GetComponent<FireballScript>();
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
@@ -158,30 +155,8 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Z"))
             {
-                if (MeteorsImage.fillAmount <= 0)
-                {
-                    CastMeteorRain();
-                    MeteorsImage.fillAmount = 1;
-                    MeteorsCooldown = 5f;
-                }
-            }
-            else if (name.Equals("Shield"))
-            {
-                if (MeteorsImage.fillAmount <= 0)
-                {
-                    //_shieldScript.;
-                    ShieldImage.fillAmount = 1;
-                    ShieldCooldown = 5f;
-                }
-            }
-            else if (name.Equals("Lightning"))
-            {
-                if (MeteorsImage.fillAmount <= 0)
-                {
-                    //_chainLightningShootScript.StartShooting();
-                    LightningImage.fillAmount = 1;
-                    LightningCooldown = 5f;
-                }
+                CastMeteorRain();
+                CastSpell("Meteor Rain!!!");
             }
             Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
         }
@@ -192,17 +167,66 @@ public class SpellCasting : MonoBehaviour
         Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
         _playerVoiceCommands.recognizedSpell = null;
     }
- 
-    public void CastFireball()
-    {
-        _fireballScript.CastFireBallInDirection();
-    }
 
     public void CastMeteorRain()
     {
-        _meteorsScript.CastMeteorRain();
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+
+        // Wykonanie BoxCast z praktycznie nieskończonym zasięgiem
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
+        {
+            SpawnMeteor(hit.point);
+            Debug.Log("Hit: " + hit.collider.name);
+            
+        }
     }
 
+    void SpawnMeteor(Vector3 hitPoint)
+    {
+        // Tworzenie instancji meteorytu
+        GameObject meteor = Instantiate(meteorPrefab, new Vector3(hitPoint.x, 0.01f, hitPoint.z), Quaternion.identity);
+
+        MeteroAOEDamage meteroAOE = meteor.transform.GetChild(0).GetComponent<MeteroAOEDamage>();   
+        meteroAOE.Initialize(hitPoint);
+
+
+        // Zniszcz meteor po 5 sekundach
+        Destroy(meteor, 5);
+    }
+
+    //void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
+    //{
+    //    // Wykonaj OverlapSphere, aby znaleźć obiekty w promieniu damageRadius
+    //    Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.01f);
+        
+
+    //    // Iteracja przez wszystkie obiekty w promieniu
+    //    foreach (Collider hitCollider in hitColliders)
+    //    {
+    //        // Sprawdź, czy obiekt jest przeciwnikiem (zakładamy, że ma komponent Enemy)
+    //        Enemy enemy = hitCollider.GetComponent<Enemy>();
+    //        if (enemy != null)
+    //        {
+    //            // Zadaj obrażenia przeciwnikowi
+    //            enemy.TakeDamage(20);
+    //            Debug.Log("Przeciwnik " + enemy.name + " otrzymał obrażenia: " + 100);
+    //        }
+    //    }
+    //}
+    
+    void CastSpell(string spellName)
+    {
+        Debug.Log("Casting spell: " + spellName);
+        // Tu dodaj logik� odpowiedniego zakl�cia
+    }
+
+    public void CastFireball()
+    {
+        fireballScript.CastFireBallInDirection();
+    }
 
     private void HandleMouseInput()
     {
@@ -246,15 +270,18 @@ public class SpellCasting : MonoBehaviour
         {
             FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
         }
-        if (MeteorsCooldown > 0 && IsMeteorsUnlocked)
+        if (ExterminationCooldown > 0 && IsExterminationUnlocked)
         {
-            MeteorsImage.fillAmount -= 1 / MeteorsCooldown * Time.deltaTime;
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
         }
-        if (ShieldCooldown > 0 && IsShieldUnlocked)
+        if (FreezingCooldown > 0 && IsFreezeUnlocked)
         {
-            ShieldImage.fillAmount -= 1 / ShieldCooldown* Time.deltaTime;
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
         }
-
+        if (GreenballCooldown > 0 && IsGreenballUnlocked)
+        {
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
+        }
         if (LightningCooldown > 0 && IsLightningUnlocked)
         {
             FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
@@ -269,19 +296,24 @@ public class SpellCasting : MonoBehaviour
             FireballImage.color = new Color(1f, 0.5f, 0f, 0.7f);
             IsFireballUnlocked = true;
         }
-        if (spell.Equals("Meteros"))
+        if (spell.Equals("Extermination"))
         {
-            MeteorsImage.fillAmount = 0;
-            MeteorsImage.color = new Color(0.5f, 0f, 0.5f, 0.7f);
-            IsMeteorsUnlocked = true;
+            ExterminationImage.fillAmount = 0;
+            ExterminationImage.color = new Color(0.5f, 0f, 0.5f, 0.7f);
+            IsExterminationUnlocked = true;
         }
-        if (spell.Equals("Shield"))
+        if (spell.Equals("Freezing"))
         {
-            ShieldImage.fillAmount = 0;
-            ShieldImage.color = new Color(0f, 0f, 0.55f, 0.7f);
-            IsShieldUnlocked = true;
+            FreezingImage.fillAmount = 0;
+            FreezingImage.color = new Color(0f, 0f, 0.55f, 0.7f);
+            IsFreezeUnlocked = true;
         }
-
+        if (spell.Equals("Greenball"))
+        {
+            GreenBallImage.fillAmount = 0;
+            GreenBallImage.color = new Color(0f, 1f, 0f, 0.7f);
+            IsGreenballUnlocked = true;
+        }
         if (spell.Equals("Lightning"))
         {
             LightningImage.fillAmount = 0;
