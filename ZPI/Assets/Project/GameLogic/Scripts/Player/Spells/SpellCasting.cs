@@ -14,14 +14,15 @@ public class SpellCasting : MonoBehaviour
     private GameFreezer gameFreezer;
     private List<Vector3> mousePositions = new List<Vector3>();
     private InputManager inputManager;
-    
+    private FireBaseScript prefabScript;
+    private GameObject fireball;
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public GameObject lineRendererPrefab;
-    private List<GameObject> lineRendererInstances = new List<GameObject>();
-    private LineRenderer currentLineRenderer;
-    
+    private FireballScript fireballScript; 
+    private GameObject lineRendererInstance;
+    private LineRenderer lineRenderer;
     public ParticleSystem spellCastingParticleSystem;
     private PlayerVoiceCommands _playerVoiceCommands;
 
@@ -54,7 +55,7 @@ public class SpellCasting : MonoBehaviour
     public bool IsLightningUnlocked = true;
     private ChainLightningShoot _chainLightningShootScript;
 
-    private int _strokeIndex = 0;
+    private int _strokeIndex;
 
     private AudioManager _audioManager;
 
@@ -72,6 +73,9 @@ public class SpellCasting : MonoBehaviour
         gameFreezer = FindObjectOfType<GameFreezer>();
         // Pobieramy referencj� do skryptu obracaj�cego kamer�
         inputManager = FindObjectOfType<InputManager>();
+        lineRendererInstance = Instantiate(lineRendererPrefab);
+        lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         spellCastingParticleSystem.Stop();
@@ -80,7 +84,6 @@ public class SpellCasting : MonoBehaviour
         _audioManager = GetComponent<AudioManager>();
 
         UnlockSpell("Fireball");
-        UnlockSpell("Extermination");
 
 
     }
@@ -88,13 +91,33 @@ public class SpellCasting : MonoBehaviour
     void Update()
     {
         if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused || GameState.Instance.IsUpgrading) return;
-       
-        if (GameOverManager.isGameOver) return;
+        float rayLength = 1000f;
+        Vector3 origin = transform.position;
+        // Kierunek Raycasta (np. w przód od obiektu)
+        Vector3 direction = transform.forward;
+
+        // Zmienna, w której zapisujemy trafienie
+        RaycastHit hit;
+
+        // Wykonujemy Raycast
+        if (Physics.Raycast(origin, direction, out hit, rayLength))
+        {
+            // Jeśli trafiono obiekt, rysujemy linię do punktu trafienia
+            Debug.DrawLine(origin, hit.point, Color.red);
+
+            // Opcjonalnie: wyświetl trafiony obiekt w logach
+           // Debug.Log("Hit object: " + hit.collider.name);
+        }
+        else
+        {
+            // Jeśli Raycast nie trafił, rysujemy linię do maksymalnej odległości
+            Debug.DrawLine(origin, origin + direction * rayLength, Color.green);
+        }
 
         if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused) return;
 
         // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
-        if (Input.GetMouseButton(1)) // Prawy przycisk myszy
+        if (Input.GetMouseButton(0)) // Lewy przycisk myszy
         {
             if (!GameState.Instance.IsSpellCasting)
             {
@@ -102,51 +125,16 @@ public class SpellCasting : MonoBehaviour
                 gameFreezer.UpdateTimeScale();
                 Cursor.lockState = CursorLockMode.Confined;
             }
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartNewStroke();
-            }
-            if (Input.GetMouseButton(0))
-            {
-                HandleMouseInput();
-                
-            }
-            
-            
+            HandleMouseInput();
         }
 
         // Gdy przycisk myszy zostanie puszczony, analizujemy gest
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(0))
         {
             FinalizeSpellCasting();
-            _strokeIndex = 0;
         }
 
         updateCooldowns();
-    }
-
-    private void StartNewStroke()
-    {
-        _strokeIndex++;
-        mousePositions.Clear(); // Czyścimy punkty dla nowej linii
-
-        // Tworzymy nowy LineRenderer dla nowego gestu
-        CreateNewLineRenderer();
-        Debug.Log("New Stroke index: " + _strokeIndex);
-    }
-
-    private void CreateNewLineRenderer()
-    {
-        spellCastingParticleSystem.Stop();
-        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
-        spellCastingParticleSystem.Play();
-        // Usunięcie poprzedniego LineRenderer, aby nie zaśmiecać sceny
-        GameObject newLineRendererInstance = Instantiate(lineRendererPrefab);
-        lineRendererInstances.Add(newLineRendererInstance);
-
-        currentLineRenderer = newLineRendererInstance.GetComponent<LineRenderer>();
-        currentLineRenderer.positionCount = 0;
-        currentLineRenderer.sortingOrder = 1;
     }
 
     void RecognizeSpell(string name, float distance)
@@ -159,7 +147,7 @@ public class SpellCasting : MonoBehaviour
                 Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
             }
 
-            if (name.Equals("Fireball"))
+            if (name.Equals("I"))
             {
                 if (FireballImage.fillAmount <= 0)
                 {
@@ -168,7 +156,7 @@ public class SpellCasting : MonoBehaviour
                     FireballCooldown = 3f;
                 }
             }
-            else if (name.Equals("Meteors"))
+            else if (name.Equals("Z"))
             {
                 if (MeteorsImage.fillAmount <= 0)
                 {
@@ -221,15 +209,13 @@ public class SpellCasting : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 0.8f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
         if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
         {
             mousePositions.Add(mousePos);
-            _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = _strokeIndex });
-
-            currentLineRenderer.positionCount = mousePositions.Count;
-            currentLineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
-
+            _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = 1 });
+            lineRenderer.positionCount = mousePositions.Count;
+            lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
+            // Przenoszenie Particle System na aktualną pozycję myszy
             spellCastingParticleSystem.transform.position = worldPos;
 
             if (!spellCastingParticleSystem.isPlaying)
@@ -244,18 +230,12 @@ public class SpellCasting : MonoBehaviour
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
         RecognizeSpell(result, points);
-
         mousePositions.Clear();
-
-        // Usuwamy wszystkie LineRenderery
-        foreach (var line in lineRendererInstances)
-        {
-            Destroy(line);
-        }
-        lineRendererInstances.Clear();
-
+        lineRenderer.positionCount = 0;
         spellCastingParticleSystem.Stop();
-        gameFreezer.SetIsCastSpelling(false);
+
+        GameState.Instance.IsSpellCasting = false;
+        gameFreezer.UpdateTimeScale();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -277,7 +257,7 @@ public class SpellCasting : MonoBehaviour
 
         if (LightningCooldown > 0 && IsLightningUnlocked)
         {
-            LightningImage.fillAmount -= 1 / LightningCooldown * Time.deltaTime;
+            FireballImage.fillAmount -= 1 / FireballCooldown * Time.deltaTime;
         }
     }
 
@@ -309,4 +289,97 @@ public class SpellCasting : MonoBehaviour
             IsLightningUnlocked = true;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+    //bool IsVerticalLine()
+    //{
+    //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
+    //    if (mousePositions.Count < 2) return false;
+
+    //    float previousX = Math.Abs(mousePositions[0].x);
+    //    float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
+
+    //    foreach (var point in mousePositions)
+    //    {
+    //        //Debug.Log("POPRZEDNI: " + previousX);
+    //        //Debug.Log(point.x);
+    //        if (Math.Abs(previousX - Math.Abs(point.x)) > threshold)
+    //        {
+    //            return false;
+    //        }
+    //        previousX = Math.Abs(point.x);
+    //    }
+    //    return true;
+    //}
+
+    //bool IsHorizontalLine()
+    //{
+    //    // Proste sprawdzenie, czy �lad przypomina pionow� lini�
+    //    if (mousePositions.Count < 2) return false;
+
+    //    float previousY = Math.Abs(mousePositions[0].y);
+    //    float threshold = 6f; // Tolerowanie odchylenie dla kolejnych punktow
+
+    //    foreach (var point in mousePositions)
+    //    {
+    //        if (Math.Abs(previousY - Math.Abs(point.y)) > threshold)
+    //        {
+    //            return false;
+    //        }
+    //        previousY = Math.Abs(point.y);
+    //    }
+    //    return true;
+    //}
+
+    //// Funkcja do por�wnywania kierunk�w z wzorcem "Z"
+    //bool IsZShape()
+    //{
+    //    if (mousePositions.Count < 3) return false;
+
+    //    // Analiza kierunk�w mi�dzy punktami
+    //    List<Vector2> directions = new List<Vector2>();
+
+    //    for (int i = 1; i < mousePositions.Count; i++)
+    //    {
+    //        Vector2 direction = (mousePositions[i] - mousePositions[i - 1]).normalized;
+    //        directions.Add(direction);
+    //    }
+
+    //    // Sprawd�, czy ruch odpowiada wzorcowi litery Z
+    //    bool firstLine = false;
+    //    bool diagonalLine = false;
+    //    bool secondLine = false;
+
+    //    foreach (var dir in directions)
+    //    {
+    //        //Debug.Log(dir);
+    //        //Debug.Log("WSPOLRZEDNA IKSOWA: " + dir.x);
+    //        if (!firstLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Poziomy ruch w prawo
+    //        {
+    //            //Debug.Log("PIERWSZA LINIA");
+    //            firstLine = true;
+    //        }
+    //        else if (firstLine && !diagonalLine && dir.x < 0 && dir.y < 0) // Uko�ny ruch w lewo-d�
+    //        {
+    //            //Debug.Log("DRUGA LINIA");
+    //            diagonalLine = true;
+    //        }
+    //        else if (diagonalLine && !secondLine && Mathf.Abs(dir.x) > Mathf.Abs(dir.y) && dir.x > 0) // Drugi poziomy ruch w prawo
+    //        {
+    //            secondLine = true;
+    //            break; // Wzorzec rozpoznany, mo�na zako�czy� p�tl�
+    //        }
+    //    }
+
+    //    return firstLine && diagonalLine && secondLine;
+    //}
 }
