@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2196454102205054617}
   - component: {fileID: 2048155410124923787}
   - component: {fileID: 7159852586212062762}
-  m_Layer: 13
+  m_Layer: 2
   m_Name: Cubert
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2382944599211591376}
   - component: {fileID: 6829060492057478735}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 1561894974833848639}
   - component: {fileID: 2543556908226885408}
   - component: {fileID: 7979805525070613433}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Backround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 171361862974641418}
   - component: {fileID: 1688407787562499293}
   - component: {fileID: 2068761843368335155}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1172,7 +1172,7 @@ GameObject:
   - component: {fileID: 7954233344658137448}
   - component: {fileID: 7127725658135151444}
   - component: {fileID: 3704322047127761762}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1329,7 +1329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3209704037301134339}
   - component: {fileID: 7421633671814439612}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: EaseHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1419,7 +1419,7 @@ GameObject:
   - component: {fileID: 3251555963222379442}
   - component: {fileID: 6325930612986768198}
   - component: {fileID: 563857832970781477}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1681,7 +1681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8044355102595715045}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
