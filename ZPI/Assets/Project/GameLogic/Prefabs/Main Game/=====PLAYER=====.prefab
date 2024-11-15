@@ -6976,6 +6976,7 @@ GameObject:
   - component: {fileID: 5544275007056250367}
   - component: {fileID: 6548903247335484790}
   - component: {fileID: 3123051070601863000}
+  - component: {fileID: 17261954202372003}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -7181,22 +7182,18 @@ MonoBehaviour:
   spellCastDistance: 10
   lineRendererPrefab: {fileID: 5588435897959824239}
   spellCastingParticleSystem: {fileID: 6044663983278898036}
-  FireballImage: {fileID: 0}
+  FireballImage: {fileID: 7138551765791434740, guid: 6841dc54178a2934fb8123c60a11bf55, type: 3}
   FireballCooldown: 0
   IsFireballUnlocked: 0
-  ExterminationImage: {fileID: 0}
-  ExterminationCooldown: 0
-  IsExterminationUnlocked: 1
-  meteorPrefab: {fileID: 7957833072274404953, guid: 3355f6bfa6db8b24281b827de929694c, type: 3}
-  FreezingImage: {fileID: 0}
-  FreezingCooldown: 0
-  IsFreezeUnlocked: 0
-  GreenBallImage: {fileID: 0}
-  GreenballCooldown: 0
-  IsGreenballUnlocked: 1
-  LightningImage: {fileID: 0}
+  MeteorsImage: {fileID: 1452835768447418871, guid: 681f30bec2b6ef34cb2893d17ae511fa, type: 3}
+  MeteorsCooldown: 0
+  IsMeteorsUnlocked: 0
+  ShieldImage: {fileID: 3187245991557500145, guid: 03ec424110577ec438e1671613a5b1d8, type: 3}
+  ShieldCooldown: 0
+  IsShieldUnlocked: 0
+  LightningImage: {fileID: 2797794300429498541, guid: 9f743e8618310ed4986652294bee61f7, type: 3}
   LightningCooldown: 0
-  IsLightningUnlocked: 1
+  IsLightningUnlocked: 0
   boxHalfExtents: {x: 1, y: 1, z: 1}
   Layer:
     serializedVersion: 2
@@ -7456,6 +7453,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldObject: {fileID: 3390245879141812664}
+--- !u!114 &17261954202372003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021588089235170061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d1da9cd0f9d5844a542ce54cc94756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  radius: 0.01
+  meteorPrefab: {fileID: 7957833072274404953, guid: e719376f38db3a6479c0eb7a37b5d65c, type: 3}
+  Layer:
+    serializedVersion: 2
+    m_Bits: 24439
 --- !u!1 &6096824105370716556
 GameObject:
   m_ObjectHideFlags: 0
