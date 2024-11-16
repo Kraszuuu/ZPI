@@ -21,7 +21,7 @@ public class SpellCasting : MonoBehaviour
     //private GameObject lineRendererInstance;
     private LineRenderer lineRenderer;
     public ParticleSystem spellCastingParticleSystem;
-    private PlayerVoiceCommands playerVoiceCommands;
+    private PlayerVoiceCommands _playerVoiceCommands;
 
     private List<DollarPoint> _drawPoints = new List<DollarPoint>();
     public event Action<DollarPoint[]> OnDrawFinished;
@@ -69,19 +69,16 @@ public class SpellCasting : MonoBehaviour
         _chainLightningShootScript = GetComponent<ChainLightningShoot>();
 
         gameFreezer = FindObjectOfType<GameFreezer>();
-        //lineRendererInstance = Instantiate(lineRendererPrefab);
-        //lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
-        //lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         spellCastingParticleSystem.Stop();
-        //lineRenderer.sortingOrder = 1;
         spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
         _audioManager = GetComponent<AudioManager>();
 
         UnlockSpell("Fireball");
         UnlockSpell("Meteors");
-
+        UnlockSpell("Shield");
+        UnlockSpell("Lightning");
 
     }
 
@@ -113,7 +110,6 @@ public class SpellCasting : MonoBehaviour
             _strokeIndex++;
         }
 
-        // Gdy przycisk myszy zostanie puszczony, analizujemy gest
         if (Input.GetMouseButtonUp(1) && GameState.Instance.IsSpellCasting)
         {
             FinalizeSpellCasting();
@@ -123,36 +119,11 @@ public class SpellCasting : MonoBehaviour
         updateCooldowns();
     }
 
-    private void StartNewStroke()
-    {
-        _strokeIndex++;
-        mousePositions.Clear(); // Czyścimy punkty dla nowej linii
-
-        // Tworzymy nowy LineRenderer dla nowego gestu
-        CreateNewLineRenderer();
-        Debug.Log("New Stroke index: " + _strokeIndex);
-    }
-
-    private void CreateNewLineRenderer()
-    {
-        spellCastingParticleSystem.Stop();
-        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
-        spellCastingParticleSystem.Play();
-        // Usunięcie poprzedniego LineRenderer, aby nie zaśmiecać sceny
-        GameObject newLineRendererInstance = Instantiate(lineRendererPrefab);
-        lineRendererInstances.Add(newLineRendererInstance);
-
-        currentLineRenderer = newLineRendererInstance.GetComponent<LineRenderer>();
-        currentLineRenderer.positionCount = 0;
-        currentLineRenderer.sortingOrder = 1;
-    }
-
     void RecognizeSpell(string name, float distance)
     {
-        // Przyk�ad: proste rozpoznawanie linii pionowej
         if (name != null || distance > 2f)
         {
-            if (playerVoiceCommands.recognizedSpell != null)
+            if (_playerVoiceCommands.recognizedSpell != null)
             {
                 Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
             }
@@ -177,9 +148,9 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Shield"))
             {
-                if (MeteorsImage.fillAmount <= 0)
+                if (ShieldImage.fillAmount <= 0)
                 {
-                    //_shieldScript.;
+                    _shieldScript.activateShield();
                     ShieldImage.fillAmount = 1;
                     ShieldCooldown = 5f;
                 }
@@ -188,7 +159,7 @@ public class SpellCasting : MonoBehaviour
             {
                 if (MeteorsImage.fillAmount <= 0)
                 {
-                    //_chainLightningShootScript.StartShooting();
+                    _chainLightningShootScript.StartShooting();
                     LightningImage.fillAmount = 1;
                     LightningCooldown = 5f;
                 }
@@ -199,8 +170,7 @@ public class SpellCasting : MonoBehaviour
         {
             Debug.Log("Unrecognized spell pattern");
         }
-        Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
-        playerVoiceCommands.recognizedSpell = null;
+        _playerVoiceCommands.recognizedSpell = null;
     }
 
     public void CastFireball()
@@ -255,20 +225,9 @@ public class SpellCasting : MonoBehaviour
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
         RecognizeSpell(result, points);
-
         mousePositions.Clear();
         ClearLineRenderers();
         spellCastingParticleSystem.Stop();
-
-        mousePositions.Clear();
-
-        // Usuwamy wszystkie LineRenderery
-        foreach (var line in lineRendererInstances)
-        {
-            Destroy(line);
-        }
-        lineRendererInstances.Clear();
-
         spellCastingParticleSystem.Stop();
         GameState.Instance.IsSpellCasting = false;
         gameFreezer.UpdateTimeScale();
