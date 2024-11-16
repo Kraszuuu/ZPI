@@ -49,7 +49,7 @@ public class ChainLightningShoot : MonoBehaviour
         }
     }
 
-    void StartShooting()
+    public void StartShooting()
     {
         shooting = true;
 
@@ -70,9 +70,11 @@ public class ChainLightningShoot : MonoBehaviour
                     {
                         StartCoroutine(ChainReaction(currentClosestEnemy));
                     }
-
-                    // Uruchomienie coroutine, aby po 3 sekundach wywo³aæ StopShooting()
                     StartCoroutine(StopShootingAfterDelay(spellDuration));
+                }
+                else
+                {
+                    StopShooting();
                 }
             }
         }
@@ -111,7 +113,7 @@ public class ChainLightningShoot : MonoBehaviour
         }
     }
 
-    void StopShooting()
+    public void StopShooting()
     {
         shooting = false;
         shot = false;

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     public GameObject shieldObject;
+    public float shieldDuration = 5f;
 
     private void Start()
     {
@@ -15,17 +16,16 @@ public class Shield : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log(shieldObject);
-            shieldObject.SetActive(!shieldObject.activeSelf);
-        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void activateShield()
     {
-        if (shieldObject.activeSelf)
-        {
-        }
+        shieldObject.SetActive(true);
+        Invoke(nameof(DeactivateShield), shieldDuration);
+    }
+
+    private void DeactivateShield()
+    {
+        shieldObject.SetActive(false);
     }
 }

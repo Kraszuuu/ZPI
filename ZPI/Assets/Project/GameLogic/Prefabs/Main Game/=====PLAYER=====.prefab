@@ -7453,6 +7453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldObject: {fileID: 3390245879141812664}
+  shieldDuration: 5
 --- !u!114 &2796780624817078581
 MonoBehaviour:
   m_ObjectHideFlags: 0

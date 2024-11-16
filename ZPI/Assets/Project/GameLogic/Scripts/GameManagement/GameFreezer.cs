@@ -12,6 +12,11 @@ public class GameFreezer : MonoBehaviour
         inputManager = GameObject.Find("Player").GetComponent<InputManager>();
     }
 
+    private void OnEnable()
+    {
+        inputManager = GameObject.Find("Player").GetComponent<InputManager>();
+    }
+
     public void UpdateTimeScale()
     {
         if (GameState.Instance.IsSpellCasting)
