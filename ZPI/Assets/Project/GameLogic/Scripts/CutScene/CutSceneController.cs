@@ -1,30 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CutsceneController : MonoBehaviour
 {
-    public GameObject cutsceneCamera;
-    public GameObject player;
-    public GameObject cutsceneCharacter;
-    public GameObject UI;
     public float cutsceneDuration = 10f;
 
     void Start()
     {
-        cutsceneCamera.SetActive(true);
-        player.SetActive(false);
-        UI.SetActive(false);
-
         Invoke("EndCutscene", cutsceneDuration);
     }
 
     void EndCutscene()
     {
-        cutsceneCamera.SetActive(false);
-        player.SetActive(true);
-        UI.SetActive(true);
-
-        cutsceneCharacter.SetActive(false);
+        SceneManager.LoadScene("Final Scene");
     }
 }
