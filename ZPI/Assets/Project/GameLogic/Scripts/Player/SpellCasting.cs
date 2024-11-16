@@ -13,15 +13,13 @@ public class SpellCasting : MonoBehaviour
     public CameraShake cameraShake;
     private GameFreezer gameFreezer;
     private List<Vector3> mousePositions = new List<Vector3>();
-    private InputManager inputManager;
-
     public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
     public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
     public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
     public GameObject lineRendererPrefab;
-    private List<GameObject> lineRendererInstances = new List<GameObject>();
-    private LineRenderer currentLineRenderer;
-
+    private FireballScript fireballScript; 
+    //private GameObject lineRendererInstance;
+    private LineRenderer lineRenderer;
     public ParticleSystem spellCastingParticleSystem;
     private PlayerVoiceCommands playerVoiceCommands;
 
@@ -54,7 +52,10 @@ public class SpellCasting : MonoBehaviour
     public bool IsLightningUnlocked = true;
     private ChainLightningShoot _chainLightningShootScript;
 
-    private int _strokeIndex = 0;
+    private int _strokeIndex;
+
+    private AudioManager _audioManager;
+    private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
 
     public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
     public LayerMask Layer;
@@ -68,11 +69,15 @@ public class SpellCasting : MonoBehaviour
         _chainLightningShootScript = GetComponent<ChainLightningShoot>();
 
         gameFreezer = FindObjectOfType<GameFreezer>();
-        // Pobieramy referencj� do skryptu obracaj�cego kamer�
-        inputManager = FindObjectOfType<InputManager>();
+        //lineRendererInstance = Instantiate(lineRendererPrefab);
+        //lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
+        //lineRenderer.positionCount = 0;
         recognitionManager = new RecognitionManager();
-        playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
-
+        _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
+        spellCastingParticleSystem.Stop();
+        //lineRenderer.sortingOrder = 1;
+        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        _audioManager = GetComponent<AudioManager>();
 
         UnlockSpell("Fireball");
         UnlockSpell("Meteors");
@@ -86,28 +91,30 @@ public class SpellCasting : MonoBehaviour
 
         if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused) return;
 
-        // �ledzenie ruchu myszy, gdy przycisk jest wci�ni�ty
-        if (Input.GetMouseButton(1)) // Prawy przycisk myszy
+        if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting)
         {
-            if (!GameState.Instance.IsSpellCasting)
-            {
-                GameState.Instance.IsSpellCasting = true;
-                gameFreezer.UpdateTimeScale();
-                Cursor.lockState = CursorLockMode.Confined;
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartNewStroke();
-            }
-            if (Input.GetMouseButton(0))
-            {
-                HandleMouseInput();
+            GameState.Instance.IsSpellCasting = true;
+            gameFreezer.UpdateTimeScale();
+            Cursor.lockState = CursorLockMode.Confined;
+        }
 
-            }
+        if (Input.GetMouseButtonDown(0))
+        {
+            lineRenderer = CreateNewLineRenderer();
+        }
+
+        if (Input.GetMouseButton(0) && GameState.Instance.IsSpellCasting)
+        {
+            HandleMouseInput();
+        }
+
+        if (Input.GetMouseButtonUp(0) && GameState.Instance.IsSpellCasting)
+        {
+            _strokeIndex++;
         }
 
         // Gdy przycisk myszy zostanie puszczony, analizujemy gest
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && GameState.Instance.IsSpellCasting)
         {
             FinalizeSpellCasting();
             _strokeIndex = 0;
@@ -218,8 +225,8 @@ public class SpellCasting : MonoBehaviour
             mousePositions.Add(mousePos);
             _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = _strokeIndex });
 
-            currentLineRenderer.positionCount = mousePositions.Count;
-            currentLineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
+            lineRenderer.positionCount = mousePositions.Count;
+            lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
 
             spellCastingParticleSystem.transform.position = worldPos;
 
@@ -230,11 +237,28 @@ public class SpellCasting : MonoBehaviour
         }
     }
 
+    private LineRenderer CreateNewLineRenderer()
+    {
+        GameObject lineRendererInstance = Instantiate(lineRendererPrefab);
+        LineRenderer lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
+        mousePositions.Clear();
+        lineRenderer.positionCount = 0;
+        lineRenderer.sortingOrder = 1;
+        _lineRenderers.Add(lineRenderer);
+        spellCastingParticleSystem.Stop();
+        return lineRenderer;
+    }
+
+
     private void FinalizeSpellCasting()
     {
         (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
         RecognizeSpell(result, points);
+
+        mousePositions.Clear();
+        ClearLineRenderers();
+        spellCastingParticleSystem.Stop();
 
         mousePositions.Clear();
 
@@ -249,6 +273,17 @@ public class SpellCasting : MonoBehaviour
         GameState.Instance.IsSpellCasting = false;
         gameFreezer.UpdateTimeScale();
         Cursor.lockState = CursorLockMode.Locked;
+
+        _strokeIndex = 0;
+    }
+
+    private void ClearLineRenderers()
+    {
+        foreach (var lineRenderer in _lineRenderers)
+        {
+            lineRenderer.positionCount = 0;
+        }
+        _lineRenderers.Clear();
     }
 
 
