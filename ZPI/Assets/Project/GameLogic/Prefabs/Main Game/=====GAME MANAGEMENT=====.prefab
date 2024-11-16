@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 7410333482102173234}
   - component: {fileID: 7863127013059132137}
   - component: {fileID: 5480225068349493303}
+  - component: {fileID: 5920469091544990754}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -139,8 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4cdfc7d16f74e4fa541a7fc09c75fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpawners:
-  - {fileID: 0}
+  EnemySpawners: []
   delayBetweenWaves: 5
   upgradeWavesInterval: 1
   upgradeMenu: {fileID: 0}
@@ -207,6 +207,23 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   - {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
   - {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
+--- !u!114 &5920469091544990754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424592966547128191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4316d1d4bc1b24fbe7c0febf42f1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneCamera: {fileID: 0}
+  player: {fileID: 0}
+  cutsceneCharacter: {fileID: 0}
+  UI: {fileID: 0}
+  cutsceneDuration: 1
 --- !u!1 &5344107072983093022
 GameObject:
   m_ObjectHideFlags: 0

@@ -4686,11 +4686,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
---- !u!1 &876711416 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1424592966547128191, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-  m_PrefabInstance: {fileID: 1107120247736272712}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &892569562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12050,14 +12045,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: =====GAME MANAGEMENT=====
       objectReference: {fileID: 0}
-    - target: {fileID: 2857039648638573413, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: EnemySpawners.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5565138245899974421, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: PausePanel
       value: 
       objectReference: {fileID: 1396345566}
+    - target: {fileID: 5920469091544990754, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 2135940558}
+    - target: {fileID: 5920469091544990754, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 626475318}
+    - target: {fileID: 5920469091544990754, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: cutsceneCamera
+      value: 
+      objectReference: {fileID: 197660043708370088}
+    - target: {fileID: 5920469091544990754, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: cutsceneCharacter
+      value: 
+      objectReference: {fileID: 351140561}
     - target: {fileID: 6085989848260890887, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: SaveButton
       value: 
@@ -12081,10 +12088,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1424592966547128191, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2060515846177503300}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
 --- !u!20 &1988142242674339876
 Camera:
@@ -12142,29 +12146,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5565138245899974421, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
   m_PrefabInstance: {fileID: 1107120247736272712}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 876711416}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6d3f887a97cbac48959612a95f5eb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2060515846177503300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 876711416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4316d1d4bc1b24fbe7c0febf42f1d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cutsceneCamera: {fileID: 197660043708370088}
-  player: {fileID: 626475318}
-  cutsceneCharacter: {fileID: 351140561}
-  UI: {fileID: 2135940558}
-  cutsceneDuration: 1
 --- !u!95 &3455317823375775790
 Animator:
   serializedVersion: 5
@@ -12211,29 +12198,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 258588347708160440, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 258588347708160440, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2003487760804078521, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2003487760804078521, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4287593316179633833, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_Name
       value: =====UI=====
-      objectReference: {fileID: 0}
-    - target: {fileID: 4287593316179633833, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4539007143359038615, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -12401,21 +12368,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4776799611845271246}
     - target: {fileID: 3037187737646001077, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: FreezingImage
-      value: 
-      objectReference: {fileID: 839551868}
-    - target: {fileID: 3037187737646001077, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: GreenBallImage
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3037187737646001077, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: LightningImage
       value: 
       objectReference: {fileID: 46703145}
-    - target: {fileID: 3037187737646001077, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: ExterminationImage
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3800685183295005087, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: HealthSlider
       value: 
