@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        Invoke("SpawnWave", 5f);
+        SpawnWave();
     }
 
     void Update()
