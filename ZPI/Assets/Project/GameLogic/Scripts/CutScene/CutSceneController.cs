@@ -14,6 +14,7 @@ public class CutsceneController : MonoBehaviour
     {
         cutsceneCamera.SetActive(true);
         player.SetActive(false);
+        UI.SetActive(false);
 
         Invoke("EndCutscene", cutsceneDuration);
     }
