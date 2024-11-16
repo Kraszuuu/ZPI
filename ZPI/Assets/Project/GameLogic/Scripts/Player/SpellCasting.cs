@@ -123,12 +123,7 @@ public class SpellCasting : MonoBehaviour
     {
         if (name != null || distance > 2f)
         {
-            if (_playerVoiceCommands.recognizedSpell != null)
-            {
-                Debug.LogError("Gratulacje, dziala, teraz ogarnac spelle, zle to rzucimy ify nizej i bedzie super");
-            }
-
-            if (name.Equals("Fireball"))
+            if (name.Equals("Fireball") && ( (_playerVoiceCommands.recognizedSpell == "Fireball" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
             {
                 if (FireballImage.fillAmount <= 0)
                 {
@@ -137,7 +132,7 @@ public class SpellCasting : MonoBehaviour
                     FireballCooldown = 3f;
                 }
             }
-            else if (name.Equals("Meteors"))
+            else if (name.Equals("Meteors") && ((_playerVoiceCommands.recognizedSpell == "Meteors" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
             {
                 if (MeteorsImage.fillAmount <= 0)
                 {
@@ -146,7 +141,7 @@ public class SpellCasting : MonoBehaviour
                     MeteorsCooldown = 5f;
                 }
             }
-            else if (name.Equals("Shield"))
+            else if (name.Equals("Shield") && ((_playerVoiceCommands.recognizedSpell == "Shield" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
             {
                 if (ShieldImage.fillAmount <= 0)
                 {
@@ -155,7 +150,7 @@ public class SpellCasting : MonoBehaviour
                     ShieldCooldown = 5f;
                 }
             }
-            else if (name.Equals("Lightning"))
+            else if (name.Equals("Lightning") && ((_playerVoiceCommands.recognizedSpell == "Lightning" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
             {
                 if (MeteorsImage.fillAmount <= 0)
                 {
@@ -227,7 +222,7 @@ public class SpellCasting : MonoBehaviour
         RecognizeSpell(result, points);
         mousePositions.Clear();
         ClearLineRenderers();
-        spellCastingParticleSystem.Stop();
+        //spellCastingParticleSystem.Stop();
         spellCastingParticleSystem.Stop();
         GameState.Instance.IsSpellCasting = false;
         gameFreezer.UpdateTimeScale();
