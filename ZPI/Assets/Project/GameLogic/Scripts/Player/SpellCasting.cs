@@ -282,6 +282,7 @@ public class SpellCasting : MonoBehaviour
         foreach (var lineRenderer in _lineRenderers)
         {
             lineRenderer.positionCount = 0;
+            Destroy(lineRenderer);
         }
         _lineRenderers.Clear();
     }
