@@ -88,14 +88,14 @@ public class SpellCasting : MonoBehaviour
 
         if (GameState.Instance.IsGameOver || GameState.Instance.IsGamePaused) return;
 
-        if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting)
+        if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused)
         {
             GameState.Instance.IsSpellCasting = true;
             gameFreezer.UpdateTimeScale();
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GameState.Instance.IsSpellCasting)
         {
             lineRenderer = CreateNewLineRenderer();
         }
@@ -235,8 +235,9 @@ public class SpellCasting : MonoBehaviour
     {
         foreach (var lineRenderer in _lineRenderers)
         {
+            Debug.Log(lineRenderer);
             lineRenderer.positionCount = 0;
-            Destroy(lineRenderer);
+            Destroy(lineRenderer.gameObject);
         }
         _lineRenderers.Clear();
     }
