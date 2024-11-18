@@ -38,7 +38,7 @@ public class MeteroAOEDamage : MonoBehaviour
             if (enemy != null)
             {
                 // Zadaj obra¿enia przeciwnikowi
-                enemy.TakeDamage(1);
+                enemy.TakeDamage((int)SpellManager.Instance.GetSpellData("Meteors"));
                 Debug.Log("Przeciwnik " + enemy.name + " otrzyma³ obra¿enia: " + damage);
             }
         }

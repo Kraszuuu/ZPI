@@ -128,7 +128,7 @@ namespace DigitalRuby.PyroParticles
                     var enemyComponent = hitTransform.GetComponent<Enemy>();
                     if (enemyComponent != null)
                     {
-                        enemyComponent.TakeDamage(50);
+                        enemyComponent.TakeDamage(((int)SpellManager.Instance.GetSpellData("Fireball")));
                     }
                 }
             }

@@ -28,6 +28,7 @@ public class Projectile : MonoBehaviour
     private Vector3 _targetScale;
     private float _scaleFactor;
     private readonly List<(Transform, ParticleSystem, float)> _childTransforms = new();
+    private float _currentDamage;
 
     void Start()
     {
@@ -57,6 +58,11 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public void multiplayerDamage(float multiplayer)
+    {
+        _currentDamage *= multiplayer;
+    }
+
     private void ScaleChildren()
     {
         if (Mathf.Abs(_scaleFactor - 1f) < 0.001f) return;
@@ -77,11 +83,11 @@ public class Projectile : MonoBehaviour
 
         _collided = true;
         Transform hitTransform = collision.transform;
-
         // Obrażenia bezpośrednie
         if (IsFriendly && hitTransform.CompareTag("Enemy"))
         {
-            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage);
+            Debug.Log(DirectDamage);
+            hitTransform.GetComponent<Enemy>().TakeDamage((int)SpellManager.Instance.GetSpellData("PrimaryAttack"));
         }
         else if (!IsFriendly && hitTransform.CompareTag("Player"))
         {

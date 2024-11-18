@@ -6,11 +6,10 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     public GameObject shieldObject;
-    public float shieldDuration = 5f;
 
     private void Start()
     {
-        // Wy³¹cz tarczê na pocz¹tku
+        // Wyï¿½ï¿½cz tarczï¿½ na poczï¿½tku
         shieldObject.SetActive(false);
     }
 
@@ -21,8 +20,8 @@ public class Shield : MonoBehaviour
     public void activateShield()
     {
         shieldObject.SetActive(true);
-        Invoke(nameof(DeactivateShield), shieldDuration);
         AudioManager.instance.PlayShieldSound();
+        Invoke(nameof(DeactivateShield), SpellManager.Instance.GetSpellData("Shield"));
     }
 
     private void DeactivateShield()

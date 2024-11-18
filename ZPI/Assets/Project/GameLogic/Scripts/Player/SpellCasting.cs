@@ -74,12 +74,6 @@ public class SpellCasting : MonoBehaviour
         spellCastingParticleSystem.Stop();
         spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
         _audioManager = GetComponent<AudioManager>();
-
-        UnlockSpell("Fireball");
-        UnlockSpell("Meteors");
-        UnlockSpell("Shield");
-        UnlockSpell("Lightning");
-
     }
 
     void Update()
@@ -152,7 +146,7 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Lightning") && ((_playerVoiceCommands.recognizedSpell == "Lightning" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
             {
-                if (MeteorsImage.fillAmount <= 0)
+                if (LightningImage.fillAmount <= 0)
                 {
                     _chainLightningShootScript.StartShooting();
                     LightningImage.fillAmount = 1;
@@ -236,7 +230,6 @@ public class SpellCasting : MonoBehaviour
     {
         foreach (var lineRenderer in _lineRenderers)
         {
-            Debug.Log(lineRenderer);
             lineRenderer.positionCount = 0;
             Destroy(lineRenderer.gameObject);
         }

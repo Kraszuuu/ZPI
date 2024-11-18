@@ -47,7 +47,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnWave()
     {
-        Debug.Log(currentWave);
         if (currentWave < waves.Count)
         {
             waveInProgress = true;
