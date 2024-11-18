@@ -5413,7 +5413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111931111120022338}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -107.1253, y: 2.3270378, z: -143.25609}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12063,7 +12063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recognizedSpell: 
   recognizedWord: 
-  isOn: 1
+  isOn: 0
 --- !u!114 &245897539085753000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12306,7 +12306,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldObject: {fileID: 3884810764034603668}
-  shieldDuration: 5
 --- !u!114 &767395927334832254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13496,6 +13495,10 @@ PrefabInstance:
     - target: {fileID: 9146475950936028742, guid: 659e6c2b01721ba45ab85d457a862eee, type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146475950936028742, guid: 659e6c2b01721ba45ab85d457a862eee, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 48779808772877656}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.226715, y: -10.113596, z: 7.8736115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 3824902960725927753}
   - component: {fileID: 6934550681784510673}
   - component: {fileID: 2555006797238799597}
-  - component: {fileID: 2834969625899291137}
+  - component: {fileID: 1679694867831697284}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -140,7 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4cdfc7d16f74e4fa541a7fc09c75fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpawners: []
+  EnemySpawners:
+  - {fileID: 0}
   delayBetweenWaves: 5
   upgradeWavesInterval: 1
   upgradeMenu: {fileID: 0}
@@ -200,7 +201,7 @@ MonoBehaviour:
   dashSound: {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
   nightAmbientSound: {fileID: 8300000, guid: 21538f6160ff48040a8488deb4ed6d5e, type: 3}
   dayAmbientSound: {fileID: 8300000, guid: bec1cfb465efc7a41bd5ccbac5b6f2a2, type: 3}
---- !u!114 &2834969625899291137
+--- !u!114 &1679694867831697284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,10 +210,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2061530863420556397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4316d1d4bc1b24fbe7c0febf42f1d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4677acd865c02fa4a9914de9ab86cebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutsceneDuration: 1
 --- !u!1 &8009724173711152546
 GameObject:
   m_ObjectHideFlags: 0

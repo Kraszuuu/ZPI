@@ -9,7 +9,6 @@ public class Shield : MonoBehaviour
 
     private void Start()
     {
-        // Wy��cz tarcz� na pocz�tku
         shieldObject.SetActive(false);
     }
 

@@ -217,7 +217,6 @@ public class SpellCasting : MonoBehaviour
         RecognizeSpell(result, points);
         mousePositions.Clear();
         ClearLineRenderers();
-        //spellCastingParticleSystem.Stop();
         spellCastingParticleSystem.Stop();
         GameState.Instance.IsSpellCasting = false;
         gameFreezer.UpdateTimeScale();

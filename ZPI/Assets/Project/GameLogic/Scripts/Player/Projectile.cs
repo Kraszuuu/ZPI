@@ -83,10 +83,8 @@ public class Projectile : MonoBehaviour
 
         _collided = true;
         Transform hitTransform = collision.transform;
-        // Obrażenia bezpośrednie
         if (IsFriendly && hitTransform.CompareTag("Enemy"))
         {
-            Debug.Log(DirectDamage);
             hitTransform.GetComponent<Enemy>().TakeDamage((int)SpellManager.Instance.GetSpellData("PrimaryAttack"));
         }
         else if (!IsFriendly && hitTransform.CompareTag("Player"))
