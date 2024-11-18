@@ -52,6 +52,7 @@ public class ChainLightningShoot : MonoBehaviour
     public void StartShooting()
     {
         shooting = true;
+        AudioManager.instance.PlayLightningSound();
 
         if (playerEnemyDetector != null && lineRendererPrefab != null)
         {

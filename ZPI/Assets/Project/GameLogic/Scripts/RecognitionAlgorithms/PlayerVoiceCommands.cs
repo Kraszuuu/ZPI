@@ -11,7 +11,7 @@ public class PlayerVoiceCommands : MonoBehaviour
     private Dictionary<string, string> actions = new Dictionary<string, string>();
     public string recognizedSpell;
     public string recognizedWord;
-    public bool isOn = true;
+    public bool isOn = false;                           // Very important
 
     private void Start()
     {

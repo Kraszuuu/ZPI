@@ -43,7 +43,7 @@ public class PlayerMotor : MonoBehaviour
 
     public bool isEnabled = true;
 
-    // Sound related
+    //Sound related
     private AudioManager _audioManager;
     private float _stepSoundTimer = 0f;
     private float _stepSoundInterval = 0.5f;
@@ -89,7 +89,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (_stepSoundTimer <= 0f)
         {
-            _audioManager.WalkSound();
+            _audioManager.PlayWalkSound();
             _stepSoundTimer = _stepSoundInterval;
         }
 
@@ -172,7 +172,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (_dashCooldownTime <= 0f && !_isDashing && _isGrounded)
         {
-            _audioManager.PlayerDashSound();
+            _audioManager.PlayDashSound();
             _isDashing = true;
             _dashTime = DashDuration;
             _dashCooldownTime = DashCooldown;
@@ -248,7 +248,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (_isGrounded)
         {
-            _audioManager.JumpSound();
+            AudioManager.instance.PlayJumpSound();
             _playerVelocity.y = Mathf.Sqrt(JumpHeight * -2.0f * GravityForce);
         }
     }

@@ -21,6 +21,7 @@ public class PauseManager : MonoBehaviour
             PausePanel.SetActive(true);
             GameState.Instance.IsGamePaused = true;
             Cursor.lockState = CursorLockMode.Confined;
+            AudioManager.instance.PlayPauseSound();
         }
     }
 
@@ -32,6 +33,7 @@ public class PauseManager : MonoBehaviour
             Time.timeScale = 1f;
             PausePanel.SetActive(false);
             GameState.Instance.IsGamePaused= false;
+            AudioManager.instance.PlayUnpauseSound();
         }
     }
 }

@@ -180,33 +180,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb20f1b8b3ccdd43837907f6cdde99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClips:
-  - {fileID: 8300000, guid: 35cf7766e9e2aa542811e896fde57989, type: 3}
-  - {fileID: 8300000, guid: b83bf8726a7fac349a54389f0c57cda6, type: 3}
-  - {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
-  - {fileID: 8300000, guid: f1cb5d83282f2904a85f73111d068616, type: 3}
-  - {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
-  - {fileID: 8300000, guid: 88b1cbe3caa3fee4b8b103b5edd7aba9, type: 3}
-  - {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
-  - {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
-  - {fileID: 8300000, guid: 7a9de5c4d998126449cf964a6b27a8b0, type: 3}
-  - {fileID: 8300000, guid: 78ad99fd0a0a5144280b07bbdba84815, type: 3}
-  - {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
-  - {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
-  - {fileID: 8300000, guid: b7b5a6156961bac44a67504d42ce6fcf, type: 3}
-  - {fileID: 8300000, guid: fd25a15f9797641458336cccfb445343, type: 3}
-  - {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
-  - {fileID: 8300000, guid: c458b6714dab015479d507b21fd2cead, type: 3}
-  - {fileID: 8300000, guid: eaae8fe8d600e1f459f34aa5757fa3b8, type: 3}
-  - {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
-  - {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
-  - {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
-  - {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
-  - {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
-  - {fileID: 8300000, guid: a0ca8964c08d54c5dbebf245bdc474ca, type: 3}
-  - {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
-  - {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
-  - {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
+  backgroundMusicSource: {fileID: 0}
+  playerSource: {fileID: 0}
+  buttonClickSound: {fileID: 8300000, guid: d71a48c996a06754bab3d83868e8e906, type: 3}
+  jumpSound: {fileID: 8300000, guid: c458b6714dab015479d507b21fd2cead, type: 3}
+  pauseSound: {fileID: 8300000, guid: b83bf8726a7fac349a54389f0c57cda6, type: 3}
+  unpasueSound: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+  lightningSound: {fileID: 8300000, guid: f1cb5d83282f2904a85f73111d068616, type: 3}
+  stupefySound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
+  meteorRainSound: {fileID: 8300000, guid: 84904773804856941a7a6080ed1777dd, type: 3}
+  shieldSound: {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
+  walkSound: {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
+  playerDamageSound: {fileID: 8300000, guid: b7b5a6156961bac44a67504d42ce6fcf, type: 3}
+  playerDeathSound: {fileID: 8300000, guid: b09b4b3cb078d634783e60e6652d7c85, type: 3}
+  wandSound1: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  wandSound2: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+  waveEndSound: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
+  healSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
+  dashSound: {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
+  nightAmbientSound: {fileID: 8300000, guid: 21538f6160ff48040a8488deb4ed6d5e, type: 3}
+  dayAmbientSound: {fileID: 8300000, guid: bec1cfb465efc7a41bd5ccbac5b6f2a2, type: 3}
 --- !u!114 &2834969625899291137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,10 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4316d1d4bc1b24fbe7c0febf42f1d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutsceneCamera: {fileID: 0}
-  player: {fileID: 0}
-  cutsceneCharacter: {fileID: 0}
-  UI: {fileID: 0}
   cutsceneDuration: 1
 --- !u!1 &8009724173711152546
 GameObject:

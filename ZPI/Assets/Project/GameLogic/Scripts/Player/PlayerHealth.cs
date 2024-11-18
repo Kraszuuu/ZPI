@@ -65,11 +65,11 @@ public class PlayerHealth : MonoBehaviour
             if (health <= 0)
             {
                 GameOverManager.Instance.EndGame();
-                _audioManager.TakeDamageSound();
+                _audioManager.PlayPlayerDamageSound();
             }
             else
             {
-                _audioManager.PlayerDieSound();
+                _audioManager.PlayPlayerDeathSound();
             }
         }
     }
@@ -78,6 +78,6 @@ public class PlayerHealth : MonoBehaviour
     {
         health += healAmount;
         lerpTimer = 0f;
-        _audioManager.PlayerHealSound();
+        _audioManager.PlayHealSound();
     }
 }

@@ -20,6 +20,8 @@ public class PrimaryAttack : MonoBehaviour
     {
         if (Time.time >= _timeToFire && SmoothFollowPoint._isWandEquipped && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused)
         {
+            AudioManager.instance.PlayStupefySound();
+
             _timeToFire = Time.time + 1 / FireRate;
 
             Ray ray = Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));

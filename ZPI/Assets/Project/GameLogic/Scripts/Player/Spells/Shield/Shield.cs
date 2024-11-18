@@ -22,6 +22,7 @@ public class Shield : MonoBehaviour
     {
         shieldObject.SetActive(true);
         Invoke(nameof(DeactivateShield), shieldDuration);
+        AudioManager.instance.PlayShieldSound();
     }
 
     private void DeactivateShield()

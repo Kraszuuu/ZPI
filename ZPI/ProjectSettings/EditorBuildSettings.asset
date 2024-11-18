@@ -4,18 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Project/GameLogic/Scenes/MainMenu.unity
-    guid: 48547ef9fd91773459b3c16e94c928e8
-  - enabled: 1
-    path: Assets/Project/GameLogic/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Project/GameLogic/Scenes/Cut Scene Scene.unity
-    guid: 66e43e3f1d8289743843beb02ad39708
-  - enabled: 1
-    path: Assets/Project/GameLogic/Scenes/Final Scene.unity
-    guid: b92724fdcea6e0242bbbfb5703e5f66c
-  m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: f46e995db6607664ba84285179b7e309, type: 2}
+  m_Scenes: []
+  m_configObjects: {}
