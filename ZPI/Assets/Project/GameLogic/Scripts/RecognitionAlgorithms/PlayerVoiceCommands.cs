@@ -27,7 +27,6 @@ public class PlayerVoiceCommands : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            Debug.Log("1");
             recognizedWord = speech.text;
             recognizedSpell = actions[recognizedWord];
             Debug.LogError("You said " + speech.text);

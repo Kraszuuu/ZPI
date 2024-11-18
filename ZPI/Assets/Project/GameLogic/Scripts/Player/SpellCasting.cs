@@ -91,7 +91,7 @@ public class SpellCasting : MonoBehaviour
         if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused)
         {
             GameState.Instance.IsSpellCasting = true;
-            gameFreezer.UpdateTimeScale();
+            //gameFreezer.UpdateTimeScaleCoroutine();
             Cursor.lockState = CursorLockMode.Confined;
         }
 
@@ -226,7 +226,7 @@ public class SpellCasting : MonoBehaviour
         //spellCastingParticleSystem.Stop();
         spellCastingParticleSystem.Stop();
         GameState.Instance.IsSpellCasting = false;
-        gameFreezer.UpdateTimeScale();
+        //gameFreezer.UpdateTimeScaleCoroutine();
         Cursor.lockState = CursorLockMode.Locked;
 
         _strokeIndex = 0;
