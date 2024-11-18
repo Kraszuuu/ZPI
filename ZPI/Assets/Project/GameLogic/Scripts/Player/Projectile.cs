@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +9,9 @@ public class Projectile : MonoBehaviour
     public float DirectDamage = 10f;
 
     [Header("Area Damage Settings")]
-    public bool HasAreaDamage = true;
-    public float AreaDamage = 5f;      // Obrażenia obszarowe
+    public float AreaDamage = 0f;      // Obrażenia obszarowe
     public float ExplosionRadius = 5f; // Promień obrażeń obszarowych
-    public bool ShowExplosionRadiusGizmo = true; // Opcja pokazywania strefy rażenia
+    public bool ShowExplosionRadiusGizmo = false; // Opcja pokazywania strefy rażenia
 
     [Header("VFX Settings")]
     public GameObject ImpactVFX;
@@ -28,7 +26,6 @@ public class Projectile : MonoBehaviour
     private Vector3 _targetScale;
     private float _scaleFactor;
     private readonly List<(Transform, ParticleSystem, float)> _childTransforms = new();
-    private float _currentDamage;
 
     void Start()
     {
@@ -58,11 +55,6 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void multiplayerDamage(float multiplayer)
-    {
-        _currentDamage *= multiplayer;
-    }
-
     private void ScaleChildren()
     {
         if (Mathf.Abs(_scaleFactor - 1f) < 0.001f) return;
@@ -81,19 +73,23 @@ public class Projectile : MonoBehaviour
     {
         if (_collided) return;
 
-        _collided = true;
         Transform hitTransform = collision.transform;
-        if (IsFriendly && hitTransform.CompareTag("Enemy"))
+
+        if (hitTransform.CompareTag("Player"))
         {
-            hitTransform.GetComponent<Enemy>().TakeDamage((int)SpellManager.Instance.GetSpellData("PrimaryAttack"));
+            if (IsFriendly) return;
+            else hitTransform.GetComponent<PlayerHealth>().TakeDamage(DirectDamage);
+            // hitTransform.GetComponent<Enemy>().TakeDamage((int)SpellManager.Instance.GetSpellData("PrimaryAttack"));
         }
-        else if (!IsFriendly && hitTransform.CompareTag("Player"))
+        else if (hitTransform.CompareTag("Enemy"))
         {
-            hitTransform.GetComponent<PlayerHealth>().TakeDamage(DirectDamage);
+            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage);
         }
 
+        _collided = true;
+
         // Obrażenia obszarowe
-        if (HasAreaDamage)
+        if (AreaDamage > 0)
         {
             LayerMask detectionLayer = LayerMask.GetMask("Enemy", "Player");
             LayerMask obstacleLayer = ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Player"));

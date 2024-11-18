@@ -1,32 +1,23 @@
-using DigitalRuby.PyroParticles;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro.Examples;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class SpellCasting : MonoBehaviour
 {
-    public CameraShake cameraShake;
-    private GameFreezer gameFreezer;
-    private List<Vector3> mousePositions = new List<Vector3>();
-    public float minDistance = 20f; // Minimalna odleg�o�� mi�dzy punktami, aby unikn�� nadmiernej liczby punkt�w
-    public GameObject fireballPrefab; // Prefab, kt�ry zawiera FireBaseScript
-    public float spellCastDistance = 10f; // Odleg�o��, na jak� rzucane jest zakl�cie
-    public GameObject lineRendererPrefab;
-    private FireballScript fireballScript; 
-    //private GameObject lineRendererInstance;
-    private LineRenderer lineRenderer;
-    public ParticleSystem spellCastingParticleSystem;
-    private PlayerVoiceCommands _playerVoiceCommands;
-
-    private List<DollarPoint> _drawPoints = new List<DollarPoint>();
+    public CameraShake CameraShake;
+    public float MinDistanceBetweenPoints = 20f;
+    public float SpellCastDistance = 10f;
+    public GameObject LineRendererPrefab;
+    public ParticleSystem SpellCastingParticleSystem;
     public event Action<DollarPoint[]> OnDrawFinished;
-    private RecognitionManager recognitionManager;
 
+    private List<Vector3> _mousePositions = new();
+    private List<DollarPoint> _drawPoints = new();
+    private GameFreezer _gameFreezer;
+    private LineRenderer _lineRenderer;
+    private PlayerVoiceCommands _playerVoiceCommands;
+    private RecognitionManager _recognitionManager;
 
     [Header("--- Fireball ---")]
     public Image FireballImage;
@@ -68,11 +59,11 @@ public class SpellCasting : MonoBehaviour
         _shieldScript = GetComponent<Shield>();
         _chainLightningShootScript = GetComponent<ChainLightningShoot>();
 
-        gameFreezer = FindObjectOfType<GameFreezer>();
-        recognitionManager = new RecognitionManager();
+        _gameFreezer = FindObjectOfType<GameFreezer>();
+        _recognitionManager = new RecognitionManager();
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
-        spellCastingParticleSystem.Stop();
-        spellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        SpellCastingParticleSystem.Stop();
+        SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
         _audioManager = GetComponent<AudioManager>();
     }
 
@@ -85,13 +76,13 @@ public class SpellCasting : MonoBehaviour
         if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused)
         {
             GameState.Instance.IsSpellCasting = true;
-            //gameFreezer.UpdateTimeScaleCoroutine();
+            // _gameFreezer.UpdateTimeScaleCoroutine();
             Cursor.lockState = CursorLockMode.Confined;
         }
 
         if (Input.GetMouseButtonDown(0) && GameState.Instance.IsSpellCasting)
         {
-            lineRenderer = CreateNewLineRenderer();
+            _lineRenderer = CreateNewLineRenderer();
         }
 
         if (Input.GetMouseButton(0) && GameState.Instance.IsSpellCasting)
@@ -117,7 +108,7 @@ public class SpellCasting : MonoBehaviour
     {
         if (name != null || distance > 2f)
         {
-            if (name.Equals("Fireball") && ( (_playerVoiceCommands.recognizedSpell == "Fireball" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
+            if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && _playerVoiceCommands.isOn) || !_playerVoiceCommands.isOn))
             {
                 if (FireballImage.fillAmount <= 0)
                 {
@@ -153,7 +144,7 @@ public class SpellCasting : MonoBehaviour
                     LightningCooldown = 5f;
                 }
             }
-            Debug.Log("Spell casted! Number of points: " + mousePositions.Count);
+            Debug.Log("Spell casted! Number of points: " + _mousePositions.Count);
         }
         else
         {
@@ -180,46 +171,46 @@ public class SpellCasting : MonoBehaviour
         mousePos.z = 0.8f; // Odległość od kamery (aby przekształcić do przestrzeni świata)
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        if (mousePositions.Count == 0 || Vector3.Distance(mousePositions[mousePositions.Count - 1], mousePos) > minDistance)
+        if (_mousePositions.Count == 0 || Vector3.Distance(_mousePositions[_mousePositions.Count - 1], mousePos) > MinDistanceBetweenPoints)
         {
-            mousePositions.Add(mousePos);
+            _mousePositions.Add(mousePos);
             _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = _strokeIndex });
 
-            lineRenderer.positionCount = mousePositions.Count;
-            lineRenderer.SetPosition(mousePositions.Count - 1, worldPos);
+            _lineRenderer.positionCount = _mousePositions.Count;
+            _lineRenderer.SetPosition(_mousePositions.Count - 1, worldPos);
 
-            spellCastingParticleSystem.transform.position = worldPos;
+            SpellCastingParticleSystem.transform.position = worldPos;
 
-            if (!spellCastingParticleSystem.isPlaying)
+            if (!SpellCastingParticleSystem.isPlaying)
             {
-                spellCastingParticleSystem.Play();
+                SpellCastingParticleSystem.Play();
             }
         }
     }
 
     private LineRenderer CreateNewLineRenderer()
     {
-        GameObject lineRendererInstance = Instantiate(lineRendererPrefab);
+        GameObject lineRendererInstance = Instantiate(LineRendererPrefab);
         LineRenderer lineRenderer = lineRendererInstance.GetComponent<LineRenderer>();
-        mousePositions.Clear();
+        _mousePositions.Clear();
         lineRenderer.positionCount = 0;
         lineRenderer.sortingOrder = 1;
         _lineRenderers.Add(lineRenderer);
-        spellCastingParticleSystem.Stop();
+        SpellCastingParticleSystem.Stop();
         return lineRenderer;
     }
 
 
     private void FinalizeSpellCasting()
     {
-        (string result, float points) = recognitionManager.OnDrawFinished(_drawPoints.ToArray());
+        (string result, float points) = _recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
         RecognizeSpell(result, points);
-        mousePositions.Clear();
+        _mousePositions.Clear();
         ClearLineRenderers();
-        spellCastingParticleSystem.Stop();
+        SpellCastingParticleSystem.Stop();
         GameState.Instance.IsSpellCasting = false;
-        //gameFreezer.UpdateTimeScaleCoroutine();
+        // _gameFreezer.UpdateTimeScaleCoroutine();
         Cursor.lockState = CursorLockMode.Locked;
 
         _strokeIndex = 0;

@@ -11,7 +11,7 @@ public class PrimaryAttack : MonoBehaviour
     public float ProjectileSpeed = 30f;
     public float FireRate = 4;
     public float ArcRange = 1;
-    [Range(0, 0.2f)] public float DelayedFire = 0.05f;
+    [Range(0, 0.2f)] public float DelayedFire = 0f;
 
     private Vector3 _destination;
     private float _timeToFire;
@@ -34,7 +34,7 @@ public class PrimaryAttack : MonoBehaviour
 
             SmoothFollowPoint.TogglePrimaryAttack();
 
-            Invoke(nameof(InstantiateProjectile), 0.1f); // delikatne opóźnienie
+            Invoke(nameof(InstantiateProjectile), DelayedFire); // delikatne opóźnienie
         }
     }
 
@@ -46,6 +46,14 @@ public class PrimaryAttack : MonoBehaviour
         // Ustawienie kierunku pocisku
         Vector3 direction = (_destination - FirePoint.position).normalized;
         projectileObj.GetComponent<Rigidbody>().velocity = direction * ProjectileSpeed;
+
+        // Pobranie obrażeń z SpellManager i przypisanie do pocisku
+        var projectileScript = projectileObj.GetComponent<Projectile>();
+        if (projectileScript != null)
+        {
+            projectileScript.DirectDamage = SpellManager.Instance.GetSpellData("PrimaryAttack");
+            projectileScript.AreaDamage = SpellManager.Instance.GetSpellData("PrimaryAttackAreaDamage");
+        }
 
         // Opcjonalny efekt dla pocisku
         iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-ArcRange, ArcRange), Random.Range(-ArcRange, ArcRange), 0), Random.Range(0.5f, 2));
