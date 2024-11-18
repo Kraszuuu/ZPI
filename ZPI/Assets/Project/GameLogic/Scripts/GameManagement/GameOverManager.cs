@@ -30,6 +30,7 @@ public class GameOverManager : MonoBehaviour
         if (!GameState.Instance.IsGameOver)
         {
             GameState.Instance.IsGameOver = true;
+            Time.timeScale = 0f;
             FulfillEndGamePanel();
             EndGamePanel.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
