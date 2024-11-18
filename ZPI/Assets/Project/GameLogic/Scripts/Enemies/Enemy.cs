@@ -75,7 +75,11 @@ public class Enemy : MonoBehaviour
         //is enemy looking at the player (?)
         Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
         RaycastHit hitInfo = new RaycastHit();
-        if (!Physics.Raycast(ray, out hitInfo, sightDistance) || hitInfo.transform.gameObject != player) return false;
+
+        int layerToIgnore = LayerMask.NameToLayer("Shield");
+        int layerMask = ~(1 << layerToIgnore);
+
+        if (!Physics.Raycast(ray, out hitInfo, sightDistance, layerMask) || hitInfo.transform.gameObject != player) return false;
 
         Debug.DrawRay(ray.origin, ray.direction * sightDistance, Color.yellow);
 
@@ -87,7 +91,6 @@ public class Enemy : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.TakeDamage(damage);
-        Debug.Log("Enemy took damage. Current health: " + currentHealth);
 
         if (currentHealth <= 0)
         {

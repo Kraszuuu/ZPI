@@ -25,8 +25,8 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void BuffBaseSpell(int amount)
+    public void BuffBaseSpell(float multiplayer)
     {
-        enemyDamage += amount;
+        enemyDamage *= multiplayer;
     }
 }
