@@ -492,7 +492,6 @@ MonoBehaviour:
   _isSwinging: 0
   _isLeftSwing: 0
   _swingTimer: 0
-  _isWandEquipped: 0
   animator: {fileID: 2001461353663384950}
   _currentTargetOffset: {x: 0, y: 0, z: 0}
   _currentRotationOffset: {x: 0, y: 0, z: 0, w: 1}
@@ -11956,7 +11955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recognizedSpell: 
   recognizedWord: 
-  isOn: 0
+  isSpeechRecognitionEnabled: 0
 --- !u!114 &245897539085753000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12134,6 +12133,7 @@ MonoBehaviour:
   delayBetweenEachChain: 0.2
   lineRendererPrefab: {fileID: 7266535234903039209, guid: 0b0256bc0766dd14dbaedd59e6a4ed14, type: 3}
   spellDuration: 1.2
+  _endOfWand: {fileID: 9155031364166668945}
 --- !u!114 &7414920338665460433
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,8 @@ using UnityEngine;
 public class PauseManager : MonoBehaviour
 {
     public GameObject PausePanel;
-    public bool isEnabled = true;
+    public GameObject HelpPanel;
+    //public bool isEnabled = true;
 
     private void Start()
     {
@@ -14,7 +15,7 @@ public class PauseManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (isEnabled && !GameState.Instance.IsGameOver)
+        if (!GameState.Instance.IsGameOver)
         {
             GameState.Instance.IsGamePaused = true;
             Time.timeScale = 0f;
@@ -28,13 +29,24 @@ public class PauseManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        if (isEnabled)
-        {
-            GameState.Instance.IsGamePaused = false;
-            Time.timeScale = 1f;
-            PausePanel.SetActive(false);
-            GameState.Instance.IsGamePaused= false;
-            AudioManager.instance.PlayUnpauseSound();
-        }
+        GameState.Instance.IsGamePaused = false;
+        Time.timeScale = 1f;
+        PausePanel.SetActive(false);
+        GameState.Instance.IsGamePaused= false;
+        AudioManager.instance.PlayUnpauseSound();
+    }
+
+    public void DisplayHelpMenu()
+    {
+        PausePanel.SetActive(false);
+        HelpPanel.SetActive(true);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void HideHelpMenu()
+    {
+        PausePanel.SetActive(true);
+        HelpPanel.SetActive(false);
+        AudioManager.instance.PlayButtonClickSound();
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.449809, g: 0.49987626, b: 0.57560015, a: 1}
+  m_IndirectSpecularColor: {r: 0.44980848, g: 0.49987572, b: 0.5755988, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3315,6 +3315,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77ad9661321c6e84280c8fbe32492c06, type: 3}
+--- !u!1 &662385931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3370638863139421603, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &674054536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4025,11 +4030,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a403260d581bded4d85f723fd39eb456, type: 3}
---- !u!1 &782538089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9155031364166668945, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-  m_PrefabInstance: {fileID: 3956698893370958202}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &799950007
 GameObject:
   m_ObjectHideFlags: 0
@@ -12028,6 +12028,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8811688559174403293}
     - target: {fileID: 6672715972045503091, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: HelpPanel
+      value: 
+      objectReference: {fileID: 662385931}
+    - target: {fileID: 6672715972045503091, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: PausePanel
       value: 
       objectReference: {fileID: 6460582244847466791}
@@ -12171,10 +12175,6 @@ PrefabInstance:
       propertyPath: promptText
       value: 
       objectReference: {fileID: 7195826505722491214}
-    - target: {fileID: 8254181603177606499, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: _endOfWand
-      value: 
-      objectReference: {fileID: 782538089}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12210,6 +12210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 251628140797447411, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3582394203085749110}
     - target: {fileID: 968160703121926256, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -12218,6 +12222,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
+    - target: {fileID: 2137449708109201524, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3582394203085749110}
     - target: {fileID: 2160474248604308731, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -12306,10 +12314,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
-    - target: {fileID: 8728558427991065603, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 8874589560653319096, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
