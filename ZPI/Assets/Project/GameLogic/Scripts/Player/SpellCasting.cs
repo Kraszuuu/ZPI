@@ -161,7 +161,7 @@ public class SpellCasting : MonoBehaviour
     public void CastMeteorRain()
     {
         _meteorsScript.CastMeteorRain();
-        _audioManager.PlayMeteorRainSound();
+        //_audioManager.PlayMeteorRainSound();
     }
 
 

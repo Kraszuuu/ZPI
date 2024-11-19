@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
-    private float moveTimer;
-    private float losePlayerTimer;
-    private float attackTimer;
-    private float stopDistance = 5f;
+    private float _moveTimer;
+    private float _losePlayerTimer;
+    private float _attackTimer;
+    private float _stopDistance = 5f;
 
     public override void Enter()
     {
@@ -25,37 +25,31 @@ public class AttackState : BaseState
         if (enemy.CanSeePlayer()) //player can be seen
         {
             //lock the lose player timer and increment the move and shot timers
-            losePlayerTimer = 0;
-            moveTimer += Time.deltaTime;
-            attackTimer += Time.deltaTime;
-            enemy.transform.LookAt(enemy.Player.transform);
-            
-            float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+            _losePlayerTimer = 0;
+            _moveTimer += Time.deltaTime;
+            _attackTimer += Time.deltaTime;
+            Vector3 playerPosition = enemy.Player.transform.position;
+            playerPosition.y = enemy.transform.position.y;
+            enemy.transform.LookAt(playerPosition);
+            DetectionManager.Instance.ReportPlayerDetected(enemy.Player.transform.position);
 
-            if (distanceToPlayer > stopDistance)
-            {
-                enemy.Agent.SetDestination(enemy.Player.transform.position);
-            }
-            else
-            {
-                enemy.Agent.ResetPath();
-            }
+            
 
             //move the enemy to a random position after a random time
-            if (attackTimer > enemy.fireRate)
+            if (_attackTimer > enemy.fireRate)
             {
                 AttackPlayer();
             }
-            if (moveTimer > Random.Range(3, 7))
+            if (_moveTimer > Random.Range(3, 7))
             {
                 enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
-                moveTimer = 0;
+                _moveTimer = 0;
             }
         }
         else //lost sight of player
         {
-            losePlayerTimer += Time.deltaTime;
-            if (losePlayerTimer > 2)
+            _losePlayerTimer += Time.deltaTime;
+            if (_losePlayerTimer > 2)
             {
                 //change to the search state
                 stateMachine.ChangeState(new PatrolState());
@@ -70,6 +64,10 @@ public class AttackState : BaseState
 
         if (enemy.enemyType == EnemyType.Ranged)
         {
+
+            enemy.Agent.SetDestination(enemy.Player.transform.position);
+            
+           
             //store reference to the gun barrel
             Transform gunbarrel = enemy.gunBarrel;
 
@@ -81,7 +79,7 @@ public class AttackState : BaseState
                 Vector3 shootDirection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
                 //add force rigidbody of the bullet
                 bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
-                attackTimer = 0;
+                _attackTimer = 0;
             }
             else
             {
@@ -93,11 +91,13 @@ public class AttackState : BaseState
             
 
             // Jeœli przeciwnik jest dalej ni¿ stopDistance, to siê porusza
-            if (distance > stopDistance)
+            if (distance > _stopDistance)
             {
                 Vector3 direction = (enemy.Player.transform.position - enemy.transform.position).normalized;
                 enemy.transform.position += direction * Time.deltaTime;
-                enemy.transform.LookAt(enemy.Player.transform.position);
+                Vector3 playerPosition = enemy.Player.transform.position;
+                playerPosition.y = enemy.transform.position.y;
+                enemy.transform.LookAt(playerPosition);
             }
         }
     }

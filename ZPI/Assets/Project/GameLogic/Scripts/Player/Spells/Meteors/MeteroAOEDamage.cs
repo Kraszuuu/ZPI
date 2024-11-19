@@ -6,14 +6,15 @@ public class MeteroAOEDamage : MonoBehaviour
 {
     public int damage = 1; // Obra¿enia zadawane przez meteoryt
     public float radius = 0.01f; // Promieñ obra¿eñ obszarowych
-    private Vector3 hitPoint; // Punkt ataku, wokó³ którego zadajemy obra¿enia
+    private Vector3 _hitPoint; // Punkt ataku, wokó³ którego zadajemy obra¿enia
     public GameObject meteorPrefab;
     public LayerMask Layer;
+    private float _damageRadius = 5f;
 
     // Inicjalizacja meteoru z punktem ataku
     public void Initialize(Vector3 attackPoint)
     {
-        hitPoint = attackPoint;
+        _hitPoint = attackPoint;
     }
 
     // Wykrycie kolizji cz¹stek z ziemi¹ lub innymi obiektami
@@ -21,15 +22,15 @@ public class MeteroAOEDamage : MonoBehaviour
     {
         // Zadawanie obra¿eñ przeciwnikom w promieniu hitPoint
         Debug.Log("Object hit: " + other.name);
-        Debug.Log("HitPoint: " + hitPoint.ToString());
-        DealDamageToEnemiesInRadius(hitPoint);
+        Debug.Log("HitPoint: " + _hitPoint.ToString());
+        DealDamageToEnemiesInRadius(_hitPoint);
     }
 
     // Funkcja, która zadaje obra¿enia wszystkim przeciwnikom w promieniu wokó³ hitPoint
     void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
     {
         // ZnajdŸ wszystkie obiekty w promieniu od punktu ataku
-        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, 0.01f);
+        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, _damageRadius);
 
         foreach (var hitCollider in hitColliders)
         {
@@ -79,7 +80,7 @@ public class MeteroAOEDamage : MonoBehaviour
         Gizmos.color = new Color(1, 0, 0, 0.5f);
 
         // Narysuj sferê wokó³ explosionCenter o promieniu radius
-        Gizmos.DrawWireSphere(hitPoint, 0.01f);
+        Gizmos.DrawWireSphere(_hitPoint, 0.01f);
     }
 }
 

@@ -83,12 +83,12 @@ public class Enemy : MonoBehaviour
 
         Debug.DrawRay(ray.origin, ray.direction * sightDistance, Color.yellow);
 
-        DetectionManager.Instance.ReportPlayerDetected(player.transform.position);
         return true;
     }
 
     public void TakeDamage(int damage)
     {
+        DetectionManager.Instance.ReportPlayerDetected(player.transform.position);
         currentHealth -= damage;
         healthBar.TakeDamage(damage);
 
