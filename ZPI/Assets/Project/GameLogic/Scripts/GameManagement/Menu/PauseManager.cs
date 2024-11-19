@@ -18,6 +18,7 @@ public class PauseManager : MonoBehaviour
         {
             GameState.Instance.IsGamePaused = true;
             Time.timeScale = 0f;
+            Debug.Log(Time.timeScale);
             PausePanel.SetActive(true);
             GameState.Instance.IsGamePaused = true;
             Cursor.lockState = CursorLockMode.Confined;

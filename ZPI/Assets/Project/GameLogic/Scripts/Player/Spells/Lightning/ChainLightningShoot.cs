@@ -18,6 +18,8 @@ public class ChainLightningShoot : MonoBehaviour
     private GameObject lineRendererPrefab;
     [SerializeField]
     private float spellDuration = 1f;
+    [SerializeField]
+    private GameObject _endOfWand;
     private LightningBoltScript lightningBoltScript;
 
     private bool shooting;
@@ -33,20 +35,6 @@ public class ChainLightningShoot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Y))
-        {
-            if (playerEnemyDetector.GetEnemiesInRange().Count > 0)
-            {
-                if (!shooting)
-                {
-                    StartShooting();
-                }
-            }
-            else
-            {
-                StopShooting();
-            }
-        }
     }
 
     public void StartShooting()
@@ -64,7 +52,7 @@ public class ChainLightningShoot : MonoBehaviour
                 if (currentClosestEnemy != null)
                 {
                     enemiesInChain.Add(currentClosestEnemy);
-                    lightningBoltScript.StartObject = this.gameObject;
+                    lightningBoltScript.StartObject = _endOfWand;
                     lightningBoltScript.EndObject = currentClosestEnemy;
 
                     if (maximumEnemiesInChain > 1)

@@ -4025,6 +4025,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a403260d581bded4d85f723fd39eb456, type: 3}
+--- !u!1 &782538089 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9155031364166668945, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+  m_PrefabInstance: {fileID: 3956698893370958202}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &799950007
 GameObject:
   m_ObjectHideFlags: 0
@@ -5479,10 +5484,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemySpawn:
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
     - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
   - enemySpawn:
     - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
@@ -12186,6 +12187,10 @@ PrefabInstance:
       propertyPath: promptText
       value: 
       objectReference: {fileID: 7195826505722491214}
+    - target: {fileID: 8254181603177606499, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: _endOfWand
+      value: 
+      objectReference: {fileID: 782538089}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12317,6 +12322,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
+    - target: {fileID: 8728558427991065603, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8874589560653319096, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
