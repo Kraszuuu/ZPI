@@ -12278,10 +12278,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3956698893370958203}
-    - target: {fileID: 3370638863139421603, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3990745248663825133, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: playerSkills
       value: 
@@ -12305,10 +12301,6 @@ PrefabInstance:
     - target: {fileID: 5866366302617802142, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6351114278844828303, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7289212038708152091, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
