@@ -22,7 +22,6 @@ public class WavesManager : MonoBehaviour
 
     private void OnSpawnerWaveCleared()
     {
-        Debug.Log("SPAWNER CLEARED");
         spawnersCleared++;
         if (spawnersCleared >= EnemySpawners.Count)
         {
@@ -31,7 +30,14 @@ public class WavesManager : MonoBehaviour
 
             if (currentWave % upgradeWavesInterval == 0)
             {
-                ShowUpgradeMenu();
+                if (!IsEverySkillUnlocked())
+                {
+                    ShowUpgradeMenu();
+                }
+                else
+                {
+                    StartCoroutine(DelayedStartNextWave());
+                }
             }
             else
             {
@@ -61,6 +67,11 @@ public class WavesManager : MonoBehaviour
         upgradeMenu.Show();
         Cursor.lockState = CursorLockMode.Confined;
         upgradeMenu.OnUpgradeSelected += OnUpgradeSelected;
+    }
+
+    private bool IsEverySkillUnlocked()
+    {
+        return upgradeMenu.playerSkills.IsEverySkillUnlocked();
     }
 
     private void OnUpgradeSelected()
