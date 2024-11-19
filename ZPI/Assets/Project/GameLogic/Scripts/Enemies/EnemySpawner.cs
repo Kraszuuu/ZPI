@@ -62,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
             waveInProgress = true;
             for (int i = 0; i < waves[currentWave - 1].GetEnemySpawnList().Count; i++)
             {
-                GameObject newSpawn = Instantiate(waves[currentWave].GetEnemySpawnList()[i], FindSpawnLoc(), Quaternion.identity);
+                GameObject newSpawn = Instantiate(waves[currentWave-1].GetEnemySpawnList()[i], FindSpawnLoc(), Quaternion.identity);
                 CurrentEnemies.Add(newSpawn);
             }
         }

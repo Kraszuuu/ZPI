@@ -16,32 +16,32 @@ public class PlayerSkills : MonoBehaviour
         ELECTRIC_UNLOCK = 8
     }
 
-    private List<SkillType> unlockedSkillTypeList;
-    private Dictionary<SkillType, List<SkillType>> skillRequirements;
+    private List<SkillType> _unlockedSkillTypeList;
+    private Dictionary<SkillType, List<SkillType>> _skillRequirements;
 
     private void Start()
     {
-        unlockedSkillTypeList = new List<SkillType>();
+        _unlockedSkillTypeList = new List<SkillType>();
         InitializeSkillRequirements();
     }
 
     public void UnlockSkill(SkillType skillType)
     {
-        unlockedSkillTypeList.Add(skillType);
+        _unlockedSkillTypeList.Add(skillType);
     }
 
     public bool IsSkillUnlocked(SkillType skillType)
     {
-        return unlockedSkillTypeList.Contains(skillType);
+        return _unlockedSkillTypeList.Contains(skillType);
     }
 
     public bool CanUnlockSkill(SkillType skillType)
     {
-        if (!skillRequirements.ContainsKey(skillType))
+        if (!_skillRequirements.ContainsKey(skillType))
         {
             return true;
         }
-        foreach (var requiredSkill in skillRequirements[skillType])
+        foreach (var requiredSkill in _skillRequirements[skillType])
         {
             if (!IsSkillUnlocked(requiredSkill))
             {
@@ -51,9 +51,14 @@ public class PlayerSkills : MonoBehaviour
         return true;
     }
 
+    public bool IsEverySkillUnlocked()
+    {
+        return System.Enum.GetValues(typeof(SkillType)).Length == _unlockedSkillTypeList.Count;
+    }
+
     private void InitializeSkillRequirements()
     {
-        skillRequirements = new Dictionary<SkillType, List<SkillType>>
+        _skillRequirements = new Dictionary<SkillType, List<SkillType>>
         {
             { SkillType.FIREBALL_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
             { SkillType.SHIELD_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
