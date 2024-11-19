@@ -110,11 +110,11 @@ public class Projectile : MonoBehaviour
                         hitCollider.GetComponent<Enemy>().TakeDamage((int)AreaDamage);
                         Debug.Log("Hit enemy at distance: " + distanceToTarget);
                     }
-                    else if (!IsFriendly && hitCollider.CompareTag("Player"))
+                    /*else if (!IsFriendly && hitCollider.CompareTag("Player"))
                     {
                         hitCollider.GetComponent<PlayerHealth>().TakeDamage(AreaDamage);
                         Debug.Log("Hit player at distance: " + distanceToTarget);
-                    }
+                    }*/
                 }
                 else
                 {

@@ -26,15 +26,17 @@ public class PlayerLook : MonoBehaviour
 
     public void ProcessLook(Vector2 input)
     {
-        if (input.sqrMagnitude >= _threshold)
-        {
-            _rotationVelocity = input.x * Sensitivity;
-            _cameraPitchAngle += input.y * Sensitivity;
+        if (!GameState.Instance.IsGamePaused && !GameState.Instance.IsGameOver) {
+            if (input.sqrMagnitude >= _threshold)
+            {
+                _rotationVelocity = input.x * Sensitivity;
+                _cameraPitchAngle += input.y * Sensitivity;
 
-            _cameraPitchAngle = ClampAngle(_cameraPitchAngle, BottomClamp, TopClamp);
+                _cameraPitchAngle = ClampAngle(_cameraPitchAngle, BottomClamp, TopClamp);
 
-            cam.transform.localRotation = Quaternion.Euler(_cameraPitchAngle, 0.0f, 0.0f);
-            transform.Rotate(Vector3.up * _rotationVelocity);
+                cam.transform.localRotation = Quaternion.Euler(_cameraPitchAngle, 0.0f, 0.0f);
+                transform.Rotate(Vector3.up * _rotationVelocity);
+            }
         }
     }
 

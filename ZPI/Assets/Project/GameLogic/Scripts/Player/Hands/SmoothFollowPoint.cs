@@ -50,7 +50,6 @@ public class SmoothFollowPoint : MonoBehaviour
     private Camera _mainCamera;
     private Transform _cameraTransform;
     private InputManager _inputManager;
-    public bool _isWandEquipped = false;    // Czy gracz trzyma różdżkę
 
     public Animator animator;
 
@@ -140,9 +139,9 @@ public class SmoothFollowPoint : MonoBehaviour
 
     void ToggleWand()
     {
-        _isWandEquipped = !_isWandEquipped;
+        GameState.Instance.IsWandEquipped = !GameState.Instance.IsWandEquipped;
 
-        if (_isWandEquipped)
+        if (GameState.Instance.IsWandEquipped)
         {
             animator.SetBool("isHoldingWand", true);
         }
@@ -155,7 +154,7 @@ public class SmoothFollowPoint : MonoBehaviour
     public void TogglePrimaryAttack()
     {
         // Sprawdzenie, czy nastąpiło wciśnięcie prawego przycisku myszy do rzucenia zaklęcia
-        if (_isWandEquipped)
+        if (GameState.Instance.IsWandEquipped)
         {
             _isSwinging = true;
             _swingTimer = SwingHoldTime;
