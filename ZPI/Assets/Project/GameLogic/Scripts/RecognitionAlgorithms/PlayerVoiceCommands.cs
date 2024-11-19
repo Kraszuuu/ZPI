@@ -11,10 +11,14 @@ public class PlayerVoiceCommands : MonoBehaviour
     private Dictionary<string, string> actions = new Dictionary<string, string>();
     public string recognizedSpell;
     public string recognizedWord;
-    public bool isOn = false;                           // Very important
+    public bool isSpeechRecognitionEnabled;                           // Very important
 
     private void Start()
     {
+        isSpeechRecognitionEnabled = GameSettings.isSpeechRecognitionEnabled;
+        Debug.Log($"Speech recognition initialized to: {isSpeechRecognitionEnabled}");
+
+
         AddWords();
 
         keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
@@ -22,7 +26,6 @@ public class PlayerVoiceCommands : MonoBehaviour
         keywordRecognizer.Start();
 
     }
-
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech)
     {
         if (Input.GetMouseButton(1))
