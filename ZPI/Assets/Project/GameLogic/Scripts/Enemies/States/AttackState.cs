@@ -8,11 +8,17 @@ public class AttackState : BaseState
     private float _moveTimer;
     private float _losePlayerTimer;
     private float _attackTimer;
-    private float _stopDistance = 5f;
+    private float _stopDistanceRanged = 10f;
+    private float _stopDistanceMelee = 2f;
+    private PlayerHealth _playerHealth;
+    private float _meleeDamage = 10f;
 
     public override void Enter()
     {
-
+        if (enemy.enemyType == EnemyType.Melee)
+        {
+            _playerHealth = enemy.Player.GetComponent<PlayerHealth>();
+        }
     }
 
     public override void Exit()
@@ -32,8 +38,6 @@ public class AttackState : BaseState
             playerPosition.y = enemy.transform.position.y;
             enemy.transform.LookAt(playerPosition);
             DetectionManager.Instance.ReportPlayerDetected(enemy.Player.transform.position);
-
-            
 
             //move the enemy to a random position after a random time
             if (_attackTimer > enemy.fireRate)
@@ -61,17 +65,21 @@ public class AttackState : BaseState
     {
         // Oblicz odleg³oœæ miêdzy przeciwnikiem a graczem
         float distance = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+        enemy.Agent.SetDestination(enemy.Player.transform.position);
 
         if (enemy.enemyType == EnemyType.Ranged)
         {
+            if (distance <= _stopDistanceRanged)
+            {
+                enemy.Agent.isStopped = true;               
+            }
+            else
+            {
+                enemy.Agent.isStopped = false;
+            }
 
-            enemy.Agent.SetDestination(enemy.Player.transform.position);
-            
-           
-            //store reference to the gun barrel
             Transform gunbarrel = enemy.gunBarrel;
 
-            //instantiate a new bullt
             if (enemy.bulletPrefab != null)
             {
                 GameObject bullet = GameObject.Instantiate(enemy.bulletPrefab, gunbarrel.position, enemy.transform.rotation);
@@ -88,16 +96,15 @@ public class AttackState : BaseState
         }
         else if (enemy.enemyType == EnemyType.Melee)
         {
-            
-
-            // Jeœli przeciwnik jest dalej ni¿ stopDistance, to siê porusza
-            if (distance > _stopDistance)
+            if (distance > _stopDistanceMelee)
             {
-                Vector3 direction = (enemy.Player.transform.position - enemy.transform.position).normalized;
-                enemy.transform.position += direction * Time.deltaTime;
-                Vector3 playerPosition = enemy.Player.transform.position;
-                playerPosition.y = enemy.transform.position.y;
-                enemy.transform.LookAt(playerPosition);
+                enemy.Agent.isStopped = false;
+            }
+            else
+            {
+                enemy.Agent.isStopped = true;
+                _playerHealth.TakeDamage(_meleeDamage);
+                _attackTimer = 0;
             }
         }
     }
