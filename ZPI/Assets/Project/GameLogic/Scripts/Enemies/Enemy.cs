@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
     private string currentState;
 
     private EnemySpawner spawner;
+    private DamagePopupGenerator _damagePopupGenerator;
 
     private PlayerHealth healthBar;
     void Start()
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
         stateMachine = GetComponent<StateMachine>();
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialize();
+        _damagePopupGenerator = GetComponentInChildren<DamagePopupGenerator>();
         player = GameObject.FindGameObjectWithTag("Player");
 
         currentHealth = maxHealth;
@@ -91,11 +93,13 @@ public class Enemy : MonoBehaviour
         DetectionManager.Instance.ReportPlayerDetected(player.transform.position);
         currentHealth -= damage;
         healthBar.TakeDamage(damage);
-
+        Vector3 randomness = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
+        _damagePopupGenerator.CreatePopup(transform.position + randomness, damage.ToString(), Color.red);
         if (currentHealth <= 0)
         {
             Die();
         }
+        
     }
 
     public void SetSpawner(EnemySpawner spawner)

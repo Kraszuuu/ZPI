@@ -43,14 +43,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        if (HealthSlider.value != health)
+        float normalizedHealth = (health / maxHealth) * 100f;
+        if (HealthSlider.value != normalizedHealth)
         {
-            HealthSlider.value = health;
+            HealthSlider.value = normalizedHealth;
         }
 
-        if (HealthSlider.value != EaseHealthSlider.value)
+        // Dodanie efektu "ease" (p³ynne przejœcie) na drugim pasku
+        if (EaseHealthSlider.value != normalizedHealth)
         {
-            EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, health, _lerpSpeed);
+            EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, normalizedHealth, _lerpSpeed);
         }
 
     }
