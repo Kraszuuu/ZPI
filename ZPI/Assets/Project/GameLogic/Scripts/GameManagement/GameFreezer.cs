@@ -31,6 +31,10 @@ public class GameFreezer : MonoBehaviour
                 targetTimeScale = minTimeScale;
                 inputManager.enabled = false;
             }
+            else if (GameState.Instance.IsGamePaused || GameState.Instance.IsGameOver)
+            {
+                targetTimeScale = 0f;
+            }
             else
             {
                 targetTimeScale = 1f;
