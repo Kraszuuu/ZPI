@@ -74,6 +74,7 @@ public class UpgradeMenu : MonoBehaviour
         playerSkills.UnlockSkill((PlayerSkills.SkillType)skillTypeId);
         OnUpgradeSelected?.Invoke();
         UpdateSkillUI();
+        Cursor.lockState = CursorLockMode.Locked;
         Hide();
     }
 

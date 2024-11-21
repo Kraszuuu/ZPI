@@ -23,6 +23,10 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
+        if (GameState.Instance.IsSpellCasting)
+        {
+            _currentShakeDuration = 0f;
+        }
         if (_currentShakeDuration > 0)
         {
             Vector3 randomOffset = Random.insideUnitSphere * ShakeIntensity;
