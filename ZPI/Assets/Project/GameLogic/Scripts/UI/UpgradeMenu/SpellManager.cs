@@ -31,7 +31,7 @@ public class SpellManager : MonoBehaviour
         spellData["FireballAreaDamage"] = 20f;
         spellData["Shield"] = 5f;
         spellData["Lightning"] = 30f;
-        spellData["Meteors"] = 2f;
+        spellData["Meteors"] = 1f;
     }
 
     public float GetSpellData(string spellName)

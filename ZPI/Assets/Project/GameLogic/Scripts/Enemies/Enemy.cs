@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
         currentHealth -= damage;
         healthBar.TakeDamage(damage);
         Vector3 randomness = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
-        _damagePopupGenerator.CreatePopup(transform.position + randomness, damage.ToString(), Color.red);
+        _damagePopupGenerator.CreatePopup(transform.position + randomness, damage.ToString(), Color.yellow);
         if (currentHealth <= 0)
         {
             Die();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeteroAOEDamage : MonoBehaviour
 {
-    public int damage = 1; // Obra¿enia zadawane przez meteoryt
+
     public float radius = 0.01f; // Promieñ obra¿eñ obszarowych
     private Vector3 _hitPoint; // Punkt ataku, wokó³ którego zadajemy obra¿enia
     public GameObject meteorPrefab;
@@ -20,9 +20,6 @@ public class MeteroAOEDamage : MonoBehaviour
     // Wykrycie kolizji cz¹stek z ziemi¹ lub innymi obiektami
     void OnParticleCollision(GameObject other)
     {
-        // Zadawanie obra¿eñ przeciwnikom w promieniu hitPoint
-        Debug.Log("Object hit: " + other.name);
-        Debug.Log("HitPoint: " + _hitPoint.ToString());
         DealDamageToEnemiesInRadius(_hitPoint);
     }
 
@@ -40,7 +37,6 @@ public class MeteroAOEDamage : MonoBehaviour
             {
                 // Zadaj obra¿enia przeciwnikowi
                 enemy.TakeDamage((int)SpellManager.Instance.GetSpellData("Meteors"));
-                Debug.Log("Przeciwnik " + enemy.name + " otrzyma³ obra¿enia: " + damage);
             }
         }
     }
@@ -61,8 +57,6 @@ public class MeteroAOEDamage : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
         {
             SpawnMeteor(hit.point);
-            Debug.Log("Hit: " + hit.collider.name);
-
         }
     }
 
