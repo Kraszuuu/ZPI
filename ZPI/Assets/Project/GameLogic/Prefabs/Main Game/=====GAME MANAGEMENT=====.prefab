@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 6934550681784510673}
   - component: {fileID: 2555006797238799597}
   - component: {fileID: 1679694867831697284}
+  - component: {fileID: 1602844855471293960}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -127,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 0}
-  isEnabled: 1
+  HelpPanel: {fileID: 0}
 --- !u!114 &4103712463386379400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +214,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4677acd865c02fa4a9914de9ab86cebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1602844855471293960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061530863420556397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8fb4797d490c248a322b0ea2bd184d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellCastingCanvas: {fileID: 0}
 --- !u!1 &8009724173711152546
 GameObject:
   m_ObjectHideFlags: 0

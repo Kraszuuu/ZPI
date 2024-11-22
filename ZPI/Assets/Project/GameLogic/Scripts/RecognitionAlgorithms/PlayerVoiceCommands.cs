@@ -13,12 +13,12 @@ public class PlayerVoiceCommands : MonoBehaviour
     private Dictionary<string, string> actions = new Dictionary<string, string>();
     public string recognizedSpell;
     public string recognizedWord;
-    public bool isSpeechRecognitionEnabled = true;
+    public bool isSpeechRecognitionEnabled;
     public TMP_Text recognizedWordText;
 
     private void Start()
     {
-        isSpeechRecognitionEnabled = GameSettings.isSpeechRecognitionEnabled;
+        isSpeechRecognitionEnabled = GameState.IsSpeechRecognitionEnabled;
         Debug.Log($"Speech recognition initialized to: {isSpeechRecognitionEnabled}");
 
 
