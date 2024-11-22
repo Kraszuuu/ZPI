@@ -82,4 +82,9 @@ public class PlayerHealth : MonoBehaviour
         lerpTimer = 0f;
         _audioManager.PlayHealSound();
     }
+
+    public void RenewHealth()
+    {
+        health = maxHealth;
+    }
 }

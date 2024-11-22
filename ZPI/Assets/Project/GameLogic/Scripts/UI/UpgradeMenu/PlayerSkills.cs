@@ -13,7 +13,10 @@ public class PlayerSkills : MonoBehaviour
         FIREBALL_BUFF = 5,
         HEALTH_BUFF = 6,
         METEOR_BUFF = 7,
-        ELECTRIC_UNLOCK = 8
+        ELECTRIC_UNLOCK = 8,
+        HEAL_1 = 9,
+        HEAL_2 = 10,
+        HEAL_3 = 11
     }
 
     private List<SkillType> _unlockedSkillTypeList;
@@ -66,7 +69,9 @@ public class PlayerSkills : MonoBehaviour
             { SkillType.FIREBALL_BUFF, new List<SkillType>() { SkillType.FIREBALL_UNLOCK } },
             { SkillType.HEALTH_BUFF, new List<SkillType>() { SkillType.SHIELD_UNLOCK } },
             { SkillType.METEOR_BUFF, new List<SkillType>() { SkillType.METEOR_UNLOCK } },
-            { SkillType.ELECTRIC_UNLOCK, new List<SkillType> { SkillType.FIREBALL_BUFF, SkillType.HEALTH_BUFF, SkillType.METEOR_BUFF } }
+            { SkillType.ELECTRIC_UNLOCK, new List<SkillType> { SkillType.FIREBALL_BUFF, SkillType.HEALTH_BUFF, SkillType.METEOR_BUFF } },
+            { SkillType.HEAL_2, new List<SkillType>() { SkillType.HEAL_1 } },
+            { SkillType.HEAL_3, new List<SkillType>() { SkillType.HEAL_2 } }
         };
     }
 }
