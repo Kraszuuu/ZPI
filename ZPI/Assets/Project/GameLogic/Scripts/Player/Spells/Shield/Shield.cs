@@ -20,6 +20,7 @@ public class Shield : MonoBehaviour
     {
         shieldObject.SetActive(true);
         AudioManager.instance.PlayShieldSound();
+        Debug.Log(SpellManager.Instance.GetSpellData("Shield"));
         Invoke(nameof(DeactivateShield), SpellManager.Instance.GetSpellData("Shield"));
     }
 
