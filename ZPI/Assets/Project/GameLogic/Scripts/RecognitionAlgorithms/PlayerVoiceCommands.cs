@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerVoiceCommands : MonoBehaviour
 {
@@ -11,7 +13,8 @@ public class PlayerVoiceCommands : MonoBehaviour
     private Dictionary<string, string> actions = new Dictionary<string, string>();
     public string recognizedSpell;
     public string recognizedWord;
-    public bool isSpeechRecognitionEnabled;                           // Very important
+    public bool isSpeechRecognitionEnabled = true;
+    public TMP_Text recognizedWordText;
 
     private void Start()
     {
@@ -31,6 +34,7 @@ public class PlayerVoiceCommands : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             recognizedWord = speech.text;
+            recognizedWordText.text = speech.text;
             recognizedSpell = actions[recognizedWord];
             Debug.LogError("You said " + speech.text);
         }

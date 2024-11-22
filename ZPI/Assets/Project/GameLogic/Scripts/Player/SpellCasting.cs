@@ -45,7 +45,6 @@ public class SpellCasting : MonoBehaviour
 
     private int _strokeIndex;
 
-    private AudioManager _audioManager;
     private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
 
     public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
@@ -64,7 +63,6 @@ public class SpellCasting : MonoBehaviour
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
-        _audioManager = GetComponent<AudioManager>();
     }
 
     void Update()
@@ -76,7 +74,6 @@ public class SpellCasting : MonoBehaviour
         if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused)
         {
             GameState.Instance.IsSpellCasting = true;
-            // _gameFreezer.UpdateTimeScaleCoroutine();
             Cursor.lockState = CursorLockMode.Confined;
         }
 
@@ -161,7 +158,6 @@ public class SpellCasting : MonoBehaviour
     public void CastMeteorRain()
     {
         _meteorsScript.CastMeteorRain();
-        //_audioManager.PlayMeteorRainSound();
     }
 
 
