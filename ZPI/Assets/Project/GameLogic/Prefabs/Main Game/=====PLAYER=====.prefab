@@ -11887,7 +11887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e3f46939ac2d64fadbedb588875051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptText: {fileID: 0}
 --- !u!114 &3287277701196068767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11956,6 +11955,7 @@ MonoBehaviour:
   recognizedSpell: 
   recognizedWord: 
   isSpeechRecognitionEnabled: 0
+  recognizedWordText: {fileID: 0}
 --- !u!114 &245897539085753000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12184,7 +12184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d1da9cd0f9d5844a542ce54cc94756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
   radius: 0.01
   meteorPrefab: {fileID: 7957833072274404953, guid: e719376f38db3a6479c0eb7a37b5d65c, type: 3}
   Layer:

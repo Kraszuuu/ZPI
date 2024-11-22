@@ -7,10 +7,14 @@ public class WavesManager : MonoBehaviour
     public List<EnemySpawner> EnemySpawners;
     public float delayBetweenWaves = 5f;
     public int upgradeWavesInterval = 3;
-    private int spawnersCleared = 0;
-    private int currentWave = 1;
+    private int _spawnersCleared = 0;
+    private int _currentWave = 1;
 
     public UpgradeMenu upgradeMenu;
+    public GameObject waveClearedText;
+    public float waveClearedDisplayTime = 2f;
+    public float intervalBeforeUpgradeMenuShow = 0.3f;
+
 
     void Start()
     {
@@ -22,28 +26,49 @@ public class WavesManager : MonoBehaviour
 
     private void OnSpawnerWaveCleared()
     {
-        spawnersCleared++;
-        if (spawnersCleared >= EnemySpawners.Count)
+        _spawnersCleared++;
+        if (_spawnersCleared >= EnemySpawners.Count)
         {
-            spawnersCleared = 0;
-            currentWave++;
+            _spawnersCleared = 0;
+            _currentWave++;
 
-            if (currentWave % upgradeWavesInterval == 0)
+            if (_currentWave % upgradeWavesInterval == 0)
             {
                 if (!IsEverySkillUnlocked())
                 {
-                    ShowUpgradeMenu();
+                    StartCoroutine(ShowWaveClearedAndUpgradeMenu());
                 }
                 else
                 {
-                    StartCoroutine(DelayedStartNextWave());
+                    StartCoroutine(ShowWaveClearedAndStartNextWave());
                 }
             }
             else
             {
-                StartCoroutine(DelayedStartNextWave());
+                StartCoroutine(ShowWaveClearedAndStartNextWave());
             }
         }
+    }
+
+    private IEnumerator ShowWaveClearedAndStartNextWave()
+    {
+        yield return ShowWaveClearedMessage();
+        yield return new WaitForSeconds(delayBetweenWaves);
+        StartNextWave();
+    }
+
+    private IEnumerator ShowWaveClearedAndUpgradeMenu()
+    {
+        yield return ShowWaveClearedMessage();
+        yield return new WaitForSeconds(intervalBeforeUpgradeMenuShow);
+        ShowUpgradeMenu();
+    }
+
+    private IEnumerator ShowWaveClearedMessage()
+    {
+        waveClearedText.SetActive(true);
+        yield return new WaitForSeconds(waveClearedDisplayTime);
+        waveClearedText.gameObject.SetActive(false);
     }
 
     private IEnumerator DelayedStartNextWave()

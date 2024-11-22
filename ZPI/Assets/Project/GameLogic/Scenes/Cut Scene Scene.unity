@@ -11673,6 +11673,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5309338655296738283, guid: f62c10233031b12408c8c8cbacb02b50, type: 3}
+      propertyPath: cutsceneDuration
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6961097391084933912, guid: f62c10233031b12408c8c8cbacb02b50, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
