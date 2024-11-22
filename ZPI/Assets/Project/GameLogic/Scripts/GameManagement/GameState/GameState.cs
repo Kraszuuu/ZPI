@@ -13,7 +13,7 @@ public class GameState : MonoBehaviour
     public bool IsUpgrading { get; set; }
     public bool IsWandEquipped { get; set; }
 
-    public static bool IsSpeechRecognitionEnabled;
+    public static bool IsSpeechRecognitionEnabled = true;
 
     private void Awake()
     {
