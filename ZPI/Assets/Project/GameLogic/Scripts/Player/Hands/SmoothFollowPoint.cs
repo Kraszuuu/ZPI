@@ -49,7 +49,6 @@ public class SmoothFollowPoint : MonoBehaviour
     private Vector3 _velocity = Vector3.zero;  // Prędkość punktu, wymagana przez SmoothDamp
     private Camera _mainCamera;
     private Transform _cameraTransform;
-    private InputManager _inputManager;
 
     public Animator animator;
 
@@ -65,7 +64,6 @@ public class SmoothFollowPoint : MonoBehaviour
     void Start()
     {
         _mainCamera = Camera.main;
-        _inputManager = FindObjectOfType<InputManager>();
         _cameraTransform = _mainCamera.transform;
 
         _currentSmoothTime = UnarmedSmoothTime;
@@ -81,63 +79,99 @@ public class SmoothFollowPoint : MonoBehaviour
 
     void Update()
     {
-        // Obsługa przełączania różdżki
+        HandleWandToggle();
+
+        if (!_isSwinging)
+        {
+            UpdateOffsetsAndSmoothTime();
+        }
+
+        Vector3 noise = CalculateNoiseMotion() + CalculateNoiseJumping();
+
+        if (GameState.Instance.IsSpellCasting)
+        {
+            ResetSwingState();
+            MoveToPosition(CalculateTargetPositionForCasting(), CastingSmoothTime);
+        }
+        else if (_swingTimer <= 0)
+        {
+            _isSwinging = false;
+
+            if (_isLeftSwing)
+            {
+                HandleLeftSwingReset();
+            }
+
+            MoveToPosition(GetTargetPosition() + noise, _currentSmoothTime);
+        }
+        else
+        {
+            MoveToPosition(GetTargetPosition() + noise, SwingSmoothTime);
+            _swingTimer -= Time.deltaTime;
+        }
+    }
+
+
+    private void UpdateOffsetsAndSmoothTime()
+    {
+        if (WandObject.activeSelf)
+        {
+            _currentSmoothTime = WandSmoothTime;
+            _currentTargetOffset = WandOffset;
+            _currentRotationOffset = WandRotationOffset;
+        }
+        else
+        {
+            _currentSmoothTime = UnarmedSmoothTime;
+            _currentTargetOffset = UnarmedOffset;
+            _currentRotationOffset = UnarmedRotationOffset;
+        }
+    }
+
+    private void ResetSwingState()
+    {
+        _isSwinging = false;
+        _isLeftSwing = false;
+        _swingTimer = 0f;
+    }
+
+    private void HandleLeftSwingReset()
+    {
+        _swingTimer -= Time.deltaTime;
+        if (_swingTimer <= -0.3f)
+        {
+            _isLeftSwing = false;
+        }
+    }
+
+    private void MoveToPosition(Vector3 targetPosition, float smoothTime)
+    {
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, smoothTime);
+        UpdateRotation();
+    }
+
+
+    private Vector3 GetTargetPosition()
+    {
+        return _cameraTransform.TransformPoint(_currentTargetOffset);
+    }
+
+    private void HandleWandToggle()
+    {
         if (Keyboard.current.hKey.wasPressedThisFrame)
         {
             if (!IsAnimatorPlaying("WandSheath") && !IsAnimatorPlaying("WandWithdrawing"))
             {
                 ToggleWand();
             }
-            else Debug.Log("Animation is in progress");
-        }
-
-        if (!_isSwinging)
-        {
-            if (WandObject.activeSelf)
-            {
-                _currentSmoothTime = WandSmoothTime;
-                _currentTargetOffset = WandOffset;
-                _currentRotationOffset = WandRotationOffset;
-            }
             else
             {
-                _currentSmoothTime = UnarmedSmoothTime;
-                _currentTargetOffset = UnarmedOffset;
-                _currentRotationOffset = UnarmedRotationOffset;
+                Debug.Log("Animation is in progress");
             }
-        }
-
-        Vector3 noiseMotion = CalculateNoiseMotion();
-        Vector3 noiseJumping = CalculateNoiseJumping();
-
-        if (GameState.Instance.IsSpellCasting)
-        {
-            _isSwinging = false;
-            _isLeftSwing = false;
-            _swingTimer = 0f;
-
-            Vector3 targetPosition = CalculateTargetPositionForCasting();
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, CastingSmoothTime);
-        }
-        else if (_swingTimer <= 0)
-        {
-            _isSwinging = false;
-            _isLeftSwing = false;
-
-            Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, _currentSmoothTime);
-            UpdateRotation();
-        }
-        else
-        {
-            Vector3 targetPosition = _cameraTransform.TransformPoint(_currentTargetOffset);
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition + noiseMotion + noiseJumping, ref _velocity, SwingSmoothTime);
-            UpdateRotation();
-            _swingTimer -= Time.deltaTime;
         }
     }
 
-    void ToggleWand()
+    private void ToggleWand()
     {
         GameState.Instance.IsWandEquipped = !GameState.Instance.IsWandEquipped;
 
@@ -153,7 +187,6 @@ public class SmoothFollowPoint : MonoBehaviour
 
     public void TogglePrimaryAttack()
     {
-        // Sprawdzenie, czy nastąpiło wciśnięcie prawego przycisku myszy do rzucenia zaklęcia
         if (GameState.Instance.IsWandEquipped)
         {
             _isSwinging = true;
@@ -235,7 +268,7 @@ public class SmoothFollowPoint : MonoBehaviour
         return _mainCamera.ScreenToWorldPoint(scaledPosition) + _cameraTransform.TransformDirection(CastingOffset);
     }
 
-    bool IsAnimatorPlaying(string stateName)
+    private bool IsAnimatorPlaying(string stateName)
     {
         return animator.GetCurrentAnimatorStateInfo(0).length >
                animator.GetCurrentAnimatorStateInfo(0).normalizedTime && animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);

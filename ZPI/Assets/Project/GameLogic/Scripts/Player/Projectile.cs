@@ -95,8 +95,6 @@ public class Projectile : MonoBehaviour
             LayerMask obstacleLayer = ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Player"));
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, detectionLayer);
 
-            Debug.Log("Number of hitColliders: " + hitColliders.Length);
-
             foreach (var hitCollider in hitColliders)
             {
                 Vector3 directionToTarget = (hitCollider.transform.position - transform.position).normalized;
@@ -115,10 +113,6 @@ public class Projectile : MonoBehaviour
                         hitCollider.GetComponent<PlayerHealth>().TakeDamage(AreaDamage);
                         Debug.Log("Hit player at distance: " + distanceToTarget);
                     }*/
-                }
-                else
-                {
-                    Debug.Log("Target blocked by obstacle: " + hitCollider.name);
                 }
             }
         }
