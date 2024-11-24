@@ -105,7 +105,7 @@ public class SpellCasting : MonoBehaviour
     {
         if (name != null || distance > 2f)
         {
-            if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && _playerVoiceCommands.isSpeechRecognitionEnabled) || !_playerVoiceCommands.isSpeechRecognitionEnabled))
+            if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
                 if (FireballImage.fillAmount <= 0)
                 {
@@ -114,7 +114,7 @@ public class SpellCasting : MonoBehaviour
                     FireballCooldown = 3f;
                 }
             }
-            else if (name.Equals("Meteors") && ((_playerVoiceCommands.recognizedSpell == "Meteors" && _playerVoiceCommands.isSpeechRecognitionEnabled) || !_playerVoiceCommands.isSpeechRecognitionEnabled))
+            else if (name.Equals("Meteors") && ((_playerVoiceCommands.recognizedSpell == "Meteors" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
                 if (MeteorsImage.fillAmount <= 0)
                 {
@@ -123,7 +123,7 @@ public class SpellCasting : MonoBehaviour
                     MeteorsCooldown = 5f;
                 }
             }
-            else if (name.Equals("Shield") && ((_playerVoiceCommands.recognizedSpell == "Shield" && _playerVoiceCommands.isSpeechRecognitionEnabled) || !_playerVoiceCommands.isSpeechRecognitionEnabled))
+            else if (name.Equals("Shield") && ((_playerVoiceCommands.recognizedSpell == "Shield" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
                 if (ShieldImage.fillAmount <= 0)
                 {
@@ -132,7 +132,7 @@ public class SpellCasting : MonoBehaviour
                     ShieldCooldown = 5f;
                 }
             }
-            else if (name.Equals("Lightning") && ((_playerVoiceCommands.recognizedSpell == "Lightning" && _playerVoiceCommands.isSpeechRecognitionEnabled) || !_playerVoiceCommands.isSpeechRecognitionEnabled))
+            else if (name.Equals("Lightning") && ((_playerVoiceCommands.recognizedSpell == "Lightning" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
                 if (LightningImage.fillAmount <= 0)
                 {
@@ -142,6 +142,9 @@ public class SpellCasting : MonoBehaviour
                 }
             }
             Debug.Log("Spell casted! Number of points: " + _mousePositions.Count);
+            _playerVoiceCommands.recognizedSpell = null;
+            _playerVoiceCommands.recognizedWord = null;
+            _playerVoiceCommands.recognizedWordText.text = null;
         }
         else
         {

@@ -3,9 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void ChangeSpeechRecognitionMode(bool value)
+
+    private void Start()
     {
-        GameState.IsSpeechRecognitionEnabled = value;
+        GameState.IsSpeechRecognitionEnabled = true;
+    }
+    public void ChangeSpeechRecognitionMode()
+    {
+        GameState.IsSpeechRecognitionEnabled = !GameState.IsSpeechRecognitionEnabled;
         Debug.Log($"isSpeechRecognitionEnabled set to (GameSettings): {GameState.IsSpeechRecognitionEnabled}");
     }
 
