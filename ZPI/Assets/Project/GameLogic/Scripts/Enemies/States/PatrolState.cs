@@ -24,6 +24,7 @@ public class PatrolState : BaseState
         PatrolCycle();
         if (enemy.CanSeePlayer())
         {
+            stateMachine.SetAnimatorBool("chase", true);
             stateMachine.ChangeState(new AttackState());
         }
         if (enemy.Agent.remainingDistance < 5f)
@@ -37,10 +38,10 @@ public class PatrolState : BaseState
     {
         if (DetectionManager.Instance.PlayerDetected)
         {
-              
+
             currentTarget = DetectionManager.Instance.LastKnownPlayerPosition;
             enemy.Agent.SetDestination(currentTarget);
-            
+
         }
         if (enemy.Agent.remainingDistance < 3f)
         {

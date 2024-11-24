@@ -1,22 +1,11 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    private StateMachine stateMachine;
-    private NavMeshAgent agent;
-    private GameObject player;
-
-    public NavMeshAgent Agent { get => agent; }
-    public GameObject Player { get => player; }
-
-    public Path path;
-
-    [Header("Speed")]
-    public float speed;
+    public NavMeshAgent Agent { get => _agent; }
+    public GameObject Player { get => _player; }
 
     [Header("Enemy class")]
     public EnemyType enemyType;
@@ -32,56 +21,63 @@ public class Enemy : MonoBehaviour
     [Range(0.1f, 10)]
     public float fireRate;
 
-    [Header("Health Values")]
-    public int maxHealth = 100;
-    private int currentHealth;
+    [Header("Health")]
+    public int MaxHealth = 100;
 
-    [SerializeField]
-    private string currentState;
-
-    private EnemySpawner spawner;
+    private StateMachine _stateMachine;
+    private NavMeshAgent _agent;
+    private GameObject _player;
+    private Ragdoll _ragdoll;
+    private Animator _animator;
+    private EnemySpawner _spawner;
     private DamagePopupGenerator _damagePopupGenerator;
 
-    private PlayerHealth healthBar;
+    [Header("Debug Info")]
+    [SerializeField, ReadOnly]
+    private string _currentState;
+    [SerializeField, ReadOnly]
+    private int _currentHealth;
+
+    private EnemyHealthBar healthBar;
     void Start()
     {
-        stateMachine = GetComponent<StateMachine>();
-        agent = GetComponent<NavMeshAgent>();
-        stateMachine.Initialize();
-        _damagePopupGenerator = GetComponentInChildren<DamagePopupGenerator>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        _stateMachine = GetComponent<StateMachine>();
+        _agent = GetComponent<NavMeshAgent>();
+        _ragdoll = GetComponent<Ragdoll>();
+        _animator = GetComponent<Animator>();
+        healthBar = GetComponent<EnemyHealthBar>();
+        _player = GameObject.FindGameObjectWithTag("Player");
 
-        currentHealth = maxHealth;
-        healthBar = GetComponent<PlayerHealth>();
+        _damagePopupGenerator = GetComponentInChildren<DamagePopupGenerator>();
+
+        _currentHealth = MaxHealth;
+        healthBar.Initialize(MaxHealth);
+        _stateMachine.Initialize();
     }
 
     // Update is called once per frame
     void Update()
     {
         CanSeePlayer();
-        currentState = stateMachine.activeState.ToString();
     }
 
     public bool CanSeePlayer()
     {
-        if (player == null) return false;
+        if (_player == null) return false;
 
-        //is the player close enough to be seen?
-        if (Vector3.Distance(transform.position, player.transform.position) >= sightDistance) return false;
+        if (Vector3.Distance(transform.position, _player.transform.position) >= sightDistance) return false;
 
-        //is the player in enemy's field of view
-        Vector3 targetDirection = player.transform.position - transform.position - (Vector3.up * eyeHeight);
+        Vector3 targetDirection = _player.transform.position - transform.position - (Vector3.up * eyeHeight);
         float angleToPlayer = Vector3.Angle(targetDirection, transform.forward);
         if (angleToPlayer < -fieldOfView || angleToPlayer > fieldOfView) return false;
 
-        //is enemy looking at the player (?)
         Ray ray = new Ray(transform.position + (Vector3.up * eyeHeight), targetDirection);
         RaycastHit hitInfo = new RaycastHit();
 
         int layerToIgnore = LayerMask.NameToLayer("Shield");
         int layerMask = ~(1 << layerToIgnore);
 
-        if (!Physics.Raycast(ray, out hitInfo, sightDistance, layerMask) || hitInfo.transform.gameObject != player) return false;
+        if (!Physics.Raycast(ray, out hitInfo, sightDistance, layerMask) || hitInfo.transform.gameObject != _player) return false;
 
         Debug.DrawRay(ray.origin, ray.direction * sightDistance, Color.yellow);
 
@@ -90,31 +86,108 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        DetectionManager.Instance.ReportPlayerDetected(player.transform.position);
-        currentHealth -= damage;
+        DetectionManager.Instance.ReportPlayerDetected(_player.transform.position);
+        _currentHealth -= damage;
         healthBar.TakeDamage(damage);
+        _animator.SetTrigger("gotHit");
+
         Vector3 randomness = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
         _damagePopupGenerator.CreatePopup(transform.position + randomness, damage.ToString(), Color.yellow);
-        if (currentHealth <= 0)
+
+        if (_currentHealth <= 0)
         {
             Die();
         }
-        
     }
 
     public void SetSpawner(EnemySpawner spawner)
     {
-        this.spawner = spawner;
+        this._spawner = spawner;
     }
 
     private void Die()
     {
-        // Mo�esz doda� animacj� �mierci, usuni�cie obiektu itd.
-        Debug.Log("Enemy died!");
-        if (spawner != null)
+        if (_spawner != null)
         {
-            spawner.CurrentEnemies.Remove(this.gameObject);
+            _spawner.CurrentEnemies.Remove(this.gameObject);
         }
-        Destroy(gameObject); // Usuni�cie przeciwnika z gry
+        _ragdoll.EnableRagdoll();
+        // Destroy(gameObject, 4f);
+        _agent.isStopped = true;
+        _agent.updatePosition = false;
+        _agent.updateRotation = false;
+        StartCoroutine(FadeOutAndDestroy());
+    }
+
+    // Korutyna obsługująca zanikanie
+    private IEnumerator FadeOutAndDestroy()
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        float fadeDuration = 3f; // Czas zanikania
+        float timer = 0f;
+
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        timer = 0f;
+
+        // Zapewnij, że wszystkie materiały są w trybie transparent
+        foreach (var renderer in renderers)
+        {
+            foreach (var material in renderer.materials)
+            {
+                material.SetFloat("_Mode", 2); // Tryb transparentny
+                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                material.SetInt("_ZWrite", 0);
+                material.DisableKeyword("_ALPHATEST_ON");
+                material.EnableKeyword("_ALPHABLEND_ON");
+                material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                material.renderQueue = 3000;
+
+                if (material.HasProperty("_Color"))
+                {
+                    Color color = material.color;
+                    color.a = 1f;
+                    material.color = color;
+                }
+            }
+        }
+
+        // Stopniowe zmniejszanie alpha
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+
+            foreach (var renderer in renderers)
+            {
+                foreach (var material in renderer.materials)
+                {
+                    if (material.HasProperty("_Color"))
+                    {
+                        Color color = material.color;
+                        color.a = alpha;
+                        material.color = color;
+                    }
+                }
+            }
+
+            yield return null;
+        }
+
+        // Zniszcz obiekt po zakończeniu zanikania
+        Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Color oldColor = Gizmos.color;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.up * eyeHeight);
+        Gizmos.color = oldColor;
     }
 }

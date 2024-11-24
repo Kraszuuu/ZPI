@@ -13,6 +13,9 @@ public class AttackState : BaseState
     private PlayerHealth _playerHealth;
     private float _meleeDamage = 10f;
 
+    private bool _attackScheduled = false; // Flaga, czy atak jest zaplanowany
+    private float _attackDelayTimer = 0f; // Timer do odliczania opóźnienia
+
     public override void Enter()
     {
         if (enemy.enemyType == EnemyType.Melee)
@@ -28,42 +31,60 @@ public class AttackState : BaseState
 
     public override void Perform()
     {
-        if (enemy.CanSeePlayer()) //player can be seen
+        if (enemy.CanSeePlayer()) // Gracz widoczny
         {
-            //lock the lose player timer and increment the move and shot timers
             _losePlayerTimer = 0;
             _moveTimer += Time.deltaTime;
             _attackTimer += Time.deltaTime;
+
             Vector3 playerPosition = enemy.Player.transform.position;
             playerPosition.y = enemy.transform.position.y;
-            enemy.transform.LookAt(playerPosition);
+
+            // enemy.transform.LookAt(playerPosition);
             DetectionManager.Instance.ReportPlayerDetected(enemy.Player.transform.position);
 
-            //move the enemy to a random position after a random time
-            if (_attackTimer > enemy.fireRate)
+            if (_attackTimer > enemy.fireRate && !_attackScheduled)
             {
                 AttackPlayer();
             }
+
             if (_moveTimer > Random.Range(3, 7))
             {
                 enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
                 _moveTimer = 0;
             }
         }
-        else //lost sight of player
+        else // Gracz zgubiony
         {
             _losePlayerTimer += Time.deltaTime;
             if (_losePlayerTimer > 2)
             {
-                //change to the search state
-                stateMachine.ChangeState(new PatrolState());
+                // Przejście do stanu poszukiwań z ostatnią znaną pozycją gracza
+                stateMachine.ChangeState(new SearchState(enemy.Player.transform.position));
+            }
+        }
+
+        // Obsługa zaplanowanego ataku
+        if (_attackScheduled)
+        {
+            _attackDelayTimer -= Time.deltaTime;
+            if (_attackDelayTimer <= 0)
+            {
+                // Sprawdzenie odległości w momencie trafienia
+                float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
+                if (distanceToPlayer <= 3f)
+                {
+                    _playerHealth.TakeDamage(_meleeDamage);
+                }
+
+                _attackScheduled = false; // Resetuj planowanie ataku
             }
         }
     }
 
+
     public void AttackPlayer()
     {
-        // Oblicz odleg�o�� mi�dzy przeciwnikiem a graczem
         float distance = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
         enemy.Agent.SetDestination(enemy.Player.transform.position);
 
@@ -71,7 +92,7 @@ public class AttackState : BaseState
         {
             if (distance <= _stopDistanceRanged)
             {
-                enemy.Agent.isStopped = true;               
+                enemy.Agent.isStopped = true;
             }
             else
             {
@@ -103,21 +124,43 @@ public class AttackState : BaseState
             else
             {
                 enemy.Agent.isStopped = true;
-                _playerHealth.TakeDamage(_meleeDamage);
+                int attackIndex = Random.Range(0, 6);
+
+                // each attack index has different attack animation and time when it hits, so we need to set different cases that will set delay when attack hits
+                switch (attackIndex)
+                {
+                    case 0:
+                        _attackDelayTimer = CalculateAnimationTime(40);
+                        break;
+                    case 1:
+                        _attackDelayTimer = CalculateAnimationTime(40);
+                        break;
+                    case 2:
+                        _attackDelayTimer = CalculateAnimationTime(20);
+                        break;
+                    case 3:
+                        _attackDelayTimer = CalculateAnimationTime(38);
+                        break;
+                    case 4:
+                        _attackDelayTimer = CalculateAnimationTime(24);
+                        break;
+                    case 5:
+                        _attackDelayTimer = CalculateAnimationTime(33);
+                        break;
+                }
+
+                stateMachine.SetAnimatorInteger("attackIndex", attackIndex);
+                stateMachine.SetAnimatorTrigger("attack");
+
+                _attackScheduled = true; // Aktywuj licznik czasu
                 _attackTimer = 0;
             }
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private static float CalculateAnimationTime(int frames, int fps = 30)
     {
-
+        return (float)frames / fps;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

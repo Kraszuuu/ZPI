@@ -5,6 +5,7 @@ using UnityEngine;
 public class StateMachine : MonoBehaviour
 {
     public BaseState activeState;
+    private Animator animator;
 
     public void Initialize()
     {
@@ -14,7 +15,7 @@ public class StateMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -39,5 +40,25 @@ public class StateMachine : MonoBehaviour
             activeState.enemy = GetComponent<Enemy>();
             activeState.Enter();
         }
+    }
+
+    public void SetAnimatorTrigger(string triggerName)
+    {
+        animator.SetTrigger(triggerName);
+    }
+
+    public void SetAnimatorFloat(string floatName, float value)
+    {
+        animator.SetFloat(floatName, value);
+    }
+
+    public void SetAnimatorBool(string boolName, bool value)
+    {
+        animator.SetBool(boolName, value);
+    }
+
+    public void SetAnimatorInteger(string integerName, int value)
+    {
+        animator.SetInteger(integerName, value);
     }
 }
