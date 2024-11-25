@@ -6,9 +6,13 @@ public class Enemy : MonoBehaviour
 {
     public NavMeshAgent Agent { get => _agent; }
     public GameObject Player { get => _player; }
+    public StateMachine StateMachine { get => _stateMachine; }
 
     [Header("Enemy class")]
     public EnemyType enemyType;
+
+    [Header("Health")]
+    public int MaxHealth = 100;
 
     [Header("Sight Values")]
     public float sightDistance = 20f;
@@ -21,9 +25,6 @@ public class Enemy : MonoBehaviour
     [Range(0.1f, 10)]
     public float fireRate;
 
-    [Header("Health")]
-    public int MaxHealth = 100;
-
     private StateMachine _stateMachine;
     private NavMeshAgent _agent;
     private GameObject _player;
@@ -31,6 +32,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private EnemySpawner _spawner;
     private DamagePopupGenerator _damagePopupGenerator;
+    private EnemyHealthBar _healthBar;
 
     [Header("Debug Info")]
     [SerializeField, ReadOnly]
@@ -38,26 +40,26 @@ public class Enemy : MonoBehaviour
     [SerializeField, ReadOnly]
     private int _currentHealth;
 
-    private EnemyHealthBar healthBar;
     void Start()
     {
         _stateMachine = GetComponent<StateMachine>();
         _agent = GetComponent<NavMeshAgent>();
         _ragdoll = GetComponent<Ragdoll>();
         _animator = GetComponent<Animator>();
-        healthBar = GetComponent<EnemyHealthBar>();
+        _healthBar = GetComponent<EnemyHealthBar>();
         _player = GameObject.FindGameObjectWithTag("Player");
 
         _damagePopupGenerator = GetComponentInChildren<DamagePopupGenerator>();
 
         _currentHealth = MaxHealth;
-        healthBar.Initialize(MaxHealth);
+        _healthBar.Initialize(MaxHealth);
         _stateMachine.Initialize();
     }
 
     // Update is called once per frame
     void Update()
     {
+        _currentState = _stateMachine.activeState.ToString();
         CanSeePlayer();
     }
 
@@ -84,11 +86,10 @@ public class Enemy : MonoBehaviour
         return true;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3 hitForceVector)
     {
-        DetectionManager.Instance.ReportPlayerDetected(_player.transform.position);
         _currentHealth -= damage;
-        healthBar.TakeDamage(damage);
+        _healthBar.TakeDamage(damage);
         _animator.SetTrigger("gotHit");
 
         Vector3 randomness = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
@@ -96,8 +97,16 @@ public class Enemy : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-            Die();
+            Die(hitForceVector);
         }
+
+        if (!DetectionManager.Instance.PlayerDetected)
+        {
+            _animator.SetTrigger("scream");
+            _stateMachine.SetAnimatorBool("chase", true);
+            _stateMachine.ChangeState(new AttackState());
+        }
+        DetectionManager.Instance.ReportPlayerDetected(_player.transform.position);
     }
 
     public void SetSpawner(EnemySpawner spawner)
@@ -105,17 +114,18 @@ public class Enemy : MonoBehaviour
         this._spawner = spawner;
     }
 
-    private void Die()
+    private void Die(Vector3 hitForceVector)
     {
         if (_spawner != null)
         {
             _spawner.CurrentEnemies.Remove(this.gameObject);
         }
-        _ragdoll.EnableRagdoll();
-        // Destroy(gameObject, 4f);
         _agent.isStopped = true;
         _agent.updatePosition = false;
         _agent.updateRotation = false;
+        _ragdoll.EnableRagdoll();
+        Debug.Log(hitForceVector);
+        _ragdoll.ApplyForce(hitForceVector);
         StartCoroutine(FadeOutAndDestroy());
     }
 

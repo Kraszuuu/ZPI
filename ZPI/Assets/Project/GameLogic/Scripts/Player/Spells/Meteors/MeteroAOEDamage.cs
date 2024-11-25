@@ -5,8 +5,8 @@ using UnityEngine;
 public class MeteroAOEDamage : MonoBehaviour
 {
 
-    public float radius = 0.01f; // Promieñ obra¿eñ obszarowych
-    private Vector3 _hitPoint; // Punkt ataku, wokó³ którego zadajemy obra¿enia
+    public float radius = 0.01f; // Promieï¿½ obraï¿½eï¿½ obszarowych
+    private Vector3 _hitPoint; // Punkt ataku, wokï¿½ ktï¿½rego zadajemy obraï¿½enia
     public GameObject meteorPrefab;
     public LayerMask Layer;
     private float _damageRadius = 5f;
@@ -17,26 +17,26 @@ public class MeteroAOEDamage : MonoBehaviour
         _hitPoint = attackPoint;
     }
 
-    // Wykrycie kolizji cz¹stek z ziemi¹ lub innymi obiektami
+    // Wykrycie kolizji czï¿½stek z ziemiï¿½ lub innymi obiektami
     void OnParticleCollision(GameObject other)
     {
         DealDamageToEnemiesInRadius(_hitPoint);
     }
 
-    // Funkcja, która zadaje obra¿enia wszystkim przeciwnikom w promieniu wokó³ hitPoint
+    // Funkcja, ktï¿½ra zadaje obraï¿½enia wszystkim przeciwnikom w promieniu wokï¿½ hitPoint
     void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
     {
-        // ZnajdŸ wszystkie obiekty w promieniu od punktu ataku
+        // Znajdï¿½ wszystkie obiekty w promieniu od punktu ataku
         Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, _damageRadius);
 
         foreach (var hitCollider in hitColliders)
         {
-            // SprawdŸ, czy obiekt jest przeciwnikiem
+            // Sprawdï¿½, czy obiekt jest przeciwnikiem
             Enemy enemy = hitCollider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                // Zadaj obra¿enia przeciwnikowi
-                enemy.TakeDamage((int)SpellManager.Instance.GetSpellData("Meteors"));
+                // Zadaj obraï¿½enia przeciwnikowi
+                enemy.TakeDamage((int)SpellManager.Instance.GetSpellData("Meteors"), Vector3.down * 10f);
             }
         }
     }
@@ -45,14 +45,14 @@ public class MeteroAOEDamage : MonoBehaviour
     public void CastMeteorRain()
     {
         // Pozycja i kierunek patrzenia kamery
-        Camera playerCamera = Camera.main; // Zak³adamy, ¿e g³ówna kamera to kamera gracza
+        Camera playerCamera = Camera.main; // Zakï¿½adamy, ï¿½e gï¿½ï¿½wna kamera to kamera gracza
         Vector3 rayOrigin = playerCamera.transform.position;
         Vector3 rayDirection = playerCamera.transform.forward;
 
         Ray ray = new Ray(rayOrigin, rayDirection);
         RaycastHit hit;
 
-        // Wykonanie BoxCast z praktycznie nieskoñczonym zasiêgiem
+        // Wykonanie BoxCast z praktycznie nieskoï¿½czonym zasiï¿½giem
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, Layer))
         {
@@ -70,10 +70,10 @@ public class MeteroAOEDamage : MonoBehaviour
     }
     void OnDrawGizmosSelected()
     {
-        // Ustaw kolor sfery na pó³przezroczysty czerwony
+        // Ustaw kolor sfery na pï¿½przezroczysty czerwony
         Gizmos.color = new Color(1, 0, 0, 0.5f);
 
-        // Narysuj sferê wokó³ explosionCenter o promieniu radius
+        // Narysuj sferï¿½ wokï¿½ explosionCenter o promieniu radius
         Gizmos.DrawWireSphere(_hitPoint, 0.01f);
     }
 }

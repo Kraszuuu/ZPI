@@ -6,14 +6,20 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public float MinVelocity = 0.5f;
+    public float CloseDistanceThreshold = 1.5f; // Minimalna odległość uznawana za "blisko celu"
+    public float MaxStuckTime = 3f; // Maksymalny czas, po którym cel zostanie zresetowany
+
     private NavMeshAgent Agent;
     private Animator Animator;
     [SerializeField]
     private LookAt LookAt;
+    [SerializeField]
     private bool DebugMode = false;
 
     private Vector2 Velocity;
     private Vector2 SmoothDeltaPosition;
+
+    private float stuckTimer = 0f; // Licznik czasu, przez który agent jest "zablokowany"
 
     private void Awake()
     {
@@ -27,6 +33,7 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         SynchronizeAnimatorAndAgent();
+        CheckForStuck();
 
         // Obsługa prawego przycisku myszy
         if (DebugMode)
@@ -86,6 +93,9 @@ public class EnemyMovement : MonoBehaviour
                 // Ustawienie celu na pozycji kliknięcia
                 Agent.SetDestination(navHit.position);
                 Agent.isStopped = false;
+
+                // Reset licznika "zablokowania"
+                stuckTimer = 0f;
             }
         }
     }
@@ -93,5 +103,27 @@ public class EnemyMovement : MonoBehaviour
     public void StopMoving()
     {
         Agent.isStopped = true;
+    }
+
+    private void CheckForStuck()
+    {
+        // Jeśli agent znajduje się blisko celu, ale nie dotarł do niego
+        if (Agent.remainingDistance <= CloseDistanceThreshold && Agent.velocity.magnitude < MinVelocity)
+        {
+            stuckTimer += Time.deltaTime;
+
+            // Jeśli agent jest "zablokowany" przez dłużej niż MaxStuckTime
+            if (stuckTimer >= MaxStuckTime)
+            {
+                Debug.Log("Agent zablokowany. Reset celu.");
+                Agent.SetDestination(transform.position); // Ustaw cel na bieżącą pozycję agenta
+                stuckTimer = 0f; // Reset licznika
+            }
+        }
+        else
+        {
+            // Jeśli agent porusza się prawidłowo, resetuj licznik
+            stuckTimer = 0f;
+        }
     }
 }

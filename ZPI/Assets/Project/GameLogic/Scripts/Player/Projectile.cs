@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
 
     [Header("Direct Damage Settings")]
     public float DirectDamage = 10f;
+    public float ProjectileHitForce = 15f;
 
     [Header("Area Damage Settings")]
     public float AreaDamage = 0f;      // Obrażenia obszarowe
@@ -75,6 +76,8 @@ public class Projectile : MonoBehaviour
 
         Transform hitTransform = collision.transform;
 
+        Vector3 hitForce = CalculateForceVector(hitTransform, collision.contacts[0].point);
+
         if (hitTransform.CompareTag("Player"))
         {
             if (IsFriendly) return;
@@ -83,41 +86,53 @@ public class Projectile : MonoBehaviour
         }
         else if (hitTransform.CompareTag("Enemy"))
         {
-            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage);
+            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage, hitForce);
         }
 
         _collided = true;
 
+        HandleAreaDamage(collision);
+        CreateImpactEffect(collision);
+        Destroy(gameObject);
+    }
+
+    private void HandleAreaDamage(Collision collision)
+    {
         // Obrażenia obszarowe
         if (AreaDamage > 0)
         {
             LayerMask detectionLayer = LayerMask.GetMask("Enemy", "Player");
-            LayerMask obstacleLayer = ~(1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Player"));
+            LayerMask obstacleLayer = ~LayerMask.GetMask("Enemy", "Player");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, ExplosionRadius, detectionLayer);
 
             foreach (var hitCollider in hitColliders)
             {
-                Vector3 directionToTarget = (hitCollider.transform.position - transform.position).normalized;
-                float distanceToTarget = Vector3.Distance(transform.position, hitCollider.transform.position);
+                Transform hitTransform = hitCollider.transform;
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleLayer))
+                // Wyklucz wroga, który otrzymał bezpośrednie obrażenia
+                if (_collided && hitTransform == collision.transform)
+                {
+                    continue; // Pomijamy tego wroga
+                }
+
+                Vector3 hitForce = CalculateForceVector(hitTransform, transform.position);
+                float distanceToTarget = Vector3.Distance(transform.position, hitTransform.position);
+
+                // Sprawdzenie linii wzroku
+                if (!Physics.Raycast(transform.position, hitForce, distanceToTarget, obstacleLayer))
                 {
                     // Jeśli nie ma przeszkód, zadaj obrażenia
                     if (IsFriendly && hitCollider.CompareTag("Enemy"))
                     {
-                        hitCollider.GetComponent<Enemy>().TakeDamage((int)AreaDamage);
-                        Debug.Log("Hit enemy at distance: " + distanceToTarget);
+                        hitCollider.GetComponent<Enemy>().TakeDamage((int)AreaDamage, hitForce);
                     }
-                    /*else if (!IsFriendly && hitCollider.CompareTag("Player"))
-                    {
-                        hitCollider.GetComponent<PlayerHealth>().TakeDamage(AreaDamage);
-                        Debug.Log("Hit player at distance: " + distanceToTarget);
-                    }*/
                 }
             }
         }
+    }
 
-        // Tworzenie efektu kolizji
+    private void CreateImpactEffect(Collision collision)
+    {
         if (ImpactVFX != null)
         {
             var impact = Instantiate(ImpactVFX, collision.contacts[0].point, Quaternion.identity);
@@ -149,8 +164,6 @@ public class Projectile : MonoBehaviour
                 }
             }
         }
-
-        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
@@ -160,5 +173,16 @@ public class Projectile : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, ExplosionRadius);
         }
+    }
+
+    private Vector3 CalculateForceVector(Transform hitTransform, Vector3 hitPoint)
+    {
+        Vector3 targetPoint = hitTransform.position;
+        targetPoint.y = hitPoint.y;
+
+        Vector3 hitDirection = (targetPoint - hitPoint).normalized;
+        hitDirection.y = 0.9f;
+
+        return hitDirection * ProjectileHitForce;
     }
 }

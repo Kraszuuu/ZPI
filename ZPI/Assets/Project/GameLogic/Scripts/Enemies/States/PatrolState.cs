@@ -1,68 +1,99 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PatrolState : BaseState
 {
-    private Vector3 currentTarget;
-    private float patrolRadius = 10f;
-    private float maxNavMeshDistance = 5f;
+    private const float _patrolRadius = 10f;
+    private const float _maxNavMeshDistance = 6f;
+    private const float _closeDistanceThreshold = 2f; // Minimalna odległość do uznania celu za osiągnięty
+    private const int _maxAttempts = 10; // Maksymalna liczba prób wygenerowania celu
+
+    private bool isWaitingForTransition = false; // Flaga blokująca inne operacje
 
     public override void Enter()
     {
-        currentTarget = GetNewRandomDestination();
+        enemy.Agent.angularSpeed = 120f;
+        SetNewRandomDestination();
     }
 
     public override void Exit()
     {
+        isWaitingForTransition = false; // Zresetuj flagę podczas wyjścia
     }
 
     public override void Perform()
     {
-        PatrolCycle();
-        if (enemy.CanSeePlayer())
+        if (isWaitingForTransition)
         {
-            stateMachine.SetAnimatorBool("chase", true);
-            stateMachine.ChangeState(new AttackState());
+            return; // Zablokuj wykonywanie innych operacji, jeśli oczekujemy na przejście
         }
-        if (enemy.Agent.remainingDistance < 5f)
+
+        if (HandlePlayerDetection())
         {
-            DetectionManager.Instance.ResetDetection();
-            currentTarget = GetNewRandomDestination();
+            return; // Jeśli gracz został wykryty, zakończ metodę
+        }
+
+        if (enemy.Agent.remainingDistance < _closeDistanceThreshold)
+        {
+            SetNewRandomDestination();
         }
     }
 
-    private void PatrolCycle()
+    private bool HandlePlayerDetection()
     {
+        // Jeśli gracz został zgłoszony przez innego przeciwnika
         if (DetectionManager.Instance.PlayerDetected)
         {
-
-            currentTarget = DetectionManager.Instance.LastKnownPlayerPosition;
-            enemy.Agent.SetDestination(currentTarget);
-
+            float randomDelay = Random.Range(0.5f, 2f); // Losowe opóźnienie od 0.5 do 2 sekund
+            enemy.StartCoroutine(TransitionToAttackStateWithDelay(randomDelay));
+            return true;
         }
-        if (enemy.Agent.remainingDistance < 3f)
+
+        // Jeśli przeciwnik sam wykrywa gracza
+        if (enemy.CanSeePlayer())
         {
-            enemy.Agent.SetDestination(currentTarget);
-            currentTarget = GetNewRandomDestination();
+            DetectionManager.Instance.ReportPlayerDetected(enemy.Player.transform.position);
+            TransitionToAttackState();
+            return true;
         }
+
+        return false;
     }
 
-    private Vector3 GetNewRandomDestination()
+    private IEnumerator TransitionToAttackStateWithDelay(float delay)
     {
-        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-        randomDirection += enemy.transform.position;
+        isWaitingForTransition = true; // Ustaw flagę na czas oczekiwania
+        yield return new WaitForSeconds(delay);
+        TransitionToAttackState();
+    }
 
+    private void TransitionToAttackState()
+    {
+        stateMachine.SetAnimatorBool("chase", true);
+        enemy.Agent.angularSpeed = 180f;
+        stateMachine.ChangeState(new AttackState());
+        isWaitingForTransition = false; // Zresetuj flagę po zakończeniu przejścia
+    }
+
+    private void SetNewRandomDestination()
+    {
+        Vector3 randomDirection;
         NavMeshHit navHit;
-        if (NavMesh.SamplePosition(randomDirection, out navHit, maxNavMeshDistance, NavMesh.AllAreas))
+
+        for (int attempts = 0; attempts < _maxAttempts; attempts++)
         {
-            return navHit.position;
+            randomDirection = Random.insideUnitSphere * _patrolRadius + enemy.transform.position;
+
+            if (NavMesh.SamplePosition(randomDirection, out navHit, _maxNavMeshDistance, NavMesh.AllAreas)
+                && Vector3.Distance(enemy.transform.position, navHit.position) >= _closeDistanceThreshold)
+            {
+                enemy.Agent.SetDestination(navHit.position);
+                return;
+            }
         }
-        else
-        {
-            return GetNewRandomDestination();
-        }
+
+        // Jeśli nie udało się znaleźć odpowiedniego punktu, ustaw bieżącą pozycję jako cel
+        enemy.Agent.SetDestination(enemy.transform.position);
     }
 }

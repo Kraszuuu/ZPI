@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsFriendly: 1
   DirectDamage: 50
-  HasAreaDamage: 1
+  ProjectileHitForce: 30
   AreaDamage: 25
   ExplosionRadius: 4
   ShowExplosionRadiusGizmo: 1

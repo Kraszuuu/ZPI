@@ -42,6 +42,12 @@ public class StateMachine : MonoBehaviour
         }
     }
 
+    public void ResetCurrentState()
+    {
+        activeState.Exit();
+        activeState.Enter();
+    }
+
     public void SetAnimatorTrigger(string triggerName)
     {
         animator.SetTrigger(triggerName);
