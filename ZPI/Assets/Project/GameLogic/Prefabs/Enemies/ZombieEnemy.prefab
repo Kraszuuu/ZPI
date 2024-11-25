@@ -3360,7 +3360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthSlider: {fileID: 6056226724956560504}
   EaseHealthSlider: {fileID: 2534009122718079612}
-  fadeOutDuration: 1.5
+  fadeOutDuration: 1
 --- !u!114 &3267739936796087481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3554,7 +3554,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6761079371077853584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
+  m_Script: {fileID: 11500000, guid: ded200198f5f6914695b62c35ad1b59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MinVelocity: 0.5

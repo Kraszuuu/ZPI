@@ -35,7 +35,7 @@ public class InputManager : MonoBehaviour
 
         onFoot.Dash.performed += OnDashPerformed;
 
-        // onFoot.Pause.performed += ctx => TogglePause();
+        onFoot.Pause.performed += ctx => TogglePause();
 
         onFoot.BasicAttack.performed += ctx => primaryAttack.ShootProjectile();
     }

@@ -120,11 +120,8 @@ public class Enemy : MonoBehaviour
         {
             _spawner.CurrentEnemies.Remove(this.gameObject);
         }
-        _agent.isStopped = true;
-        _agent.updatePosition = false;
-        _agent.updateRotation = false;
+        _stateMachine.ChangeState(new DeadState());
         _ragdoll.EnableRagdoll();
-        Debug.Log(hitForceVector);
         _ragdoll.ApplyForce(hitForceVector);
         StartCoroutine(FadeOutAndDestroy());
     }

@@ -11305,11 +11305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 435701080}
-  DebugMode: 0
 --- !u!95 &435701082
 Animator:
   serializedVersion: 5
@@ -11741,11 +11736,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 440419666}
-  DebugMode: 0
 --- !u!95 &440419668
 Animator:
   serializedVersion: 5
@@ -22898,11 +22888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 758431324}
-  DebugMode: 0
 --- !u!95 &758431326
 Animator:
   serializedVersion: 5
@@ -25306,11 +25291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 845420381}
-  DebugMode: 0
 --- !u!95 &845420383
 Animator:
   serializedVersion: 5
@@ -28480,11 +28460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 949910162}
-  DebugMode: 0
 --- !u!95 &949910164
 Animator:
   serializedVersion: 5
@@ -35525,11 +35500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1192744362}
-  DebugMode: 0
 --- !u!95 &1192744364
 Animator:
   serializedVersion: 5
@@ -37400,11 +37370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1238473233}
-  DebugMode: 0
 --- !u!95 &1238473235
 Animator:
   serializedVersion: 5
@@ -38922,11 +38887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1293007801}
-  DebugMode: 0
 --- !u!95 &1293007803
 Animator:
   serializedVersion: 5
@@ -40328,11 +40288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1319711683}
-  DebugMode: 0
 --- !u!95 &1319711685
 Animator:
   serializedVersion: 5
@@ -44176,11 +44131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1421017538}
-  DebugMode: 0
 --- !u!95 &1421017540
 Animator:
   serializedVersion: 5
@@ -47450,11 +47400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1521053773}
-  DebugMode: 0
 --- !u!95 &1521053775
 Animator:
   serializedVersion: 5
@@ -51867,11 +51812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1650881181}
-  DebugMode: 0
 --- !u!95 &1650881183
 Animator:
   serializedVersion: 5
@@ -57233,11 +57173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e9bf4a752fc7849b34b7a83079c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinVelocity: 0.5
-  CloseDistanceThreshold: 1.5
-  MaxStuckTime: 3
-  LookAt: {fileID: 1827521682}
-  DebugMode: 0
 --- !u!95 &1827521684
 Animator:
   serializedVersion: 5
@@ -66864,7 +66799,7 @@ PrefabInstance:
     - target: {fileID: 6367473559023663655, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: promptText
       value: 
-      objectReference: {fileID: 7195826505722491214}
+      objectReference: {fileID: 0}
     - target: {fileID: 7414920338665460433, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: drawGizmo
       value: 1
@@ -67049,17 +66984,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 271781838304637736, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
   m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7195826505722491214 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 33027034751319900, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-  m_PrefabInstance: {fileID: 4669242325582227672}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7688060202375044748 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3715149579922707698, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
