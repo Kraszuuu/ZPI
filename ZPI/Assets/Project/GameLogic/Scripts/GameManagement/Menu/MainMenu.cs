@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Final Scene");
+        SceneManager.LoadScene("Cut Scene Scene");
     }
 
     public void QuitGame()
