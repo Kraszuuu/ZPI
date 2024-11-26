@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip zombieDeathSound;
     public AudioClip zombieAttackSound;
     public AudioClip zombieAmbientSound;
+    public AudioClip zombieEnemySpotted;
 
     [Header("Skeleton Clips")]
     public AudioClip skeletonWalkSound;
@@ -40,6 +41,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip skeletonDeathSound;
     public AudioClip skeletonAttackSound;
     public AudioClip skeletonAmbientSound;
+    public AudioClip skeletonArrowInAir;
+    public AudioClip skeletonArrowHit;
 
     [Header("Other Clips")]
     public AudioClip buttonClickSound; // "ButtonClick"
@@ -106,7 +109,10 @@ public class AudioManager : MonoBehaviour
             skeletonAttackSound,
             skeletonAmbientSound,
             exampleSound,
-            fireballExplosionSound
+            fireballExplosionSound,
+            zombieEnemySpotted,
+            skeletonArrowInAir,
+            skeletonArrowHit
         };
     }
 
@@ -190,12 +196,15 @@ public class AudioManager : MonoBehaviour
     private void PlayZombieDeathSound(AudioSource audioSource) => PlaySoundFromSource(zombieDeathSound, audioSource);
     private void PlayZombieAttackSound(AudioSource audioSource) => PlaySoundFromSource(zombieAttackSound, audioSource);
     private void PlayZombieAmbientSound(AudioSource audioSource) => PlaySoundFromSource(zombieAmbientSound, audioSource);
+    public void PlayZombieEnemySpottedSound(AudioSource audioSource) => PlaySoundFromSource(zombieEnemySpotted, audioSource);
     // Skeleton
     private void PlaySkeletonWalkSound(AudioSource audioSource) => PlaySoundFromSource(skeletonWalkSound, audioSource);
     private void PlaySkeletonDamageSound(AudioSource audioSource) => PlaySoundFromSource(skeletonDamageSound, audioSource);
     private void PlaySkeletonDeathSound(AudioSource audioSource) => PlaySoundFromSource(skeletonDeathSound, audioSource);
     private void PlaySkeletonAttackSound(AudioSource audioSource) => PlaySoundFromSource(skeletonAttackSound, audioSource);
     private void PlaySkeletonAmbientSound(AudioSource audioSource) => PlaySoundFromSource(skeletonAmbientSound, audioSource);
+    public void PlayArrowInAirSound(AudioSource audioSource) => PlaySoundFromSource(skeletonArrowInAir, audioSource);
+    public void PlayArrowHitSound(AudioSource audioSource) => PlaySoundFromSource(skeletonArrowHit, audioSource);
 
     // Other
     public void PlayPauseSound() => PlaySoundFromPlayer(pauseSound);

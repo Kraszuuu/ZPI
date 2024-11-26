@@ -12763,6 +12763,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2089347251128145233}
     - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonArrowHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 1b10588791cf6284cae0b493f7749a43, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: zombieDeathSound
       value: 
       objectReference: {fileID: 8300000, guid: 2b154d6b77fa1b74ebf24eb82de6a7fb, type: 3}
@@ -12775,6 +12779,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0cadeda29fac61b41af4f46712d93786, type: 3}
     - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonArrowInAir
+      value: 
+      objectReference: {fileID: 8300000, guid: 053de9023a78c9f428c9711ba9f8baa5, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: skeletonDeathSound
       value: 
       objectReference: {fileID: 8300000, guid: 35b3dbcc989e9ad47a467e35defcb7ae, type: 3}
@@ -12782,6 +12790,10 @@ PrefabInstance:
       propertyPath: zombieAmbientSound
       value: 
       objectReference: {fileID: 8300000, guid: 880c074687a4a724f84973bc4f1db65b, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieEnemySpotted
+      value: 
+      objectReference: {fileID: 8300000, guid: d521e8e8e43f49c4f8e4fcae06afb43b, type: 3}
     - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: skeletonAttackSound
       value: 
