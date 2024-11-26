@@ -1,3 +1,4 @@
+using DigitalRuby.PyroParticles;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -40,6 +41,7 @@ public class Enemy : MonoBehaviour
     [SerializeField, ReadOnly]
     private int _currentHealth;
 
+    public AudioSource audioSource;
     void Start()
     {
         _stateMachine = GetComponent<StateMachine>();
@@ -47,6 +49,7 @@ public class Enemy : MonoBehaviour
         _ragdoll = GetComponent<Ragdoll>();
         _animator = GetComponent<Animator>();
         _healthBar = GetComponent<EnemyHealthBar>();
+        audioSource = GetComponent<AudioSource>();
         _player = GameObject.FindGameObjectWithTag("Player");
 
         _damagePopupGenerator = GetComponentInChildren<DamagePopupGenerator>();
@@ -86,19 +89,27 @@ public class Enemy : MonoBehaviour
         return true;
     }
 
-    public void TakeDamage(int damage, Vector3 hitForceVector)
+    public void TakeDamage(int damage, Vector3 hitForceVector, bool isCritical = false)
     {
+        Color color = Color.yellow;
+        if (isCritical)
+        {
+            color = Color.red;
+            damage *= 2;
+        }
         _currentHealth -= damage;
         _healthBar.TakeDamage(damage);
         _animator.SetTrigger("gotHit");
 
         Vector3 randomness = new Vector3(Random.Range(0f, 0.25f), Random.Range(0f, 0.25f), Random.Range(0f, 0.25f));
-        _damagePopupGenerator.CreatePopup(transform.position + randomness, damage.ToString(), Color.yellow);
+
+        _damagePopupGenerator.CreatePopup(transform.position + randomness, damage.ToString(), color);
 
         if (_currentHealth <= 0)
         {
             Die(hitForceVector);
         }
+        else AudioManager.instance.PlayEnemyDamageSound(audioSource, enemyType);
 
         if (!DetectionManager.Instance.PlayerDetected)
         {
@@ -124,6 +135,7 @@ public class Enemy : MonoBehaviour
         _ragdoll.EnableRagdoll();
         _ragdoll.ApplyForce(hitForceVector);
         StartCoroutine(FadeOutAndDestroy());
+        AudioManager.instance.PlayEnemyDeathSound(audioSource, enemyType);
     }
 
     // Korutyna obsługująca zanikanie

@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.7176613, g: 0.7043059, b: 0.5529133, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.20009838, g: 0.18842998, b: 0.2981131, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.04
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.78742635, g: 0.7089375, b: 0.6786049, a: 1}
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 97637a2a763b7f24b8da4e139e4144ca, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44980878, g: 0.49987596, b: 0.5755994, a: 1}
+  m_IndirectSpecularColor: {r: 0.0007200191, g: 0.0018433576, b: 0.05432608, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7482,7 +7482,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328463677}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8de383bac1e3574f87a354af5152c4e, type: 3}
   m_Name: 
@@ -11155,11 +11155,11 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944421945}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.78431374, g: 0.78431374, b: 0.50980395, a: 1}
+  m_Color: {r: 0.7815923, g: 0.7815923, b: 0.51054573, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -12762,6 +12762,34 @@ PrefabInstance:
       propertyPath: playerSource
       value: 
       objectReference: {fileID: 2089347251128145233}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieDeathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b154d6b77fa1b74ebf24eb82de6a7fb, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieAttackSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 77973099c39c1ad42bae642e198bdd3f, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieDamageSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0cadeda29fac61b41af4f46712d93786, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonDeathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 35b3dbcc989e9ad47a467e35defcb7ae, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieAmbientSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 880c074687a4a724f84973bc4f1db65b, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonAttackSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9efab8578181d9948902f82d57f6a57d, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonDamageSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 081de732e2672ed4f86af76c897065dd, type: 3}
     - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: upgradeMenu
       value: 
@@ -12933,14 +12961,6 @@ PrefabInstance:
     - target: {fileID: 3724787195980539973, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3984586873370978207, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: speakerIcon
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3984586873370978207, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: recognitionCanvas
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3984586873370978207, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: recognizedWordText

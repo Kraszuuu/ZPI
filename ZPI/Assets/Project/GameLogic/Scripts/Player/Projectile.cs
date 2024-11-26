@@ -4,6 +4,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public bool IsFriendly = false;
+    public bool IsCritical = false;
 
     [Header("Direct Damage Settings")]
     public float DirectDamage = 10f;
@@ -80,13 +81,11 @@ public class Projectile : MonoBehaviour
 
         if (hitTransform.CompareTag("Player"))
         {
-            if (IsFriendly) return;
-            else hitTransform.GetComponent<PlayerHealth>().TakeDamage(DirectDamage);
-            // hitTransform.GetComponent<Enemy>().TakeDamage((int)SpellManager.Instance.GetSpellData("PrimaryAttack"));
+            hitTransform.GetComponent<PlayerHealth>().TakeDamage(DirectDamage);
         }
         else if (hitTransform.CompareTag("Enemy"))
         {
-            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage, hitForce);
+            hitTransform.GetComponent<Enemy>().TakeDamage((int)DirectDamage, hitForce, IsCritical);
         }
 
         _collided = true;
