@@ -46,15 +46,15 @@ MonoBehaviour:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}
     key1: {r: 0.78431374, g: 0.78431374, b: 0.50980395, a: 1}
-    key2: {r: 0.78431374, g: 0.78431374, b: 0.50980395, a: 0}
+    key2: {r: 0.7056604, g: 0.7056604, b: 0.53124243, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 13107
-    ctime1: 19661
-    ctime2: 45875
+    ctime1: 22899
+    ctime2: 42945
     ctime3: 52428
     ctime4: 0
     ctime5: 0
