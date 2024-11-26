@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:ZPI/Assets/Project/GameLogic/Scripts/UI/RecognitionIndicators.meta
+guid: bdcdc826a304f3c4f850eb8fcc8e0c78
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+========
+guid: 0d75b52eee0540441ab5ae23055312c7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 31900000
+>>>>>>>> 913cd11 (Working Zombie Anims):ZPI/Assets/Project/Zombie/Anims/OnHitReaction Mask.mask.meta
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

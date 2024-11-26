@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemyDetector : MonoBehaviour
 {
     public float detectionRadius = 10f;
-    List<GameObject> enemiesInRange = new List<GameObject>();
+    [SerializeField]
+    private bool drawGizmo = true;
+    List<GameObject> enemiesInRange = new();
 
     public GameObject GetClosestEnemy(List<GameObject> excludedEnemies = null)
     {
@@ -60,6 +62,15 @@ public class EnemyDetector : MonoBehaviour
             {
                 enemiesInRange.Add(hitCollider.gameObject);
             }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (drawGizmo)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, detectionRadius);
         }
     }
 }

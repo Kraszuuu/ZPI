@@ -84,7 +84,7 @@ public class ChainLightningShoot : MonoBehaviour
             yield break;
         }
 
-        if (closestEnemy == null) 
+        if (closestEnemy == null)
         {
             yield break;
         }
@@ -111,7 +111,7 @@ public class ChainLightningShoot : MonoBehaviour
         {
             if (enemy != null)
             {
-                enemy.GetComponent<Enemy>().TakeDamage(60);
+                enemy.GetComponent<Enemy>().TakeDamage(60, Vector3.zero);
                 enemy.GetComponent<LightningBoltScript>().ResetGameObjects();
             }
         }

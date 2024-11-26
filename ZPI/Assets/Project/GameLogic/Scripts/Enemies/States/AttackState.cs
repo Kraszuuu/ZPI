@@ -6,15 +6,21 @@ using UnityEngine;
 public class AttackState : BaseState
 {
     private float _moveTimer;
-    private float _losePlayerTimer;
     private float _attackTimer;
     private float _stopDistanceRanged = 10f;
     private float _stopDistanceMelee = 2f;
     private PlayerHealth _playerHealth;
     private float _meleeDamage = 10f;
 
+    private bool _attackScheduled = false; // Flaga, czy atak jest zaplanowany
+    private float _attackDelayTimer = 0f; // Timer do odliczania opóźnienia
+
+    private Vector3 _playerPosition;
+    private float _distanceToPlayer;
+
     public override void Enter()
     {
+        enemy.Agent.angularSpeed = 180f;
         if (enemy.enemyType == EnemyType.Melee)
         {
             _playerHealth = enemy.Player.GetComponent<PlayerHealth>();
@@ -23,101 +29,143 @@ public class AttackState : BaseState
 
     public override void Exit()
     {
-
     }
 
     public override void Perform()
     {
-        if (enemy.CanSeePlayer()) //player can be seen
+        _playerPosition = enemy.Player.transform.position;
+        _distanceToPlayer = Vector3.Distance(enemy.transform.position, _playerPosition);
+
+        if (enemy.CanSeePlayer())
         {
-            //lock the lose player timer and increment the move and shot timers
-            _losePlayerTimer = 0;
+            DetectionManager.Instance.ReportPlayerDetected(_playerPosition);
+        }
+
+        if (DetectionManager.Instance.PlayerDetected) // Gracz widoczny
+        {
             _moveTimer += Time.deltaTime;
             _attackTimer += Time.deltaTime;
-            Vector3 playerPosition = enemy.Player.transform.position;
-            playerPosition.y = enemy.transform.position.y;
-            enemy.transform.LookAt(playerPosition);
-            DetectionManager.Instance.ReportPlayerDetected(enemy.Player.transform.position);
 
-            //move the enemy to a random position after a random time
-            if (_attackTimer > enemy.fireRate)
+            if (_attackTimer > enemy.fireRate && !_attackScheduled)
             {
                 AttackPlayer();
             }
-            if (_moveTimer > Random.Range(3, 7))
-            {
-                enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
-                _moveTimer = 0;
-            }
+
+            // else if (_moveTimer > Random.Range(, 7))
+            // {
+            //     enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 3f));
+            //     _moveTimer = 0;
+            // }
         }
-        else //lost sight of player
+        else // Gracz zgubiony
         {
-            _losePlayerTimer += Time.deltaTime;
-            if (_losePlayerTimer > 2)
+            // Przejście do stanu poszukiwań z ostatnią znaną pozycją gracza
+            stateMachine.ChangeState(new SearchState());
+        }
+
+        // Obsługa zaplanowanego ataku
+        if (_attackScheduled)
+        {
+            _attackDelayTimer -= Time.deltaTime;
+            if (_attackDelayTimer <= 0)
             {
-                //change to the search state
-                stateMachine.ChangeState(new PatrolState());
+                // Sprawdzenie odległości w momencie trafienia
+                if (_distanceToPlayer <= 3f)
+                {
+                    _playerHealth.TakeDamage(_meleeDamage);
+                }
+
+                _attackScheduled = false; // Resetuj planowanie ataku
+                enemy.Agent.isStopped = false;
             }
         }
     }
+
 
     public void AttackPlayer()
     {
-        // Oblicz odleg�o�� mi�dzy przeciwnikiem a graczem
-        float distance = Vector3.Distance(enemy.transform.position, enemy.Player.transform.position);
-        enemy.Agent.SetDestination(enemy.Player.transform.position);
-
-        if (enemy.enemyType == EnemyType.Ranged)
+        if (Vector3.Distance(enemy.Agent.destination, _playerPosition) > 0.5f)
         {
-            if (distance <= _stopDistanceRanged)
-            {
-                enemy.Agent.isStopped = true;               
-            }
-            else
-            {
-                enemy.Agent.isStopped = false;
-            }
+            enemy.Agent.SetDestination(_playerPosition);
+        }
 
-            Transform gunbarrel = enemy.gunBarrel;
+        // Jeżeli można atakować i obecnie atak nie ma miejsca to próbuj atakować
+        if (_attackTimer > enemy.fireRate && !_attackScheduled)
+        {
+            if (enemy.enemyType == EnemyType.Ranged)
+            {
+                if (_distanceToPlayer <= _stopDistanceRanged)
+                {
+                    enemy.Agent.isStopped = true;
+                }
+                else
+                {
+                    enemy.Agent.isStopped = false;
+                }
 
-            if (enemy.bulletPrefab != null)
-            {
-                GameObject bullet = GameObject.Instantiate(enemy.bulletPrefab, gunbarrel.position, enemy.transform.rotation);
-                //calculate the direction to the player
-                Vector3 shootDirection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
-                //add force rigidbody of the bullet
-                bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
-                _attackTimer = 0;
+                Transform gunbarrel = enemy.gunBarrel;
+
+                if (enemy.bulletPrefab != null)
+                {
+                    GameObject bullet = GameObject.Instantiate(enemy.bulletPrefab, gunbarrel.position, enemy.transform.rotation);
+                    //calculate the direction to the player
+                    Vector3 shootDirection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
+                    //add force rigidbody of the bullet
+                    bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
+                    _attackTimer = 0;
+                }
+                else
+                {
+                    Debug.LogWarning("Prefab bullet not assigned!");
+                }
             }
-            else
+            else if (enemy.enemyType == EnemyType.Melee)
             {
-                Debug.LogWarning("Prefab bullet not assigned!");
+                if (_distanceToPlayer > _stopDistanceMelee)
+                {
+                    enemy.Agent.isStopped = false;
+                }
+                else
+                {
+                    enemy.Agent.isStopped = true;
+                    int attackIndex = Random.Range(0, 6);
+
+                    // each attack index has different attack animation and time when it hits, so we need to set different cases that will set delay when attack hits
+                    switch (attackIndex)
+                    {
+                        case 0:
+                            _attackDelayTimer = CalculateAnimationTime(40);
+                            break;
+                        case 1:
+                            _attackDelayTimer = CalculateAnimationTime(40);
+                            break;
+                        case 2:
+                            _attackDelayTimer = CalculateAnimationTime(20);
+                            break;
+                        case 3:
+                            _attackDelayTimer = CalculateAnimationTime(38);
+                            break;
+                        case 4:
+                            _attackDelayTimer = CalculateAnimationTime(24);
+                            break;
+                        case 5:
+                            _attackDelayTimer = CalculateAnimationTime(33);
+                            break;
+                    }
+
+                    stateMachine.SetAnimatorInteger("attackIndex", attackIndex);
+                    stateMachine.SetAnimatorTrigger("attack");
+
+                    _attackScheduled = true; // Aktywuj licznik czasu
+                    _attackTimer = 0;
+                }
             }
         }
-        else if (enemy.enemyType == EnemyType.Melee)
-        {
-            if (distance > _stopDistanceMelee)
-            {
-                enemy.Agent.isStopped = false;
-            }
-            else
-            {
-                enemy.Agent.isStopped = true;
-                _playerHealth.TakeDamage(_meleeDamage);
-                _attackTimer = 0;
-            }
-        }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private static float CalculateAnimationTime(int frames, int fps = 30)
     {
-
+        return (float)frames / fps;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

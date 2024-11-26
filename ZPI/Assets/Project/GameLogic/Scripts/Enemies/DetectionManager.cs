@@ -10,30 +10,57 @@ public class DetectionManager : MonoBehaviour
     public bool PlayerDetected { get; private set; } = false;
     public Vector3 LastKnownPlayerPosition { get; private set; }
 
+    [Header("Detection Settings")]
+    public float detectionTimeout = 4f; // Czas w sekundach po kt√≥rym gracz jest uznawany za zgubionego
+
+    [SerializeField, ReadOnly]
+    private float detectionTimer = 0f; // Licznik czasu od ostatniego zg≈Çoszenia
+
     private void Awake()
     {
-        // Sprawdzenie, czy instancja juø istnieje
+        // Sprawdzenie, czy instancja ju≈º istnieje
         if (Instance == null)
         {
-            Instance = this; // Ustaw obecnπ instancjÍ
+            Instance = this; // Ustaw obecnƒÖ instancjƒô
             DontDestroyOnLoad(gameObject); // Zabezpiecza przed zniszczeniem obiektu przy zmianie scen
         }
         else
         {
-            Destroy(gameObject); // UsuÒ nowπ instancjÍ, jeúli juø istnieje
+            Destroy(gameObject); // Usu≈Ñ nowƒÖ instancjƒô, je≈õli ju≈º istnieje
         }
     }
 
-    // Metoda do zg≥aszania wykrycia gracza przez dowolnego przeciwnika
+    private void Update()
+    {
+        if (PlayerDetected)
+        {
+            detectionTimer += Time.deltaTime;
+        }
+
+        // Je≈õli licznik przekroczy czas limitu, uznaj gracza za zgubionego
+        if (detectionTimer >= detectionTimeout)
+        {
+            Debug.Log("Gracz zosta≈Ç zgubiony.");
+            ResetDetection();
+        }
+    }
+
+    // Metoda do zg≈Çaszania wykrycia gracza przez dowolnego przeciwnika
     public void ReportPlayerDetected(Vector3 playerPosition)
     {
-        PlayerDetected = true;
+        if (!PlayerDetected)
+        {
+            Debug.Log("Gracz zosta≈Ç wykryty.");
+            PlayerDetected = true;
+        }
+        detectionTimer = 0f;
         LastKnownPlayerPosition = playerPosition;
     }
 
-    // Metoda resetujπca wykrycie gracza
+    // Metoda resetujƒÖca wykrycie gracza
     public void ResetDetection()
     {
         PlayerDetected = false;
+        detectionTimer = 0f;
     }
 }

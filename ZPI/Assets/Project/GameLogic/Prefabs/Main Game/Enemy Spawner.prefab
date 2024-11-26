@@ -46,18 +46,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemySpawn:
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
   - enemySpawn:
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
   - enemySpawn:
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
   - enemySpawn:
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
-    - {fileID: 176457563675557565, guid: e77ac59a4432ea044be0428700f5d575, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
+    - {fileID: 6761079371077853584, guid: 786cd11806a289b44afe74a3da203bbf, type: 3}
   CurrentEnemies: []

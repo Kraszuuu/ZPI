@@ -56,8 +56,8 @@ public class RecognitionManager : MonoBehaviour
     {
         (string, float) result = _currentRecognizer.DoRecognition(points, 64,
                 _templates.RawTemplates);
-        return result;       
-        
+        return result;
+
     }
 
     private void OnApplicationQuit()
