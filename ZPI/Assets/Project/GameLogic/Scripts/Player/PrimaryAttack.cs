@@ -12,6 +12,7 @@ public class PrimaryAttack : MonoBehaviour
     public float FireRate = 4;
     public float ArcRange = 1;
     [Range(0, 0.2f)] public float DelayedFire = 0f;
+    [Range(0, 1f)] public float CriticalChance = 0.1f;
 
     private Vector3 _destination;
     private float _timeToFire;
@@ -53,6 +54,8 @@ public class PrimaryAttack : MonoBehaviour
         {
             projectileScript.DirectDamage = SpellManager.Instance.GetSpellData("PrimaryAttack");
             projectileScript.AreaDamage = SpellManager.Instance.GetSpellData("PrimaryAttackAreaDamage");
+            bool isCritical = Random.value <= CriticalChance;
+            projectileScript.IsCritical = isCritical;
         }
 
         // Opcjonalny efekt dla pocisku
