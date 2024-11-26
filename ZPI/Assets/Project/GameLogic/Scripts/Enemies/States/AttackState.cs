@@ -113,6 +113,7 @@ public class AttackState : BaseState
                     //add force rigidbody of the bullet
                     bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
                     _attackTimer = 0;
+                    AudioManager.instance.PlayEnemyAttackSound(enemy.audioSource, enemy.enemyType);
                 }
                 else
                 {
@@ -152,6 +153,8 @@ public class AttackState : BaseState
                             _attackDelayTimer = CalculateAnimationTime(33);
                             break;
                     }
+
+                    AudioManager.instance.PlayEnemyAttackSound(enemy.audioSource, enemy.enemyType);
 
                     stateMachine.SetAnimatorInteger("attackIndex", attackIndex);
                     stateMachine.SetAnimatorTrigger("attack");

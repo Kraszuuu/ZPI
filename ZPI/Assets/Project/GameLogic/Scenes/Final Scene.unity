@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.449809, g: 0.49987626, b: 0.57560015, a: 1}
+  m_IndirectSpecularColor: {r: 0.44980848, g: 0.49987572, b: 0.5755988, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12762,6 +12762,34 @@ PrefabInstance:
       propertyPath: playerSource
       value: 
       objectReference: {fileID: 2089347251128145233}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieDeathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b154d6b77fa1b74ebf24eb82de6a7fb, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieAttackSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 77973099c39c1ad42bae642e198bdd3f, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieDamageSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0cadeda29fac61b41af4f46712d93786, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonDeathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 35b3dbcc989e9ad47a467e35defcb7ae, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: zombieAmbientSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 880c074687a4a724f84973bc4f1db65b, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonAttackSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 9efab8578181d9948902f82d57f6a57d, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: skeletonDamageSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 081de732e2672ed4f86af76c897065dd, type: 3}
     - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: upgradeMenu
       value: 
