@@ -11899,7 +11899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad2c80041e35324cb50bb07bf7755af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 100
   chipSpeed: 2
   frontHealthBar: {fileID: 0}
   backHealthBar: {fileID: 0}
@@ -11954,7 +11954,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recognizedSpell: 
   recognizedWord: 
-  isSpeechRecognitionEnabled: 0
   recognizedWordText: {fileID: 0}
 --- !u!114 &245897539085753000
 MonoBehaviour:
@@ -11991,6 +11990,7 @@ MonoBehaviour:
   FireRate: 4
   ArcRange: 1
   DelayedFire: 0
+  CriticalChance: 0.1
 --- !u!120 &1037459207440256217
 LineRenderer:
   serializedVersion: 2
@@ -12146,7 +12146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf9db2bf25839648a630d360a6a5308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 10
+  detectionRadius: 16
+  drawGizmo: 1
 --- !u!114 &3880760116037998179
 MonoBehaviour:
   m_ObjectHideFlags: 0
