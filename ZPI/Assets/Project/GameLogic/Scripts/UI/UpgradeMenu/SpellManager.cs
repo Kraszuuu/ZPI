@@ -25,13 +25,13 @@ public class SpellManager : MonoBehaviour
 
     private void InitializeSpells()
     {
-        spellData["PrimaryAttack"] = 10f;
+        spellData["PrimaryAttack"] = 6f;
         spellData["PrimaryAttackAreaDamage"] = 0f;
-        spellData["Fireball"] = 30f;
+        spellData["Fireball"] = 40f;
         spellData["FireballAreaDamage"] = 20f;
-        spellData["Shield"] = 5f;
-        spellData["Lightning"] = 30f;
-        spellData["Meteors"] = 1f;
+        spellData["Shield"] = 6f;
+        spellData["Lightning"] = 40f;
+        spellData["Meteors"] = 2f;
     }
 
     public float GetSpellData(string spellName)

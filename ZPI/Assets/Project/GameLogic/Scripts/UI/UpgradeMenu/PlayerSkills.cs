@@ -11,12 +11,18 @@ public class PlayerSkills : MonoBehaviour
         SHIELD_UNLOCK = 3,
         METEOR_UNLOCK = 4,
         FIREBALL_BUFF = 5,
-        HEALTH_BUFF = 6,
+        SHIELD_BUFF = 6,
         METEOR_BUFF = 7,
         ELECTRIC_UNLOCK = 8,
         HEAL_1 = 9,
         HEAL_2 = 10,
-        HEAL_3 = 11
+        HEAL_3 = 11,
+        HEALTH_BUFF_1 = 12,
+        HEALTH_BUFF_2 = 13,
+        HEALTH_BUFF_3 = 14,
+        FIREBALL_BUFF_2 = 15,
+        ELECTRIC_BUFF = 16,
+        METEOR_BUFF_2 = 17
     }
 
     private List<SkillType> _unlockedSkillTypeList;
@@ -67,11 +73,16 @@ public class PlayerSkills : MonoBehaviour
             { SkillType.SHIELD_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
             { SkillType.METEOR_UNLOCK, new List<SkillType> { SkillType.BASE_BUFF } },
             { SkillType.FIREBALL_BUFF, new List<SkillType>() { SkillType.FIREBALL_UNLOCK } },
-            { SkillType.HEALTH_BUFF, new List<SkillType>() { SkillType.SHIELD_UNLOCK } },
+            { SkillType.SHIELD_BUFF, new List<SkillType>() { SkillType.SHIELD_UNLOCK } },
             { SkillType.METEOR_BUFF, new List<SkillType>() { SkillType.METEOR_UNLOCK } },
-            { SkillType.ELECTRIC_UNLOCK, new List<SkillType> { SkillType.FIREBALL_BUFF, SkillType.HEALTH_BUFF, SkillType.METEOR_BUFF } },
+            { SkillType.ELECTRIC_UNLOCK, new List<SkillType> { SkillType.FIREBALL_BUFF, SkillType.SHIELD_BUFF, SkillType.METEOR_BUFF } },
             { SkillType.HEAL_2, new List<SkillType>() { SkillType.HEAL_1 } },
-            { SkillType.HEAL_3, new List<SkillType>() { SkillType.HEAL_2 } }
+            { SkillType.HEAL_3, new List<SkillType>() { SkillType.HEAL_2 } },
+            { SkillType.HEALTH_BUFF_2, new List<SkillType>() { SkillType.HEALTH_BUFF_1 } },
+            { SkillType.HEALTH_BUFF_3, new List<SkillType>() { SkillType.HEALTH_BUFF_2 } },
+            { SkillType.FIREBALL_BUFF_2, new List<SkillType>() { SkillType.ELECTRIC_UNLOCK } },
+            { SkillType.ELECTRIC_BUFF, new List<SkillType>() { SkillType.ELECTRIC_UNLOCK } },
+            { SkillType.METEOR_BUFF_2, new List<SkillType>() { SkillType.ELECTRIC_UNLOCK } }
         };
     }
 }

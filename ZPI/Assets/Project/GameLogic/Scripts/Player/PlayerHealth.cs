@@ -87,4 +87,9 @@ public class PlayerHealth : MonoBehaviour
     {
         health = maxHealth;
     }
+
+    public void BuffHealth()
+    {
+        maxHealth += 100;
+    }
 }
