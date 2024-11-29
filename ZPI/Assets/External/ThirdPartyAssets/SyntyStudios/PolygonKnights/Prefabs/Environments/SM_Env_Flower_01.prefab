@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 455490}
   - component: {fileID: 3304870}
   - component: {fileID: 2336956}
-  - component: {fileID: -5705239907502336765}
+  - component: {fileID: 3636904984407168409}
   m_Layer: 0
   m_Name: SM_Env_Flower_01
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &-5705239907502336765
-MeshCollider:
+--- !u!65 &3636904984407168409
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,8 +101,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: b3703e25a7198a94fac43b88c4140e76, type: 3}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 2.4585423, y: 1.5315273, z: 1.9278458}
+  m_Center: {x: -0.0000036358833, y: -0.20016578, z: 0}
