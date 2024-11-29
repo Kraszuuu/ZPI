@@ -67,11 +67,11 @@ public class PlayerHealth : MonoBehaviour
             if (health <= 0)
             {
                 GameOverManager.Instance.EndGame();
-                _audioManager.PlayPlayerDamageSound();
+                _audioManager.PlayPlayerDeathSound();
             }
             else
             {
-                _audioManager.PlayPlayerDeathSound();
+                _audioManager.PlayPlayerDamageSound();
             }
         }
     }

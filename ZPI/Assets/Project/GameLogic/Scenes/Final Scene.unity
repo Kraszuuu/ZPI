@@ -12804,6 +12804,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2089347251128145233}
     - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: fireballSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3bcbb5605887218498731a69e626f86f, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: skeletonArrowHit
       value: 
       objectReference: {fileID: 8300000, guid: 1b10588791cf6284cae0b493f7749a43, type: 3}
@@ -12843,6 +12847,10 @@ PrefabInstance:
       propertyPath: skeletonDamageSound
       value: 
       objectReference: {fileID: 8300000, guid: 081de732e2672ed4f86af76c897065dd, type: 3}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: fireballExplosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c5486c17cf172c54aa3c63a8ff487773, type: 3}
     - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: upgradeMenu
       value: 
