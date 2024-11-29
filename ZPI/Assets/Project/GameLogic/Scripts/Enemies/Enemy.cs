@@ -15,16 +15,13 @@ public class Enemy : MonoBehaviour
     [Header("Health")]
     public int MaxHealth = 100;
 
+    [Header("Attacking")]
+    public float FireRate = 2;
+
     [Header("Sight Values")]
     public float sightDistance = 20f;
     public float fieldOfView = 85f;
     public float eyeHeight;
-
-    [Header("Weapon Values")]
-    public Transform gunBarrel;
-    public GameObject bulletPrefab;
-    [Range(0.1f, 10)]
-    public float fireRate;
 
     private StateMachine _stateMachine;
     private NavMeshAgent _agent;
