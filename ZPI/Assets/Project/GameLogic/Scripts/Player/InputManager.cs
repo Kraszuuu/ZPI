@@ -77,7 +77,7 @@ public class InputManager : MonoBehaviour
     }
     private void TogglePause()
     {
-        if (pauseManager != null)
+        if (pauseManager != null && !GameState.Instance.IsGamePaused)
         {
             pauseManager.PauseGame();
         }
