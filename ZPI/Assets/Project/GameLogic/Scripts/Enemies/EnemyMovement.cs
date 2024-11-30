@@ -76,6 +76,7 @@ public class EnemyMovement : MonoBehaviour
         bool shouldMove = Velocity.magnitude > MinVelocity && Agent.remainingDistance > Agent.stoppingDistance;
 
         Animator.SetBool("move", shouldMove);
+        Animator.SetFloat("velx", Velocity.x);
         Animator.SetFloat("vely", Velocity.y);
 
         LookAt.lookAtTargetPosition = Agent.steeringTarget + transform.forward;

@@ -5902,6 +5902,7 @@ GameObject:
   - component: {fileID: 253780042}
   - component: {fileID: 253780041}
   - component: {fileID: 253780040}
+  - component: {fileID: 253780043}
   m_Layer: 0
   m_Name: TestCamera
   m_TagString: MainCamera
@@ -5983,6 +5984,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 42.198, y: 0, z: 0}
+--- !u!114 &253780043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253780039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8565768887c65cf44abcf2985b304ba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  rotationSpeed: 150
+  target: {fileID: 8270688441143636601}
+  offset: {x: 1.26, y: 1.61, z: -3.09}
+  followSpeed: 5
 --- !u!1 &255563786
 GameObject:
   m_ObjectHideFlags: 0
@@ -11530,12 +11548,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &435701090
@@ -11961,12 +11977,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &440419676
@@ -23113,12 +23127,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &758431334
@@ -25516,12 +25528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &845420391
@@ -28685,12 +28695,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &949910172
@@ -35725,12 +35733,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1192744372
@@ -37595,12 +37601,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1238473243
@@ -39112,12 +39116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1293007811
@@ -40513,12 +40515,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1319711693
@@ -44356,12 +44356,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1421017548
@@ -47625,12 +47623,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1521053783
@@ -52037,12 +52033,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1650881191
@@ -57398,12 +57392,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   MaxHealth: 1
+  FireRate: 2
   sightDistance: 25
   fieldOfView: 85
   eyeHeight: 1.8
-  gunBarrel: {fileID: 0}
-  bulletPrefab: {fileID: 6260881243706939861, guid: 17ce436cda9336547958f8e643d80bd2, type: 3}
-  fireRate: 2
   _currentState: 
   _currentHealth: 0
 --- !u!4 &1827521692
@@ -66796,6 +66788,10 @@ PrefabInstance:
       propertyPath: LightningImage
       value: 
       objectReference: {fileID: 1163383623263333355}
+    - target: {fileID: 5350565384308254927, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 15359
+      objectReference: {fileID: 0}
     - target: {fileID: 6367473559023663655, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: promptText
       value: 
@@ -66984,6 +66980,79 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 271781838304637736, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
   m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6905478298703544590
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5288012322748397141, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288012322748397141, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196398385161258076, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7196398385161258076, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -129.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193287146213233624, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+      propertyPath: m_Name
+      value: SkeletonEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
 --- !u!114 &7688060202375044748 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3715149579922707698, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
@@ -66995,6 +67064,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8270688441143636601 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8820493334224338182, guid: 3380b371972132a4cbb0d6570627d6df, type: 3}
+  m_PrefabInstance: {fileID: 6905478298703544590}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8811688559174403293 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2070267715952001481, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
@@ -67019,6 +67093,7 @@ SceneRoots:
   - {fileID: 710894456}
   - {fileID: 1979699778}
   - {fileID: 302444132}
-  - {fileID: 809386309874356876}
   - {fileID: 249812458}
+  - {fileID: 809386309874356876}
+  - {fileID: 6905478298703544590}
   - {fileID: 253780042}

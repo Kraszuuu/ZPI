@@ -11,11 +11,13 @@ public class FireballScript : MonoBehaviour
 
     private CameraShake _cameraShake;
     private Vector3 _destination;
+    private AudioSource _audioSource;
 
     private void Start()
     {
 
         _cameraShake = Camera.GetComponent<CameraShake>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void CastFireBallInDirection()
@@ -41,6 +43,9 @@ public class FireballScript : MonoBehaviour
         // Ustawienie kierunku pocisku
         Vector3 direction = (_destination - FireballSpawnPoint.position).normalized;
         projectileObj.GetComponent<Rigidbody>().velocity = direction * ProjectileSpeed;
+
+        //Audio
+        AudioManager.instance.PlayFireballSound(_audioSource);
 
         var projectileScript = projectileObj.GetComponent<Projectile>();
         if (projectileScript != null)

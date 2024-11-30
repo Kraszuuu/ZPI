@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AttackState : BaseState
 {
@@ -46,16 +47,39 @@ public class AttackState : BaseState
             _moveTimer += Time.deltaTime;
             _attackTimer += Time.deltaTime;
 
-            if (_attackTimer > enemy.fireRate && !_attackScheduled)
+            if (enemy.enemyType == EnemyType.Ranged)
             {
-                AttackPlayer();
+                if (Vector3.Distance(enemy.Agent.destination, _playerPosition) > _stopDistanceRanged)
+                {
+                    Vector3 randomDirection = Random.insideUnitSphere * _stopDistanceRanged;
+                    randomDirection.y = 0;
+                    Vector3 targetPosition = _playerPosition + randomDirection;
+
+                    if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, _stopDistanceRanged, NavMesh.AllAreas))
+                    {
+                        enemy.Agent.SetDestination(hit.position);
+                    }
+                }
+                else if (_distanceToPlayer <= _stopDistanceRanged)
+                {
+                    stateMachine.ChangeState(new AimState());
+                }
+
+            }
+            else if (enemy.enemyType == EnemyType.Melee)
+            {
+                if (Vector3.Distance(enemy.Agent.destination, _playerPosition) > 0.5f)
+                {
+                    enemy.Agent.SetDestination(_playerPosition);
+                }
+
+                if (_attackTimer > enemy.FireRate && !_attackScheduled)
+                {
+                    AttackPlayer();
+                }
             }
 
-            // else if (_moveTimer > Random.Range(, 7))
-            // {
-            //     enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 3f));
-            //     _moveTimer = 0;
-            // }
+
         }
         else // Gracz zgubiony
         {
@@ -84,43 +108,10 @@ public class AttackState : BaseState
 
     public void AttackPlayer()
     {
-        if (Vector3.Distance(enemy.Agent.destination, _playerPosition) > 0.5f)
-        {
-            enemy.Agent.SetDestination(_playerPosition);
-        }
-
         // Jeżeli można atakować i obecnie atak nie ma miejsca to próbuj atakować
-        if (_attackTimer > enemy.fireRate && !_attackScheduled)
+        if (_attackTimer > enemy.FireRate && !_attackScheduled)
         {
-            if (enemy.enemyType == EnemyType.Ranged)
-            {
-                if (_distanceToPlayer <= _stopDistanceRanged)
-                {
-                    enemy.Agent.isStopped = true;
-                }
-                else
-                {
-                    enemy.Agent.isStopped = false;
-                }
-
-                Transform gunbarrel = enemy.gunBarrel;
-
-                if (enemy.bulletPrefab != null)
-                {
-                    GameObject bullet = GameObject.Instantiate(enemy.bulletPrefab, gunbarrel.position, enemy.transform.rotation);
-                    //calculate the direction to the player
-                    Vector3 shootDirection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
-                    //add force rigidbody of the bullet
-                    bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-2f, 2f), Vector3.up) * shootDirection * 40;
-                    _attackTimer = 0;
-                    AudioManager.instance.PlayEnemyAttackSound(enemy.audioSource, enemy.enemyType);
-                }
-                else
-                {
-                    Debug.LogWarning("Prefab bullet not assigned!");
-                }
-            }
-            else if (enemy.enemyType == EnemyType.Melee)
+            if (enemy.enemyType == EnemyType.Melee)
             {
                 if (_distanceToPlayer > _stopDistanceMelee)
                 {
@@ -135,22 +126,22 @@ public class AttackState : BaseState
                     switch (attackIndex)
                     {
                         case 0:
-                            _attackDelayTimer = CalculateAnimationTime(40);
+                            _attackDelayTimer = CalculateAnimationTime(40) / 1.6f;
                             break;
                         case 1:
-                            _attackDelayTimer = CalculateAnimationTime(40);
+                            _attackDelayTimer = CalculateAnimationTime(40) / 1.5f;
                             break;
                         case 2:
-                            _attackDelayTimer = CalculateAnimationTime(20);
+                            _attackDelayTimer = CalculateAnimationTime(20) / 1.1f;
                             break;
                         case 3:
-                            _attackDelayTimer = CalculateAnimationTime(38);
+                            _attackDelayTimer = CalculateAnimationTime(38) / 1.1f;
                             break;
                         case 4:
-                            _attackDelayTimer = CalculateAnimationTime(24);
+                            _attackDelayTimer = CalculateAnimationTime(24) / 1.4f;
                             break;
                         case 5:
-                            _attackDelayTimer = CalculateAnimationTime(33);
+                            _attackDelayTimer = CalculateAnimationTime(33) / 1.4f;
                             break;
                     }
 

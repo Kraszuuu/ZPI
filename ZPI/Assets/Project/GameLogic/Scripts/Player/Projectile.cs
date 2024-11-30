@@ -184,4 +184,9 @@ public class Projectile : MonoBehaviour
 
         return hitDirection * ProjectileHitForce;
     }
+
+    public void PlayFireballExplosionSound(AudioSource audioSource)
+    {
+        AudioManager.instance.PlayFireballExplosionSound(audioSource);
+    }
 }

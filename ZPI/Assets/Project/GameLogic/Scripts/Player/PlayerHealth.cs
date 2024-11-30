@@ -25,15 +25,17 @@ public class PlayerHealth : MonoBehaviour
     public Slider EaseHealthSlider;
     private float _lerpSpeed = 0.05f;
 
+    private PlayerMotor _playerMotor;
+
     private AudioManager _audioManager;
 
     void Start()
     {
         health = maxHealth;
         _audioManager = FindObjectOfType<AudioManager>();
+        _playerMotor = GetComponent<PlayerMotor>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         health = Mathf.Clamp(health, 0, maxHealth);
@@ -49,12 +51,10 @@ public class PlayerHealth : MonoBehaviour
             HealthSlider.value = normalizedHealth;
         }
 
-        // Dodanie efektu "ease" (p³ynne przejœcie) na drugim pasku
         if (EaseHealthSlider.value != normalizedHealth)
         {
             EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, normalizedHealth, _lerpSpeed);
         }
-
     }
 
     public void TakeDamage(float damage)
@@ -67,13 +67,14 @@ public class PlayerHealth : MonoBehaviour
             if (health <= 0)
             {
                 GameOverManager.Instance.EndGame();
-                _audioManager.PlayPlayerDamageSound();
+                _audioManager.PlayPlayerDeathSound();
             }
             else
             {
-                _audioManager.PlayPlayerDeathSound();
+                _audioManager.PlayPlayerDamageSound();
             }
         }
+        _playerMotor.ApplyDamageEffect();
     }
 
     public void RestoreHealth(float healAmount)
@@ -86,5 +87,10 @@ public class PlayerHealth : MonoBehaviour
     public void RenewHealth()
     {
         health = maxHealth;
+    }
+
+    public void BuffHealth()
+    {
+        maxHealth += 100;
     }
 }

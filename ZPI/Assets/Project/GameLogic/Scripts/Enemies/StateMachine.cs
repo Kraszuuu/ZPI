@@ -63,6 +63,11 @@ public class StateMachine : MonoBehaviour
         animator.SetBool(boolName, value);
     }
 
+    public bool GetAnimatorBool(string boolName)
+    {
+        return animator.GetBool(boolName);
+    }
+
     public void SetAnimatorInteger(string integerName, int value)
     {
         animator.SetInteger(integerName, value);

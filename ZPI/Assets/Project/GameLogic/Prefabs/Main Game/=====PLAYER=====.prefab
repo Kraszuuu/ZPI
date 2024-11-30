@@ -5629,7 +5629,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 15351
+    m_Bits: 15359
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -11858,6 +11858,18 @@ MonoBehaviour:
   DashSpeed: 10
   DashDuration: 0.4
   DashCooldown: 1
+  MaxStamina: 100
+  StaminaConsumptionRate: 25
+  StaminaRegenRate: 10
+  IsExhaustedValue: 30
+  CurrentStamina: 0
+  StaminaSlider: {fileID: 0}
+  FlashDuration: 0.5
+  ExhaustedColor: {r: 1, g: 0, b: 0, a: 1}
+  NormalColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  SlowDuration: 3
+  SlowMultiplier: 0.9
+  DamageEffectImage: {fileID: 0}
   isEnabled: 1
 --- !u!114 &7822322065535976200
 MonoBehaviour:
@@ -11899,7 +11911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad2c80041e35324cb50bb07bf7755af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 100
   chipSpeed: 2
   frontHealthBar: {fileID: 0}
   backHealthBar: {fileID: 0}
@@ -11954,7 +11966,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recognizedSpell: 
   recognizedWord: 
-  isSpeechRecognitionEnabled: 0
   recognizedWordText: {fileID: 0}
 --- !u!114 &245897539085753000
 MonoBehaviour:
@@ -11991,6 +12002,7 @@ MonoBehaviour:
   FireRate: 4
   ArcRange: 1
   DelayedFire: 0
+  CriticalChance: 0.1
 --- !u!120 &1037459207440256217
 LineRenderer:
   serializedVersion: 2
@@ -12146,7 +12158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf9db2bf25839648a630d360a6a5308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 10
+  detectionRadius: 16
+  drawGizmo: 1
 --- !u!114 &3880760116037998179
 MonoBehaviour:
   m_ObjectHideFlags: 0
