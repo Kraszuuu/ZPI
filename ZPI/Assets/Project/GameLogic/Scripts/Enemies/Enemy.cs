@@ -131,6 +131,7 @@ public class Enemy : MonoBehaviour
         _stateMachine.ChangeState(new DeadState());
         _ragdoll.EnableRagdoll();
         _ragdoll.ApplyForce(hitForceVector);
+        SetLayerRecursively(_ragdoll.gameObject, LayerMask.NameToLayer("IgnorePlayer"));
         StartCoroutine(FadeOutAndDestroy());
         AudioManager.instance.PlayEnemyDeathSound(audioSource, enemyType);
     }
@@ -197,6 +198,34 @@ public class Enemy : MonoBehaviour
 
         // Zniszcz obiekt po zakończeniu zanikania
         Destroy(gameObject);
+    }
+
+    private void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Sprawdź, czy gracz znajduje się nad przeciwnikiem
+            Vector3 directionToPlayer = collision.transform.position - transform.position;
+            if (directionToPlayer.y > 0.5f) // Możesz dostosować próg
+            {
+                // Odepchnij gracza w bok
+                Rigidbody playerRb = collision.gameObject.GetComponent<Rigidbody>();
+                if (playerRb != null)
+                {
+                    Vector3 pushDirection = new Vector3(directionToPlayer.x, 0, directionToPlayer.z).normalized;
+                    playerRb.AddForce(pushDirection * 500f); // Dopasuj siłę odpychania
+                }
+            }
+        }
     }
 
     private void OnDrawGizmos()

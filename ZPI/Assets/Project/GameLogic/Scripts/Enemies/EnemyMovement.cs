@@ -8,7 +8,6 @@ public class EnemyMovement : MonoBehaviour
     public float MinVelocity = 0.5f;
     public float CloseDistanceThreshold = 1.5f; // Minimalna odległość uznawana za "blisko celu"
     public float MaxStuckTime = 3f; // Maksymalny czas, po którym cel zostanie zresetowany
-    public bool UpdateRotation = true;
 
     private NavMeshAgent Agent;
     private Animator Animator;
@@ -35,8 +34,6 @@ public class EnemyMovement : MonoBehaviour
     {
         SynchronizeAnimatorAndAgent();
         CheckForStuck();
-
-        Agent.updateRotation = UpdateRotation;
 
         // Obsługa prawego przycisku myszy
         if (DebugMode)

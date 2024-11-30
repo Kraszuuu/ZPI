@@ -60,6 +60,11 @@ public class AttackState : BaseState
                         enemy.Agent.SetDestination(hit.position);
                     }
                 }
+                else if (_distanceToPlayer <= _stopDistanceRanged)
+                {
+                    stateMachine.ChangeState(new AimState());
+                }
+
             }
             else if (enemy.enemyType == EnemyType.Melee)
             {
@@ -67,12 +72,13 @@ public class AttackState : BaseState
                 {
                     enemy.Agent.SetDestination(_playerPosition);
                 }
+
+                if (_attackTimer > enemy.FireRate && !_attackScheduled)
+                {
+                    AttackPlayer();
+                }
             }
 
-            if (_attackTimer > enemy.FireRate && !_attackScheduled)
-            {
-                AttackPlayer();
-            }
 
         }
         else // Gracz zgubiony
@@ -102,28 +108,10 @@ public class AttackState : BaseState
 
     public void AttackPlayer()
     {
-        if (Vector3.Distance(enemy.Agent.destination, _playerPosition) > 0.5f)
-        {
-            enemy.Agent.SetDestination(_playerPosition);
-        }
-
         // Jeżeli można atakować i obecnie atak nie ma miejsca to próbuj atakować
         if (_attackTimer > enemy.FireRate && !_attackScheduled)
         {
-            if (enemy.enemyType == EnemyType.Ranged)
-            {
-                if (_distanceToPlayer <= _stopDistanceRanged && enemy.CanSeePlayer())
-                {
-                    enemy.Agent.isStopped = true;
-                    stateMachine.ChangeState(new AimState());
-                }
-                else
-                {
-                    enemy.Agent.isStopped = false;
-                }
-
-            }
-            else if (enemy.enemyType == EnemyType.Melee)
+            if (enemy.enemyType == EnemyType.Melee)
             {
                 if (_distanceToPlayer > _stopDistanceMelee)
                 {

@@ -7,6 +7,7 @@ public class BowController : MonoBehaviour
     public Transform arrowHolder; // Bone trzymający strzałę w dłoni
     // public Transform bowString;   // Bone cięciwy łuku
     public Transform firePoint;   // Miejsce, z którego strzała zostaje wystrzelona
+    public float force = 500f;
 
     private GameObject currentArrow; // Strzała trzymana przez postać
 
@@ -16,7 +17,6 @@ public class BowController : MonoBehaviour
         if (currentArrow == null)
         {
             currentArrow = Instantiate(arrowPrefab, arrowHolder.position, arrowHolder.rotation, arrowHolder);
-            // currentArrow.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
         }
     }
 
@@ -34,32 +34,24 @@ public class BowController : MonoBehaviour
                 arrowScript.isHeld = false;
             }
 
-            // Przenieś strzałę na pozycję wystrzału (opcjonalne)
-            // currentArrow.transform.position = firePoint.position;
-            // currentArrow.transform.rotation = firePoint.rotation;
+            currentArrow.transform.rotation = transform.rotation;
 
             // Dodaj siłę do strzały
             Rigidbody arrowRb = currentArrow.GetComponent<Rigidbody>();
             if (arrowRb != null)
             {
                 arrowRb.isKinematic = false;
-                arrowRb.AddForce(firePoint.forward * 2000f); // Dopasuj siłę do potrzeb
+                arrowRb.AddForce(currentArrow.transform.forward * force); // Dopasuj siłę do potrzeb
             }
 
             Collider arrowCollider = currentArrow.GetComponent<Collider>();
             if (arrowCollider != null)
             {
-                StartCoroutine(EnableColliderAfterDelay(arrowCollider, 0.05f));
+                arrowCollider.enabled = true;
             }
 
             // Usuń referencję do bieżącej strzały
             currentArrow = null;
         }
-    }
-
-    private IEnumerator EnableColliderAfterDelay(Collider collider, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        collider.enabled = true; // Włącz collider po opóźnieniu
     }
 }
