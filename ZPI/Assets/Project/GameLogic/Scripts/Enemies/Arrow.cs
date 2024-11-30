@@ -36,9 +36,9 @@ public class Arrow : MonoBehaviour
         if (isHeld) return;
 
         // Zatrzymaj ruch strzały
-        rb.isKinematic = true;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
 
         arrowCollider.enabled = false;
 

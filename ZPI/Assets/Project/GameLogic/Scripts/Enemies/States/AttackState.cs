@@ -126,22 +126,22 @@ public class AttackState : BaseState
                     switch (attackIndex)
                     {
                         case 0:
-                            _attackDelayTimer = CalculateAnimationTime(40);
+                            _attackDelayTimer = CalculateAnimationTime(40) / 1.6f;
                             break;
                         case 1:
-                            _attackDelayTimer = CalculateAnimationTime(40);
+                            _attackDelayTimer = CalculateAnimationTime(40) / 1.5f;
                             break;
                         case 2:
-                            _attackDelayTimer = CalculateAnimationTime(20);
+                            _attackDelayTimer = CalculateAnimationTime(20) / 1.1f;
                             break;
                         case 3:
-                            _attackDelayTimer = CalculateAnimationTime(38);
+                            _attackDelayTimer = CalculateAnimationTime(38) / 1.1f;
                             break;
                         case 4:
-                            _attackDelayTimer = CalculateAnimationTime(24);
+                            _attackDelayTimer = CalculateAnimationTime(24) / 1.4f;
                             break;
                         case 5:
-                            _attackDelayTimer = CalculateAnimationTime(33);
+                            _attackDelayTimer = CalculateAnimationTime(33) / 1.4f;
                             break;
                     }
 
