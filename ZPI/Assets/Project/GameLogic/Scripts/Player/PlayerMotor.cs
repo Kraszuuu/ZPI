@@ -23,6 +23,12 @@ public class PlayerMotor : MonoBehaviour
     public float DashDuration = 0.4f;
     public float DashCooldown = 1f;
 
+    [Header("Slow Movement")]
+    public float SlowDuration = 5f;
+    public float SlowMultiplier = 0.8f;
+    public GameObject DamageEffectImage;
+    private int _activeDamageEffects = 0;
+
     private CharacterController _controller;
     private Vector3 _playerVelocity;
     private bool _isGrounded;
@@ -31,9 +37,9 @@ public class PlayerMotor : MonoBehaviour
     private bool _isSprinting;
     private bool _isDashing = false;
     private bool _sprintLocked;
-    private float _currentSpeed;
     private float _crouchTimer;
     private float _dashTimer;
+    private float _currentSpeed;
 
     private float _sprintTimer = 0f;
     private bool _isMovingForward = false;
@@ -56,7 +62,6 @@ public class PlayerMotor : MonoBehaviour
         _audioManager = FindObjectOfType<AudioManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _isGrounded = _controller.isGrounded;
@@ -81,6 +86,14 @@ public class PlayerMotor : MonoBehaviour
         if (_dashCooldownTime > 0)
         {
             _dashCooldownTime -= Time.deltaTime;
+        }
+
+        if (_activeDamageEffects > 0)
+        {
+            DamageEffectImage.SetActive(true);
+        } else
+        {
+            DamageEffectImage.SetActive(false);
         }
 
     }
@@ -262,7 +275,29 @@ public class PlayerMotor : MonoBehaviour
         _currentSpeed = _isCrouching ? CrouchingSpeed : WalkingSpeed;
     }
 
-    // Slowly change camera height while in process of _isCrouching/standing up
+    public void ApplyDamageEffect()
+    {
+        StartCoroutine(ReduceSpeedTemporarily());
+    }
+
+    private IEnumerator ReduceSpeedTemporarily()
+    {
+        _activeDamageEffects += 1;
+        Debug.Log(_activeDamageEffects);
+        WalkingSpeed *= SlowMultiplier;
+        SprintingSpeed *= SlowMultiplier;
+
+        _currentSpeed = _isSprinting ? SprintingSpeed : WalkingSpeed;
+
+        yield return new WaitForSeconds(SlowDuration);
+
+        _activeDamageEffects -= 1;
+        WalkingSpeed /= SlowMultiplier;
+        SprintingSpeed /= SlowMultiplier;
+
+        _currentSpeed = _isSprinting ? SprintingSpeed : WalkingSpeed;
+    }
+
     private void LerpCrouch()
     {
         _crouchTimer += Time.deltaTime;
