@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -23,6 +24,21 @@ public class PlayerMotor : MonoBehaviour
     public float DashDuration = 0.4f;
     public float DashCooldown = 1f;
 
+    [Header("Stamina")]
+    public float MaxStamina = 100f;
+    public float StaminaConsumptionRate = 25f;
+    public float StaminaRegenRate = 10f;
+    public float IsExhaustedValue = 30f;
+    public float CurrentStamina;
+    public Slider StaminaSlider;
+    private bool _isExhausted = false;
+    private Image _sliderFill;
+    private bool _isFlashing;
+    private float _flashTimer;
+    public float FlashDuration = 0.5f;
+    public Color ExhaustedColor = Color.red;
+    public Color NormalColor = Color.yellow;
+
     [Header("Slow Movement")]
     public float SlowDuration = 5f;
     public float SlowMultiplier = 0.8f;
@@ -36,13 +52,10 @@ public class PlayerMotor : MonoBehaviour
     private bool _lerpCrouch;
     private bool _isSprinting;
     private bool _isDashing = false;
-    private bool _sprintLocked;
     private float _crouchTimer;
     private float _dashTimer;
     private float _currentSpeed;
 
-    private float _sprintTimer = 0f;
-    private bool _isMovingForward = false;
     private float _dashTime = 0f;
     private float _dashCooldownTime = 0f;
     private Vector3 _dashDirection;
@@ -60,84 +73,28 @@ public class PlayerMotor : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _currentSpeed = WalkingSpeed;
         _audioManager = FindObjectOfType<AudioManager>();
+        CurrentStamina = MaxStamina;
+        _sliderFill = StaminaSlider.fillRect.GetComponent<Image>();
     }
 
     void Update()
     {
-        _isGrounded = _controller.isGrounded;
-
-        if (_lerpCrouch)
-        {
-            LerpCrouch();
-        }
-
-        if (_sprintLocked && !_isMovingForward)
-        {
-            _sprintLocked = false;
-            _isSprinting = false;
-            _currentSpeed = WalkingSpeed;
-        }
-
-        if (_isDashing)
-        {
-            PerformDash();
-        }
-
-        if (_dashCooldownTime > 0)
-        {
-            _dashCooldownTime -= Time.deltaTime;
-        }
-
-        if (_activeDamageEffects > 0)
-        {
-            DamageEffectImage.SetActive(true);
-        } else
-        {
-            DamageEffectImage.SetActive(false);
-        }
-
+        CheckGroundStatus();
+        HandleStamina();
+        HandleFlashing();
+        HandleCrouch();
+        HandleDash();
+        UpdateDamageEffects();
     }
 
-    private void PlayStepSound()
-    {
-        if (_stepSoundTimer <= 0f)
-        {
-            _audioManager.PlayWalkSound();
-            _stepSoundTimer = _stepSoundInterval;
-        }
-
-        if (_stepSoundTimer > 0f)
-        {
-            _stepSoundTimer -= Time.deltaTime;
-        }
-    }
-
-    // receive the inputs from InputManager.cs and apply them to the character _controller.
     public void ProcessMove(Vector2 input)
     {
         if (!_isDashing)
         {
-            _isMovingForward = input.y > 0;
 
             Vector3 moveDirection = Vector3.zero;
             moveDirection.x = input.x;
             moveDirection.z = input.y;
-
-            // Handle sprint locking after 2 seconds
-            if (_isSprinting && _isMovingForward && !_sprintLocked)
-            {
-                _sprintTimer += Time.deltaTime;
-                if (_sprintTimer >= SprintHoldToLockThreshold)
-                {
-                    _sprintLocked = true;
-                    _currentSpeed = SprintingSpeed;
-                    Debug.Log("Sprint locked!");
-                }
-            }
-            else
-            {
-                _sprintTimer = 0f;
-            }
 
             if (_isGrounded)
             {
@@ -194,8 +151,192 @@ public class PlayerMotor : MonoBehaviour
 
             _isCrouching = false;
             _isSprinting = false;
-            _sprintLocked = false;
             _currentSpeed = WalkingSpeed;
+        }
+    }
+
+    public void HandleAirMovement(Vector3 moveDirection)
+    {
+        // Add air acceleration
+        _playerVelocity += AccelerationSpeedInAir * Time.deltaTime * transform.TransformDirection(moveDirection);
+
+        // Limit air speed horizontally
+        float verticalVelocity = _playerVelocity.y;
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_playerVelocity, Vector3.up);
+        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, _currentSpeed);
+
+        _playerVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
+    }
+
+    public void Jump()
+    {
+        if (_isGrounded)
+        {
+            AudioManager.instance.PlayJumpSound();
+            _playerVelocity.y = Mathf.Sqrt(JumpHeight * -2.0f * GravityForce);
+        }
+    }
+
+    public void Crouch()
+    {
+        if (_isSprinting) _isSprinting = false;
+        _isCrouching = !_isCrouching;
+        _crouchTimer = 0;
+        _lerpCrouch = true;
+        _currentSpeed = _isCrouching ? CrouchingSpeed : WalkingSpeed;
+    }
+
+    public void ApplyDamageEffect()
+    {
+        StartCoroutine(ReduceSpeedTemporarily());
+    }
+
+    public void StartSprint()
+    {
+        if (!_isCrouching && _isGrounded && !_isExhausted)
+        {
+            _isSprinting = true;
+            _currentSpeed = SprintingSpeed;
+        }
+    }
+
+    public void StopSprint()
+    {
+        _isSprinting = false;
+        _currentSpeed = WalkingSpeed;
+    }
+
+    private void CheckGroundStatus()
+    {
+        _isGrounded = _controller.isGrounded;
+    }
+
+    private void HandleStamina()
+    {
+        if (_isSprinting)
+        {
+            ConsumeStamina();
+        }
+        else
+        {
+            RegenerateStamina();
+        }
+
+        UpdateStaminaSlider();
+    }
+
+    private void ConsumeStamina()
+    {
+        CurrentStamina -= StaminaConsumptionRate * Time.deltaTime;
+        if (CurrentStamina <= 0)
+        {
+            CurrentStamina = 0;
+            _isExhausted = true;
+            _isSprinting = false;
+            _currentSpeed = WalkingSpeed;
+        }
+    }
+
+    private void RegenerateStamina()
+    {
+        CurrentStamina += StaminaRegenRate * Time.deltaTime;
+        if (CurrentStamina >= MaxStamina)
+        {
+            CurrentStamina = MaxStamina;
+        }
+        else if (CurrentStamina >= 30)
+        {
+            _isExhausted = false;
+        }
+    }
+
+    private void UpdateStaminaSlider()
+    {
+        if (StaminaSlider != null)
+        {
+            StaminaSlider.value = CurrentStamina;
+        }
+    }
+
+    private void HandleFlashing()
+    {
+        if (_isExhausted && !_isFlashing)
+        {
+            StartFlashing();
+        }
+        else if (!_isExhausted && _isFlashing)
+        {
+            StopFlashing();
+        }
+
+        if (_isFlashing)
+        {
+            FlashStaminaBar();
+        }
+    }
+
+    private void HandleCrouch()
+    {
+        if (_lerpCrouch)
+        {
+            LerpCrouch();
+        }
+    }
+
+    private void HandleDash()
+    {
+        if (_isDashing)
+        {
+            PerformDash();
+        }
+
+        if (_dashCooldownTime > 0)
+        {
+            _dashCooldownTime -= Time.deltaTime;
+        }
+    }
+
+    private void UpdateDamageEffects()
+    {
+        DamageEffectImage.SetActive(_activeDamageEffects > 0);
+    }
+
+    private void FlashStaminaBar()
+    {
+        _flashTimer += Time.deltaTime;
+        if (_sliderFill != null)
+        {
+            float lerp = Mathf.PingPong(_flashTimer, FlashDuration) / FlashDuration;
+            _sliderFill.color = Color.Lerp(NormalColor, ExhaustedColor, lerp);
+        }
+    }
+
+    private void StartFlashing()
+    {
+        _isFlashing = true;
+        _flashTimer = 0f;
+    }
+
+    private void StopFlashing()
+    {
+        _isFlashing = false;
+        if (_sliderFill != null)
+        {
+            _sliderFill.color = NormalColor;
+        }
+    }
+
+    private void PlayStepSound()
+    {
+        if (_stepSoundTimer <= 0f)
+        {
+            _audioManager.PlayWalkSound();
+            _stepSoundTimer = _stepSoundInterval;
+        }
+
+        if (_stepSoundTimer > 0f)
+        {
+            _stepSoundTimer -= Time.deltaTime;
         }
     }
 
@@ -244,41 +385,6 @@ public class PlayerMotor : MonoBehaviour
         _playerVelocity = Vector3.zero;
     }
 
-    void HandleAirMovement(Vector3 moveDirection)
-    {
-        // Add air acceleration
-        _playerVelocity += AccelerationSpeedInAir * Time.deltaTime * transform.TransformDirection(moveDirection);
-
-        // Limit air speed horizontally
-        float verticalVelocity = _playerVelocity.y;
-        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(_playerVelocity, Vector3.up);
-        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, _currentSpeed);
-
-        _playerVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
-    }
-
-    public void Jump()
-    {
-        if (_isGrounded)
-        {
-            AudioManager.instance.PlayJumpSound();
-            _playerVelocity.y = Mathf.Sqrt(JumpHeight * -2.0f * GravityForce);
-        }
-    }
-
-    public void Crouch()
-    {
-        if (_isSprinting) _isSprinting = false;
-        _isCrouching = !_isCrouching;
-        _crouchTimer = 0;
-        _lerpCrouch = true;
-        _currentSpeed = _isCrouching ? CrouchingSpeed : WalkingSpeed;
-    }
-
-    public void ApplyDamageEffect()
-    {
-        StartCoroutine(ReduceSpeedTemporarily());
-    }
 
     private IEnumerator ReduceSpeedTemporarily()
     {
@@ -309,15 +415,6 @@ public class PlayerMotor : MonoBehaviour
         {
             _lerpCrouch = false;
             _crouchTimer = 0f;
-        }
-    }
-
-    public void Sprint()
-    {
-        if (!_sprintLocked && !_isCrouching && _isGrounded)
-        {
-            _isSprinting = !_isSprinting;
-            _currentSpeed = _isSprinting ? SprintingSpeed : WalkingSpeed;
         }
     }
 }

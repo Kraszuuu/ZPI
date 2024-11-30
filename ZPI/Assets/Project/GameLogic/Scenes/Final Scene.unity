@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0008510157, g: 0.0018434842, b: 0.054547586, a: 1}
+  m_IndirectSpecularColor: {r: 0.0007200191, g: 0.0018433576, b: 0.05432608, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7785,6 +7785,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43c7f8dd68155c9429740d8000ec6c10, type: 3}
+--- !u!1 &1350608437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1957965262949602445, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1351315421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8294,17 +8299,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2907186084022916324, guid: 72e375433fe5eca4eb603438b7c44afe, type: 3}
   m_PrefabInstance: {fileID: 1638942731}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1418980361 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6980882223746180072, guid: 72e375433fe5eca4eb603438b7c44afe, type: 3}
-  m_PrefabInstance: {fileID: 1638942731}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566e6e0fede6734468e262137e69394a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1424137444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10222,6 +10216,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77ad9661321c6e84280c8fbe32492c06, type: 3}
+--- !u!114 &1743270832 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6953372920720415117, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1743741739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 403650, guid: 379aef8e43219a14ebef74d9cdd557e8, type: 3}
@@ -11521,17 +11526,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2907186084022916324, guid: 72e375433fe5eca4eb603438b7c44afe, type: 3}
   m_PrefabInstance: {fileID: 1472505653}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1985876692 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6980882223746180072, guid: 72e375433fe5eca4eb603438b7c44afe, type: 3}
-  m_PrefabInstance: {fileID: 1472505653}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566e6e0fede6734468e262137e69394a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1995681084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11812,17 +11806,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2907186084022916324, guid: 72e375433fe5eca4eb603438b7c44afe, type: 3}
   m_PrefabInstance: {fileID: 310862037}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2046327237 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6980882223746180072, guid: 72e375433fe5eca4eb603438b7c44afe, type: 3}
-  m_PrefabInstance: {fileID: 310862037}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566e6e0fede6734468e262137e69394a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2050161947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12748,11 +12731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &2089347251128145233 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8538152980648542259, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-  m_PrefabInstance: {fileID: 3956698893370958202}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2222658880245555547 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5716695388942713804, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
@@ -12820,58 +12798,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: playerSource
-      value: 
-      objectReference: {fileID: 2089347251128145233}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: fireballSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 3bcbb5605887218498731a69e626f86f, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: skeletonArrowHit
-      value: 
-      objectReference: {fileID: 8300000, guid: 1b10588791cf6284cae0b493f7749a43, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: zombieDeathSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 2b154d6b77fa1b74ebf24eb82de6a7fb, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: zombieAttackSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 77973099c39c1ad42bae642e198bdd3f, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: zombieDamageSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 0cadeda29fac61b41af4f46712d93786, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: skeletonArrowInAir
-      value: 
-      objectReference: {fileID: 8300000, guid: 053de9023a78c9f428c9711ba9f8baa5, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: skeletonDeathSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 35b3dbcc989e9ad47a467e35defcb7ae, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: zombieAmbientSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 880c074687a4a724f84973bc4f1db65b, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: zombieEnemySpotted
-      value: 
-      objectReference: {fileID: 8300000, guid: d521e8e8e43f49c4f8e4fcae06afb43b, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: skeletonAttackSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 9efab8578181d9948902f82d57f6a57d, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: skeletonDamageSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 081de732e2672ed4f86af76c897065dd, type: 3}
-    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: fireballExplosionSound
-      value: 
-      objectReference: {fileID: 8300000, guid: c5486c17cf172c54aa3c63a8ff487773, type: 3}
     - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: upgradeMenu
       value: 
@@ -12884,18 +12810,6 @@ PrefabInstance:
       propertyPath: EnemySpawners.Array.data[0]
       value: 
       objectReference: {fileID: 1672544077}
-    - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: EnemySpawners.Array.data[1]
-      value: 
-      objectReference: {fileID: 2046327237}
-    - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: EnemySpawners.Array.data[2]
-      value: 
-      objectReference: {fileID: 1418980361}
-    - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
-      propertyPath: EnemySpawners.Array.data[3]
-      value: 
-      objectReference: {fileID: 1985876692}
     - target: {fileID: 5087333965495625061, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: SaveButton
       value: 
@@ -12997,17 +12911,13 @@ PrefabInstance:
       value: =====PLAYER=====
       objectReference: {fileID: 0}
     - target: {fileID: 3000074375070578142, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: isEnabled
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: StaminaSlider
+      value: 
+      objectReference: {fileID: 1743270832}
     - target: {fileID: 3000074375070578142, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SlowDuration
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3000074375070578142, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: SlowMultiplier
-      value: 0.9
-      objectReference: {fileID: 0}
+      propertyPath: DamageEffectImage
+      value: 
+      objectReference: {fileID: 1350608437}
     - target: {fileID: 3287277701196068767, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: HealthSlider
       value: 
@@ -13126,10 +13036,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3582394203085749110}
-    - target: {fileID: 426156298182057506, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_text
-      value: Increase your max health by 100 points
-      objectReference: {fileID: 0}
     - target: {fileID: 968160703121926256, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -13150,22 +13056,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3956698893370958220}
-    - target: {fileID: 1042686892292976516, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BuffHealth
-      objectReference: {fileID: 0}
-    - target: {fileID: 1053494389210442020, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_text
-      value: Increase your max health by 100 points
-      objectReference: {fileID: 0}
     - target: {fileID: 1284835935072311260, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
-    - target: {fileID: 1284835935072311260, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: UpgradeSpell
-      objectReference: {fileID: 0}
     - target: {fileID: 2137449708109201524, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -13178,10 +13072,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
-    - target: {fileID: 2177506170474833319, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: UpgradeSpell
-      objectReference: {fileID: 0}
     - target: {fileID: 2511534509927180829, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_Name
       value: =====UI=====
@@ -13234,18 +13124,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3956698893370958220}
-    - target: {fileID: 3681899392763423097, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BuffHealth
-      objectReference: {fileID: 0}
     - target: {fileID: 3933008773675518382, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3956698893370958220}
-    - target: {fileID: 3933008773675518382, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BuffHealth
-      objectReference: {fileID: 0}
     - target: {fileID: 3990745248663825133, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: playerSkills
       value: 
@@ -13254,18 +13136,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
-    - target: {fileID: 4997582827588745085, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: UpgradeSpell
-      objectReference: {fileID: 0}
     - target: {fileID: 5007790890886359034, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3582394203085749119}
-    - target: {fileID: 5064831816834285880, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_text
-      value: Increase your max health by 100 points
-      objectReference: {fileID: 0}
     - target: {fileID: 5665889131447508615, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -13279,6 +13153,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866366302617802142, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323172671446107983, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323172671446107983, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}

@@ -11858,6 +11858,18 @@ MonoBehaviour:
   DashSpeed: 10
   DashDuration: 0.4
   DashCooldown: 1
+  MaxStamina: 100
+  StaminaConsumptionRate: 25
+  StaminaRegenRate: 10
+  IsExhaustedValue: 30
+  CurrentStamina: 0
+  StaminaSlider: {fileID: 0}
+  FlashDuration: 0.5
+  ExhaustedColor: {r: 1, g: 0, b: 0, a: 1}
+  NormalColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  SlowDuration: 3
+  SlowMultiplier: 0.9
+  DamageEffectImage: {fileID: 0}
   isEnabled: 1
 --- !u!114 &7822322065535976200
 MonoBehaviour:

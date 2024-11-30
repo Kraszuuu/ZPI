@@ -30,8 +30,8 @@ public class InputManager : MonoBehaviour
         onFoot.Crouch.performed += ctx => motor.Crouch();
         // onFoot.Crouch.canceled += ctx => motor.Crouch();
 
-        onFoot.Sprint.performed += ctx => motor.Sprint();
-        onFoot.Sprint.canceled += ctx => motor.Sprint();
+        onFoot.Sprint.performed += ctx => motor.StartSprint();
+        onFoot.Sprint.canceled += ctx => motor.StopSprint();
 
         onFoot.Dash.performed += OnDashPerformed;
 
