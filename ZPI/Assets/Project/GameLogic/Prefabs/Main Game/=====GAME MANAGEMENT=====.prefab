@@ -199,21 +199,21 @@ MonoBehaviour:
   stupefySound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
   meteorRainSound: {fileID: 8300000, guid: 84904773804856941a7a6080ed1777dd, type: 3}
   shieldSound: {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
-  fireballSound: {fileID: 0}
-  fireballExplosionSound: {fileID: 0}
+  fireballSound: {fileID: 8300000, guid: 3bcbb5605887218498731a69e626f86f, type: 3}
+  fireballExplosionSound: {fileID: 8300000, guid: c5486c17cf172c54aa3c63a8ff487773, type: 3}
   zombieWalkSound: {fileID: 0}
   zombieDamageSound: {fileID: 8300000, guid: 0cadeda29fac61b41af4f46712d93786, type: 3}
   zombieDeathSound: {fileID: 8300000, guid: 2b154d6b77fa1b74ebf24eb82de6a7fb, type: 3}
   zombieAttackSound: {fileID: 8300000, guid: 77973099c39c1ad42bae642e198bdd3f, type: 3}
   zombieAmbientSound: {fileID: 8300000, guid: 880c074687a4a724f84973bc4f1db65b, type: 3}
-  zombieEnemySpotted: {fileID: 0}
+  zombieEnemySpotted: {fileID: 8300000, guid: d521e8e8e43f49c4f8e4fcae06afb43b, type: 3}
   skeletonWalkSound: {fileID: 0}
   skeletonDamageSound: {fileID: 8300000, guid: 081de732e2672ed4f86af76c897065dd, type: 3}
   skeletonDeathSound: {fileID: 8300000, guid: 35b3dbcc989e9ad47a467e35defcb7ae, type: 3}
   skeletonAttackSound: {fileID: 8300000, guid: 9efab8578181d9948902f82d57f6a57d, type: 3}
   skeletonAmbientSound: {fileID: 0}
-  skeletonArrowInAir: {fileID: 0}
-  skeletonArrowHit: {fileID: 0}
+  skeletonArrowInAir: {fileID: 8300000, guid: 053de9023a78c9f428c9711ba9f8baa5, type: 3}
+  skeletonArrowHit: {fileID: 8300000, guid: 1b10588791cf6284cae0b493f7749a43, type: 3}
   buttonClickSound: {fileID: 8300000, guid: d71a48c996a06754bab3d83868e8e906, type: 3}
   pauseSound: {fileID: 8300000, guid: b83bf8726a7fac349a54389f0c57cda6, type: 3}
   unpasueSound: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
