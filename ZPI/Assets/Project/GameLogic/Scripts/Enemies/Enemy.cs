@@ -1,5 +1,6 @@
 using DigitalRuby.PyroParticles;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -234,5 +235,25 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.up * eyeHeight);
         Gizmos.color = oldColor;
+    }
+
+    public void ZombieScream()
+    {
+        if(enemyType != EnemyType.Melee)
+        {
+            Debug.LogError("Wrong enemy type for function ZombieScream");
+            return;
+        }
+        AudioManager.instance.PlayZombieEnemySpottedSound(audioSource);
+    }
+
+    public void SkeletonShoot()
+    {
+        if (enemyType != EnemyType.Ranged)
+        {
+            Debug.LogError("Wrong enemy type for function SkeletonShoot");
+            return;
+        }
+        AudioManager.instance.PlayArrowInAirSound(audioSource);
     }
 }

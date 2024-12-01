@@ -31,6 +31,7 @@ public class WavesManager : MonoBehaviour
         {
             _spawnersCleared = 0;
             _currentWave++;
+            AudioManager.instance.PlayWaveEndSound();
 
             if (_currentWave % upgradeWavesInterval == 0)
             {

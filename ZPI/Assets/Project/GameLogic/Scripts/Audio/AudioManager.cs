@@ -208,7 +208,7 @@ public class AudioManager : MonoBehaviour
 
     // Other
     public void PlayPauseSound() => PlaySoundFromPlayer(pauseSound);
-    public void PlayMightAmbientSound() => PlaySoundFromPlayer(unpasueSound);
+    public void PlayNightAmbientSound() => PlaySoundFromPlayer(unpasueSound);
     public void PlayDayAmbientSound() => PlaySoundFromPlayer(dayAmbientSound);
     public void PlayUnpauseSound() => PlaySoundFromPlayer(unpasueSound);
     public void PlayWaveEndSound() => PlaySoundFromPlayer(waveEndSound);
