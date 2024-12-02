@@ -53,9 +53,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip dayAmbientSound; // "Forest_Birds_Loop_Stereo"
     public AudioClip exampleSound;
 
-    //[Header("Volume Settings")]
-    //[Range(0, 1)] private float _masterVolume;
-    //[SerializeField] private Slider _slider;
+    [Header("Volume Settings")]
+    [Range(0f, 1f)] public float _masterVolume = 0.5f;
+    [SerializeField] private Slider _volumeSlider;
 
     private HashSet<AudioClip> soundEffects;
 
@@ -116,11 +116,16 @@ public class AudioManager : MonoBehaviour
         };
     }
 
+    public void SetMasterVolume()
+    {
+        _masterVolume = _volumeSlider.value;
+    }
+
     private void PlaySoundFromPlayer(AudioClip soundName)
     {
         if (soundEffects.Contains(soundName))
         {
-            //_playerSource.volume = _masterVolume;
+            _playerSource.volume = _masterVolume;
             _playerSource.PlayOneShot(soundName);
         }
     }
@@ -128,7 +133,7 @@ public class AudioManager : MonoBehaviour
     {
         if (soundEffects.Contains(soundName))
         {
-            //audioSource.volume = _masterVolume;
+            audioSource.volume = _masterVolume;
             audioSource.PlayOneShot(soundName);
         }
     }
@@ -154,7 +159,6 @@ public class AudioManager : MonoBehaviour
     public void PlayMeteorRainSound(AudioSource audioSource) => PlaySoundFromSource(meteorRainSound, audioSource);
     public void PlayShieldSound() => PlaySoundFromPlayer(shieldSound);
     public void PlayFireballSound(AudioSource audioSource) => PlaySoundFromSource(fireballSound, audioSource);
-
     public void PlayFireballExplosionSound(AudioSource audioSource) => PlaySoundFromSource(fireballExplosionSound, audioSource);
 
     // Enemies

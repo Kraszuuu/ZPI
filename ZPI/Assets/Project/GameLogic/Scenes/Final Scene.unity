@@ -400,15 +400,15 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: SFXVolume
+      - m_Target: {fileID: 2506401193434500567}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: SetMasterVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -15586,6 +15586,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2555006797238799597, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: _volumeSlider
+      value: 
+      objectReference: {fileID: 67467680}
     - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: upgradeMenu
       value: 
@@ -15867,22 +15871,6 @@ PrefabInstance:
     - target: {fileID: 271781838304637736, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 892579701516051940, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.a
-      value: 0.60784316
-      objectReference: {fileID: 0}
-    - target: {fileID: 892579701516051940, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 892579701516051940, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 892579701516051940, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 968160703121926256, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -16220,22 +16208,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3956698893370958220}
-    - target: {fileID: 9168065845683272818, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.a
-      value: 0.7529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168065845683272818, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168065845683272818, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9168065845683272818, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 623836470668737755, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
