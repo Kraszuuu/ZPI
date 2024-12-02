@@ -10,8 +10,7 @@ public class MainMenu : MonoBehaviour
     }
     public void ChangeSpeechRecognitionMode()
     {
-        GameState.IsSpeechRecognitionEnabled = !GameState.IsSpeechRecognitionEnabled;
-        Debug.Log($"isSpeechRecognitionEnabled set to (GameSettings): {GameState.IsSpeechRecognitionEnabled}");
+        GameState.Instance.ChangeSpeechRecognitionMode();
     }
 
     public void PlayGame()

@@ -27,4 +27,14 @@ public class GameState : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void ChangeSpeechRecognitionMode()
+    {
+        IsSpeechRecognitionEnabled = !IsSpeechRecognitionEnabled;
+        Debug.Log($"isSpeechRecognitionEnabled set to (GameSettings): {IsSpeechRecognitionEnabled}");
+    }
+
+    public bool HelpIsSpeechRecognitionEnabled()
+    {
+        return IsSpeechRecognitionEnabled;
+    }
 }

@@ -6,6 +6,8 @@ public class PauseManager : MonoBehaviour
 {
     public GameObject PausePanel;
     public GameObject HelpPanel;
+    public GameObject SoundPanel;
+    public GameObject VoiceRecognitionPanel;
     //public bool isEnabled = true;
 
     private void Start()
@@ -46,6 +48,34 @@ public class PauseManager : MonoBehaviour
     {
         PausePanel.SetActive(true);
         HelpPanel.SetActive(false);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void DisplaySoundMenu()
+    {
+        PausePanel.SetActive(false);
+        SoundPanel.SetActive(true);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void HideSoundMenu()
+    {
+        PausePanel.SetActive(true);
+        SoundPanel.SetActive(false);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void DisplayVoiceRecognitionMenu()
+    {
+        SoundPanel.SetActive(false);
+        VoiceRecognitionPanel.SetActive(true);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void HideVoiceRecognitionMenu()
+    {
+        SoundPanel.SetActive(true);
+        VoiceRecognitionPanel.SetActive(false);
         AudioManager.instance.PlayButtonClickSound();
     }
 }
