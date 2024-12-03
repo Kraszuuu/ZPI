@@ -17,7 +17,7 @@ public class PlayerVoiceCommands : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"Speech recognition initialized to: {GameState.IsSpeechRecognitionEnabled}");
+        Debug.Log($"Speech recognition initialized to: {GameState.Instance.IsSpeechRecognitionEnabled}");
 
 
         AddWords();

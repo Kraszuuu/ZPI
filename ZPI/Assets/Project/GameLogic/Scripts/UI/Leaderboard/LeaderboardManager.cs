@@ -13,7 +13,6 @@ public class LeaderboardManager : MonoBehaviour
     private void OnEnable()
     {
         sqLiteManager = FindObjectOfType<SQLiteManager>();
-        Debug.Log("START");
         DisplayLeaderboard();
     }
 

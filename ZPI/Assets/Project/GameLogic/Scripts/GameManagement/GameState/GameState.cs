@@ -12,29 +12,16 @@ public class GameState : MonoBehaviour
     public bool IsTimeSlowed { get; set; }
     public bool IsUpgrading { get; set; }
     public bool IsWandEquipped { get; set; }
-
-    public static bool IsSpeechRecognitionEnabled = true;
+    public bool IsSpeechRecognitionEnabled { get; set; }
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-    }
-    public void ChangeSpeechRecognitionMode()
-    {
-        IsSpeechRecognitionEnabled = !IsSpeechRecognitionEnabled;
-        Debug.Log($"isSpeechRecognitionEnabled set to (GameSettings): {IsSpeechRecognitionEnabled}");
-    }
-
-    public bool HelpIsSpeechRecognitionEnabled()
-    {
-        return IsSpeechRecognitionEnabled;
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 }
