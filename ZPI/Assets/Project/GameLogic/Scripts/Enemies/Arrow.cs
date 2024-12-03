@@ -59,7 +59,9 @@ public class Arrow : MonoBehaviour
         {
             // Wbij strzałę w obiekt terenowy i usuń po czasie
             transform.parent = collision.transform; // Ustaw obiekt jako dziecko trafionego
-            AudioManager.instance.PlayArrowHitSound(gameObject.AddComponent<AudioSource>());
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1.0f;
+            AudioManager.instance.PlayArrowHitSound(audioSource);
             Destroy(gameObject, destroyAfterSeconds);
         }
     }
