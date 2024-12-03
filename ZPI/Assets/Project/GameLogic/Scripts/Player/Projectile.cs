@@ -147,13 +147,17 @@ public class Projectile : MonoBehaviour
                     }
                 }
             }
+            AudioSource audioSource = impact.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1.0f;
             if (ImpactVFX.name == "FireBall Explosion FX") //hardcoded, please dont tuch
             {
-                AudioSource audioSource = impact.AddComponent<AudioSource>();
-                audioSource.spatialBlend = 1.0f;
                 AudioManager.instance.PlayFireballExplosionSound(audioSource);
             }
-            else if (ImpactVFX.name == "vfx_ImpactTut") Debug.Log(""); //that one as well
+            else if (ImpactVFX.name == "vfx_ImpactTut") //that one as well
+            {
+                AudioManager.instance.PlayStupefyExplosionSound(audioSource);
+            }
+            else Debug.LogError("Unknown projectile type");
             Destroy(impact, 4);
         }
 

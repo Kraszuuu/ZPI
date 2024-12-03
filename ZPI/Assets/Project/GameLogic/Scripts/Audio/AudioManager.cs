@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip shieldSound; // "21_Debuff_01" "39_Absorb_04"
     public AudioClip fireballSound;
     public AudioClip fireballExplosionSound;
+    public AudioClip stupefyExplosionSound;
 
     [Header("Zombie Clips")]
     public AudioClip zombieWalkSound;
@@ -112,7 +113,8 @@ public class AudioManager : MonoBehaviour
             fireballExplosionSound,
             zombieEnemySpotted,
             skeletonArrowInAir,
-            skeletonArrowHit
+            skeletonArrowHit,
+            stupefyExplosionSound
         };
     }
 
@@ -151,10 +153,12 @@ public class AudioManager : MonoBehaviour
     private void PlayWandSound1() => PlaySoundFromPlayer(wandSound1);
     public void PlayStupefySound()
     {
-        if (Random.Range(0, 10) < 5) PlayWandSound1();
+        if (Random.Range(0, 1) == 0) PlayWandSound1();
         else PlayWandSound2();
         PlaySoundFromPlayer(stupefySound);
     }
+
+    public void PlayStupefyExplosionSound(AudioSource audioSource) => PlaySoundFromSource(stupefyExplosionSound, audioSource);
     public void PlayLightningSound() => PlaySoundFromPlayer(lightningSound);
     public void PlayMeteorRainSound(AudioSource audioSource) => PlaySoundFromSource(meteorRainSound, audioSource);
     public void PlayShieldSound() => PlaySoundFromPlayer(shieldSound);
