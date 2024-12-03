@@ -12,7 +12,7 @@ public class VoiceRecognitionIndicator : MonoBehaviour
     {
         if (GameState.Instance != null)
         {
-            if (GameState.Instance.HelpIsSpeechRecognitionEnabled()) spellCastingCanvas.enabled = GameState.Instance.IsSpellCasting;
+            if (GameState.Instance.IsSpeechRecognitionEnabled) spellCastingCanvas.enabled = GameState.Instance.IsSpellCasting;
             else spellCastingCanvas.enabled = false;
         }
     }
