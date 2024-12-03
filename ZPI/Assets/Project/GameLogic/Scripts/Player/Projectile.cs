@@ -147,6 +147,13 @@ public class Projectile : MonoBehaviour
                     }
                 }
             }
+            if (ImpactVFX.name == "FireBall Explosion FX") //hardcoded, please dont tuch
+            {
+                AudioSource audioSource = impact.AddComponent<AudioSource>();
+                audioSource.spatialBlend = 1.0f;
+                AudioManager.instance.PlayFireballExplosionSound(audioSource);
+            }
+            else if (ImpactVFX.name == "vfx_ImpactTut") Debug.Log(""); //that one as well
             Destroy(impact, 4);
         }
 

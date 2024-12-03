@@ -66,6 +66,10 @@ public class MeteroAOEDamage : MonoBehaviour
         GameObject meteor = Instantiate(meteorPrefab, new Vector3(hitPoint.x, 0.01f, hitPoint.z), Quaternion.identity);
         MeteroAOEDamage meteroAOE = meteor.transform.GetChild(0).GetComponent<MeteroAOEDamage>();
         meteroAOE.Initialize(hitPoint);
+        //Audio
+        AudioSource _audioSource = meteor.AddComponent<AudioSource>();
+        _audioSource.spatialBlend = 1.0f;
+        AudioManager.instance.PlayMeteorRainSound(_audioSource);
 
     }
     void OnDrawGizmosSelected()

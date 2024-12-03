@@ -151,7 +151,7 @@ public class AudioManager : MonoBehaviour
     private void PlayWandSound1() => PlaySoundFromPlayer(wandSound1);
     public void PlayStupefySound()
     {
-        if (Random.Range(0, 1) < 0.5) PlayWandSound1();
+        if (Random.Range(0, 10) < 5) PlayWandSound1();
         else PlayWandSound2();
         PlaySoundFromPlayer(stupefySound);
     }
