@@ -107,7 +107,7 @@ public class SpellCasting : MonoBehaviour
         {
             if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
-                if (FireballImage.fillAmount <= 1)
+                if (FireballImage.fillAmount <= 0)
                 {
                     CastFireball();
                     FireballImage.fillAmount = 1;
@@ -116,7 +116,7 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Meteors") && ((_playerVoiceCommands.recognizedSpell == "Meteors" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
-                if (MeteorsImage.fillAmount <= 1)
+                if (MeteorsImage.fillAmount <= 0)
                 {
                     CastMeteorRain();
                     MeteorsImage.fillAmount = 1;
@@ -125,7 +125,7 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Shield") && ((_playerVoiceCommands.recognizedSpell == "Shield" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
-                if (ShieldImage.fillAmount <= 1)
+                if (ShieldImage.fillAmount <= 0)
                 {
                     _shieldScript.activateShield();
                     ShieldImage.fillAmount = 1;
@@ -134,7 +134,7 @@ public class SpellCasting : MonoBehaviour
             }
             else if (name.Equals("Lightning") && ((_playerVoiceCommands.recognizedSpell == "Lightning" && GameState.IsSpeechRecognitionEnabled) || !GameState.IsSpeechRecognitionEnabled))
             {
-                if (LightningImage.fillAmount <= 1)
+                if (LightningImage.fillAmount <= 0)
                 {
                     _chainLightningShootScript.StartShooting();
                     LightningImage.fillAmount = 1;
