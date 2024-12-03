@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 422068}
   - component: {fileID: 3336632}
   - component: {fileID: 2337484}
-  - component: {fileID: 231140425904947819}
+  - component: {fileID: -960071057995256466}
   m_Layer: 0
   m_Name: SM_Env_Grass_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &231140425904947819
+--- !u!65 &-960071057995256466
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,9 +99,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.2986792, y: 0.30631554, z: 0.2817334}
-  m_Center: {x: -0.041881103, y: 0.09254306, z: 0.037636716}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
