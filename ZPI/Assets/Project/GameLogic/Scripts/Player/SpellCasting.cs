@@ -24,24 +24,28 @@ public class SpellCasting : MonoBehaviour
     public float FireballCooldown = 0f;
     public bool IsFireballUnlocked;
     private FireballScript _fireballScript;
+    public ParticleSystem FireballSelected;
 
     [Header("--- Meteors ---")]
     public Image MeteorsImage;
     public float MeteorsCooldown = 0f;
     public bool IsMeteorsUnlocked = true;
     private MeteroAOEDamage _meteorsScript;
+    public GameObject MeteorsSelected;
 
     [Header("--- Shield ---")]
     public Image ShieldImage;
     public float ShieldCooldown = 0f;
     public bool IsShieldUnlocked = false;
     private Shield _shieldScript;
+    public GameObject ShieldSelected;
 
     [Header("--- Lightning ---")]
     public Image LightningImage;
     public float LightningCooldown = 0f;
     public bool IsLightningUnlocked = true;
     private ChainLightningShoot _chainLightningShootScript;
+    public GameObject LightningSelected;
 
     private int _strokeIndex;
 
@@ -107,9 +111,10 @@ public class SpellCasting : MonoBehaviour
         {
             if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && GameState.Instance.IsSpeechRecognitionEnabled) || !GameState.Instance.IsSpeechRecognitionEnabled))
             {
-                if (FireballImage.fillAmount <= 0)
+                if (FireballImage.fillAmount <= 1)
                 {
                     CastFireball();
+                    FireballSelected.Play();
                     FireballImage.fillAmount = 1;
                     FireballCooldown = 3f;
                 }
@@ -119,6 +124,7 @@ public class SpellCasting : MonoBehaviour
                 if (MeteorsImage.fillAmount <= 0)
                 {
                     CastMeteorRain();
+                    Invoke(nameof(MeteorsSelected), 0f);
                     MeteorsImage.fillAmount = 1;
                     MeteorsCooldown = 5f;
                 }
@@ -128,6 +134,7 @@ public class SpellCasting : MonoBehaviour
                 if (ShieldImage.fillAmount <= 0)
                 {
                     _shieldScript.activateShield();
+                    Invoke(nameof(ShieldSelected), 0f);
                     ShieldImage.fillAmount = 1;
                     ShieldCooldown = 5f;
                 }
@@ -137,6 +144,7 @@ public class SpellCasting : MonoBehaviour
                 if (LightningImage.fillAmount <= 0)
                 {
                     _chainLightningShootScript.StartShooting();
+                    Invoke(nameof(LightningSelected), 0f);
                     LightningImage.fillAmount = 1;
                     LightningCooldown = 5f;
                 }
