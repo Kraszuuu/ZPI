@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.091
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0008510157, g: 0.0018434842, b: 0.054547586, a: 1}
+  m_IndirectSpecularColor: {r: 0.012517955, g: 0.01190909, b: 0.012526877, a: 0.091}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10700,7 +10700,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2506401193434500568}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameState, Assembly-CSharp
         m_MethodName: ChangeSpeechRecognitionMode
         m_Mode: 1
@@ -13663,11 +13663,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 430074, guid: c34c166783f3c744686ef9143de6e3fe, type: 3}
   m_PrefabInstance: {fileID: 56565842}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1888514314 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7462185213803542157, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-  m_PrefabInstance: {fileID: 3956698893370958202}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1888514316 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4311283402878702144, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
@@ -13679,7 +13674,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888514314}
+  m_GameObject: {fileID: 1216900631}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -15615,76 +15610,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8a7b28b67598a4408bdfe6ccf005ea4, type: 3}
---- !u!1 &2136194768 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1786925068127507155, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-  m_PrefabInstance: {fileID: 3956698893370958202}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2136194769 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9030129042287877481, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-  m_PrefabInstance: {fileID: 3956698893370958202}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2136194773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2136194768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 2136194769}
-  volumeLayer:
-    serializedVersion: 2
-    m_Bits: 32768
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 0
-  antialiasingMode: 0
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
 --- !u!1 &2140610914
 GameObject:
   m_ObjectHideFlags: 0
@@ -16135,6 +16060,10 @@ PrefabInstance:
       propertyPath: recognizedWordText
       value: 
       objectReference: {fileID: 602458843}
+    - target: {fileID: 4311283402878702144, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1056
+      objectReference: {fileID: 0}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: ShieldImage
       value: 
@@ -16151,6 +16080,26 @@ PrefabInstance:
       propertyPath: LightningImage
       value: 
       objectReference: {fileID: 1163383623263333355}
+    - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: IsFireballUnlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: ShieldSelectedEffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: MeteorsSelectedEffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: FireballSelectedEffect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: LightningSelectedEffect
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7462185213803542157, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -16161,10 +16110,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1786925068127507155, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2136194773}
+      addedObject: {fileID: 1017832807}
     - targetCorrespondingSourceObject: {fileID: 7462185213803542157, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1216900634}
+    - targetCorrespondingSourceObject: {fileID: 7462185213803542157, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1888514317}
   m_SourcePrefab: {fileID: 100100000, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
 --- !u!114 &3956698893370958203 stripped
 MonoBehaviour:
@@ -16303,6 +16255,10 @@ PrefabInstance:
       propertyPath: m_fontColorGradientPreset
       value: 
       objectReference: {fileID: 11400000, guid: 9a9bc227120ecd6418f4fa9ee6a4ca71, type: 2}
+    - target: {fileID: 1923294574535309522, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 366.00006
+      objectReference: {fileID: 0}
     - target: {fileID: 2137449708109201524, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_TargetGraphic
       value: 
@@ -16551,6 +16507,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3956698893370958220}
+    - target: {fileID: 9123045724414964160, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1888514316}
+    - target: {fileID: 9123045724414964160, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 623836470668737755, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
