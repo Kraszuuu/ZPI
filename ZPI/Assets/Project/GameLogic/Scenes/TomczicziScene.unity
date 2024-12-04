@@ -2862,6 +2862,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77ad9661321c6e84280c8fbe32492c06, type: 3}
+--- !u!198 &452440449 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3434431678751852786, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &455911051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3678,6 +3683,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 422034, guid: a6904f5656dfe8e49bd1fae1497ddf07, type: 3}
   m_PrefabInstance: {fileID: 588010291}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &537767224 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5914807325878414499, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &542782698 stripped
 Transform:
@@ -6324,6 +6334,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 496004, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
   m_PrefabInstance: {fileID: 1267349434}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &934923698 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8010800747806963807, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &935534079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
@@ -7330,6 +7345,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 496004, guid: 0a5ef1aaf47f03547983772b8f1f3a80, type: 3}
   m_PrefabInstance: {fileID: 1679041080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1048319039 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4164925139915811591, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1054401141
 PrefabInstance:
@@ -16087,19 +16107,19 @@ PrefabInstance:
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: ShieldSelectedEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 452440449}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: MeteorsSelectedEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1048319039}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: FireballSelectedEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 537767224}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: LightningSelectedEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 934923698}
     - target: {fileID: 7462185213803542157, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: m_Layer
       value: 0
