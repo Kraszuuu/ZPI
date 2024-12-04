@@ -24,24 +24,28 @@ public class SpellCasting : MonoBehaviour
     public float FireballCooldown = 0f;
     public bool IsFireballUnlocked;
     private FireballScript _fireballScript;
+    public ParticleSystem FireballSelectedEffect;
 
     [Header("--- Meteors ---")]
     public Image MeteorsImage;
     public float MeteorsCooldown = 0f;
     public bool IsMeteorsUnlocked = true;
     private MeteroAOEDamage _meteorsScript;
+    public ParticleSystem MeteorsSelectedEffect;
 
     [Header("--- Shield ---")]
     public Image ShieldImage;
     public float ShieldCooldown = 0f;
     public bool IsShieldUnlocked = false;
     private Shield _shieldScript;
+    public ParticleSystem ShieldSelectedEffect;
 
     [Header("--- Lightning ---")]
     public Image LightningImage;
     public float LightningCooldown = 0f;
     public bool IsLightningUnlocked = true;
     private ChainLightningShoot _chainLightningShootScript;
+    public ParticleSystem LightningSelectedEffect;
 
     private int _strokeIndex;
 
@@ -63,6 +67,7 @@ public class SpellCasting : MonoBehaviour
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        UnlockSpell("Fireball");
     }
 
     void Update()
@@ -109,6 +114,7 @@ public class SpellCasting : MonoBehaviour
             {
                 if (FireballImage.fillAmount <= 0)
                 {
+                    FireballSelectedEffect.Play();
                     CastFireball();
                     FireballImage.fillAmount = 1;
                     FireballCooldown = 3f;
@@ -118,6 +124,7 @@ public class SpellCasting : MonoBehaviour
             {
                 if (MeteorsImage.fillAmount <= 0)
                 {
+                    MeteorsSelectedEffect.Play();
                     CastMeteorRain();
                     MeteorsImage.fillAmount = 1;
                     MeteorsCooldown = 5f;
@@ -127,6 +134,7 @@ public class SpellCasting : MonoBehaviour
             {
                 if (ShieldImage.fillAmount <= 0)
                 {
+                    ShieldSelectedEffect.Play();
                     _shieldScript.activateShield();
                     ShieldImage.fillAmount = 1;
                     ShieldCooldown = 5f;
@@ -136,6 +144,7 @@ public class SpellCasting : MonoBehaviour
             {
                 if (LightningImage.fillAmount <= 0)
                 {
+                    LightningSelectedEffect.Play();
                     _chainLightningShootScript.StartShooting();
                     LightningImage.fillAmount = 1;
                     LightningCooldown = 5f;
