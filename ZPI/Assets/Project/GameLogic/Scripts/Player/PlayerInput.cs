@@ -107,6 +107,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HideWand"",
+                    ""type"": ""Button"",
+                    ""id"": ""d635cfeb-da33-4976-94f7-a1c99dea85ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -250,6 +259,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BasicAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2dae434-4149-4850-b2df-8a9468b7c9a6"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HideWand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -785,6 +805,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_Interact = m_OnFoot.FindAction("Interact", throwIfNotFound: true);
         m_OnFoot_Dash = m_OnFoot.FindAction("Dash", throwIfNotFound: true);
         m_OnFoot_BasicAttack = m_OnFoot.FindAction("BasicAttack", throwIfNotFound: true);
+        m_OnFoot_HideWand = m_OnFoot.FindAction("HideWand", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -867,6 +888,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_Interact;
     private readonly InputAction m_OnFoot_Dash;
     private readonly InputAction m_OnFoot_BasicAttack;
+    private readonly InputAction m_OnFoot_HideWand;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -880,6 +902,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_OnFoot_Interact;
         public InputAction @Dash => m_Wrapper.m_OnFoot_Dash;
         public InputAction @BasicAttack => m_Wrapper.m_OnFoot_BasicAttack;
+        public InputAction @HideWand => m_Wrapper.m_OnFoot_HideWand;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -916,6 +939,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @BasicAttack.started += instance.OnBasicAttack;
             @BasicAttack.performed += instance.OnBasicAttack;
             @BasicAttack.canceled += instance.OnBasicAttack;
+            @HideWand.started += instance.OnHideWand;
+            @HideWand.performed += instance.OnHideWand;
+            @HideWand.canceled += instance.OnHideWand;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -947,6 +973,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @BasicAttack.started -= instance.OnBasicAttack;
             @BasicAttack.performed -= instance.OnBasicAttack;
             @BasicAttack.canceled -= instance.OnBasicAttack;
+            @HideWand.started -= instance.OnHideWand;
+            @HideWand.performed -= instance.OnHideWand;
+            @HideWand.canceled -= instance.OnHideWand;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1093,6 +1122,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnBasicAttack(InputAction.CallbackContext context);
+        void OnHideWand(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

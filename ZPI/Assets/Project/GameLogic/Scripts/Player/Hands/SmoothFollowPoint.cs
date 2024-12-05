@@ -23,6 +23,7 @@ public class SmoothFollowPoint : MonoBehaviour
     public float DistanceFromCamera = 0.53f; // Odległość punktu od kamery
     public Vector3 CastingOffset;         // Offset w lokalnych współrzędnych względem kamery
     public float FollowStrength = 0.5f;            // Siła ruchu za myszą
+    public float TransitionSpeed = 10f;
 
     [Header("Walking Noise Settings")]
     [Range(0, 0.1f)] public float NoiseAmplitude = 0.02f;
@@ -42,75 +43,91 @@ public class SmoothFollowPoint : MonoBehaviour
     public Quaternion RightSwingRotationOffset = new(85f, 129.4f, 277.1f, 0f);
     public float RotationSpeed = 5.0f;
 
-    public bool _isSwinging = false;      // Czy ręka aktualnie macha
-    public bool _isLeftSwing = false;      // Czy ręka aktualnie machnela w lewo
-    public float _swingTimer = 0f;        // Timer do zatrzymania w miejscu
+    [Header("Debug")]
+    [SerializeField] private Vector3 _currentTargetOffset;
+    [SerializeField] private Quaternion _currentRotationOffset;
 
+    private bool _isSwinging = false;      // Czy ręka aktualnie macha
+    private bool _isLeftSwing = false;      // Czy ręka aktualnie machnela w lewo
+    private float _swingTimer = 0f;        // Timer do zatrzymania w miejscu
     private Vector3 _velocity = Vector3.zero;  // Prędkość punktu, wymagana przez SmoothDamp
     private Camera _mainCamera;
     private Transform _cameraTransform;
 
-    public Animator animator;
+    public Animator Animator;
+
+    private bool _isToggleWandLocked = false;
+    private float _interpolationDelayTimer = 0f;
 
     private float _currentSmoothTime;
     private float _currentYaw;              // Bieżąca wartość obrotu w poziomie (Y)
     private float _currentPitch;            // Bieżąca wartość obrotu w pionie (X)
-    [SerializeField] private Vector3 _currentTargetOffset;
-    [SerializeField] private Quaternion _currentRotationOffset;
-
     private Quaternion _targetRotation;
     private Quaternion _currentRotation;
+
 
     void Start()
     {
         _mainCamera = Camera.main;
         _cameraTransform = _mainCamera.transform;
 
-        _currentSmoothTime = UnarmedSmoothTime;
-        _currentRotationOffset = UnarmedRotationOffset;
-        _currentTargetOffset = UnarmedOffset;
         _currentYaw = _cameraTransform.eulerAngles.y;
         _currentPitch = _cameraTransform.eulerAngles.x;
 
         // Na początku różdżka jest widoczna
+        GameState.Instance.IsWandEquipped = true;
         if (WandObject != null)
             WandObject.SetActive(true);
     }
 
     void Update()
     {
-        HandleWandToggle();
-
         if (!_isSwinging)
         {
             UpdateOffsetsAndSmoothTime();
         }
 
-        Vector3 noise = CalculateNoiseMotion() + CalculateNoiseJumping();
-
         if (GameState.Instance.IsSpellCasting)
         {
-            ResetSwingState();
-            MoveToPosition(CalculateTargetPositionForCasting(), CastingSmoothTime);
+            HandleSpellCasting();
+            return;
         }
-        else if (_swingTimer <= 0)
+
+        Vector3 noise = CalculateNoiseMotion() + CalculateNoiseJumping();
+
+        if (_swingTimer > 0)
         {
-            _isSwinging = false;
-
-            if (_isLeftSwing)
-            {
-                HandleLeftSwingReset();
-            }
-
-            MoveToPosition(GetTargetPosition() + noise, _currentSmoothTime);
+            HandleSwing(noise);
         }
         else
         {
-            MoveToPosition(GetTargetPosition() + noise, SwingSmoothTime);
-            _swingTimer -= Time.deltaTime;
+            HandleIdleOrReset(noise);
         }
     }
 
+    private void HandleSpellCasting()
+    {
+        ResetSwingState();
+        MoveToPosition(CalculateTargetPositionForCasting(), CastingSmoothTime, true);
+    }
+
+    private void HandleSwing(Vector3 noise)
+    {
+        MoveToPosition(GetTargetPosition() + noise, SwingSmoothTime);
+        _swingTimer -= Time.deltaTime;
+    }
+
+    private void HandleIdleOrReset(Vector3 noise)
+    {
+        _isSwinging = false;
+
+        if (_isLeftSwing)
+        {
+            HandleLeftSwingReset();
+        }
+
+        MoveToPosition(GetTargetPosition() + noise, _currentSmoothTime);
+    }
 
     private void UpdateOffsetsAndSmoothTime()
     {
@@ -144,44 +161,58 @@ public class SmoothFollowPoint : MonoBehaviour
         }
     }
 
-    private void MoveToPosition(Vector3 targetPosition, float smoothTime)
+    private void MoveToPosition(Vector3 targetPosition, float smoothTime, bool useDelay = false)
     {
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, smoothTime);
+        float effectiveSmoothTime;
+
+        if (useDelay)
+        {
+            _interpolationDelayTimer += Time.deltaTime;
+
+            float t = Mathf.Clamp01((_interpolationDelayTimer) * TransitionSpeed);
+            effectiveSmoothTime = Mathf.Lerp(_currentSmoothTime, smoothTime, t);
+
+        }
+        else
+        {
+            effectiveSmoothTime = smoothTime;
+            _interpolationDelayTimer = 0f;
+        }
+
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, effectiveSmoothTime);
+
         UpdateRotation();
     }
-
 
     private Vector3 GetTargetPosition()
     {
         return _cameraTransform.TransformPoint(_currentTargetOffset);
     }
 
-    private void HandleWandToggle()
+    public void ToggleWand()
     {
-        if (Keyboard.current.hKey.wasPressedThisFrame)
-        {
-            if (!IsAnimatorPlaying("WandSheath") && !IsAnimatorPlaying("WandWithdrawing"))
-            {
-                ToggleWand();
-            }
-            else
-            {
-                Debug.Log("Animation is in progress");
-            }
-        }
-    }
+        if (_isToggleWandLocked) return; // Zablokowane, wyjdź z funkcji
 
-    private void ToggleWand()
-    {
-        GameState.Instance.IsWandEquipped = !GameState.Instance.IsWandEquipped;
+        _isToggleWandLocked = true; // Zablokuj kliknięcia
 
         if (GameState.Instance.IsWandEquipped)
         {
-            animator.SetBool("isHoldingWand", true);
+            Animator.SetBool("isHoldingWand", false);
+            GameState.Instance.IsWandEquipped = false;
         }
         else
         {
-            animator.SetBool("isHoldingWand", false);
+            Animator.SetBool("isHoldingWand", true);
+        }
+
+    }
+
+    public void UnlockToggleWand()
+    {
+        _isToggleWandLocked = false;
+        if (Animator.GetBool("isHoldingWand"))
+        {
+            GameState.Instance.IsWandEquipped = true;
         }
     }
 
@@ -270,8 +301,8 @@ public class SmoothFollowPoint : MonoBehaviour
 
     private bool IsAnimatorPlaying(string stateName)
     {
-        return animator.GetCurrentAnimatorStateInfo(0).length >
-               animator.GetCurrentAnimatorStateInfo(0).normalizedTime && animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+        return Animator.GetCurrentAnimatorStateInfo(0).length >
+               Animator.GetCurrentAnimatorStateInfo(0).normalizedTime && Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
     void OnDrawGizmos()

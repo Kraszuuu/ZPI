@@ -5,6 +5,7 @@ using UnityEngine;
 public class WandWithdrawalEvent : MonoBehaviour
 {
     public GameObject WandObject;
+    public SmoothFollowPoint smoothFollowPoint;
 
     // Function that will be called when the wand is withdrawn
     public void OnWandWithdrawal()
@@ -19,4 +20,6 @@ public class WandWithdrawalEvent : MonoBehaviour
         if (WandObject != null)
             WandObject.SetActive(false);
     }
+
+    public void UnlockToggleWand() => smoothFollowPoint.UnlockToggleWand();
 }

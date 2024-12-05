@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
     private PlayerLook look;
     private PauseManager pauseManager;
     private PrimaryAttack primaryAttack;
+    private SmoothFollowPoint smoothFollowPoint;
     private Vector2 currentMoveInput;
 
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour
         look = GetComponent<PlayerLook>();
         pauseManager = FindObjectOfType<PauseManager>();
         primaryAttack = GetComponent<PrimaryAttack>();
+        smoothFollowPoint = GetComponentInChildren<SmoothFollowPoint>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
 
@@ -38,6 +40,8 @@ public class InputManager : MonoBehaviour
         onFoot.Pause.performed += ctx => TogglePause();
 
         onFoot.BasicAttack.performed += ctx => primaryAttack.ShootProjectile();
+
+        onFoot.HideWand.performed += ctx => smoothFollowPoint.ToggleWand();
     }
 
     // Update is called once per frame
