@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip zombieAttackSound;
     public AudioClip zombieAmbientSound;
     public AudioClip zombieEnemySpotted;
+    public AudioClip zombieGrawlSound;
 
     [Header("Skeleton Clips")]
     public AudioClip skeletonWalkSound;
@@ -114,7 +115,8 @@ public class AudioManager : MonoBehaviour
             zombieEnemySpotted,
             skeletonArrowInAir,
             skeletonArrowHit,
-            stupefyExplosionSound
+            stupefyExplosionSound,
+            zombieGrawlSound
         };
     }
 
@@ -205,6 +207,7 @@ public class AudioManager : MonoBehaviour
     private void PlayZombieAttackSound(AudioSource audioSource) => PlaySoundFromSource(zombieAttackSound, audioSource);
     private void PlayZombieAmbientSound(AudioSource audioSource) => PlaySoundFromSource(zombieAmbientSound, audioSource);
     public void PlayZombieEnemySpottedSound(AudioSource audioSource) => PlaySoundFromSource(zombieEnemySpotted, audioSource);
+    public void PlayZombieGrawlSound(AudioSource audioSource) => PlaySoundFromSource(zombieGrawlSound, audioSource);
     // Skeleton
     private void PlaySkeletonWalkSound(AudioSource audioSource) => PlaySoundFromSource(skeletonWalkSound, audioSource);
     private void PlaySkeletonDamageSound(AudioSource audioSource) => PlaySoundFromSource(skeletonDamageSound, audioSource);

@@ -247,6 +247,16 @@ public class Enemy : MonoBehaviour
         AudioManager.instance.PlayZombieEnemySpottedSound(audioSource);
     }
 
+    public void ZombieGrawl()
+    {
+        if (enemyType != EnemyType.Melee)
+        {
+            Debug.LogError("Wrong enemy type for function ZombieGrawl");
+            return;
+        }
+        AudioManager.instance.PlayZombieGrawlSound(audioSource);
+    }
+
     public void SkeletonShoot()
     {
         if (enemyType != EnemyType.Ranged)
