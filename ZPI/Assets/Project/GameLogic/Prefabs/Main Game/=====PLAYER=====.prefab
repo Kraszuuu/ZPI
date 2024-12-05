@@ -359,7 +359,7 @@ MonoBehaviour:
   RotationSpeed: 8
   _currentTargetOffset: {x: 0.32, y: -0.23, z: 0.45}
   _currentRotationOffset: {x: 0.33056727, y: -0.32771766, z: -0.29312164, w: 0.8351086}
-  Animator: {fileID: 0}
+  Animator: {fileID: 4346562746264896140}
 --- !u!1 &929623028097121516
 GameObject:
   m_ObjectHideFlags: 0
@@ -11944,7 +11944,7 @@ MonoBehaviour:
   delayBetweenEachChain: 0.2
   lineRendererPrefab: {fileID: 7266535234903039209, guid: 0b0256bc0766dd14dbaedd59e6a4ed14, type: 3}
   spellDuration: 1.2
-  _endOfWand: {fileID: 0}
+  _endOfWand: {fileID: 7087430697128331325}
 --- !u!114 &7414920338665460433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12111,7 +12111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 5350565384308254927}
   FireballPrefab: {fileID: 8357008375304885676, guid: 46d179789ec026a4b9622332c0193769, type: 3}
-  FireballSpawnPoint: {fileID: 0}
+  FireballSpawnPoint: {fileID: 1186598735101232463}
   ProjectileSpeed: 20
   SpawnShake: 1
   DelayedFire: 0
