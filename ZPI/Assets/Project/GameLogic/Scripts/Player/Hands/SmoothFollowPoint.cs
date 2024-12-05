@@ -72,9 +72,9 @@ public class SmoothFollowPoint : MonoBehaviour
         _currentYaw = _cameraTransform.eulerAngles.y;
         _currentPitch = _cameraTransform.eulerAngles.x;
 
-        // Na początku różdżka jest ukryta
+        // Na początku różdżka jest widoczna
         if (WandObject != null)
-            WandObject.SetActive(false);
+            WandObject.SetActive(true);
     }
 
     void Update()

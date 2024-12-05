@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 26ffc3aacdcdfd046a86eab924ed7acf
+guid: f27cd9c0c28e8a748b8681eae43451e2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: arms_material
+    second: {fileID: 2100000, guid: 320ea7e4e0876ec44bbed44d905e2ef9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -500,11 +505,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f27cd9c0c28e8a748b8681eae43451e2, type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 2
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
