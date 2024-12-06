@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     private string _currentState;
     [SerializeField, ReadOnly]
     private int _currentHealth;
+    public bool Kill = false;
 
     public AudioSource audioSource;
     void Start()
@@ -62,6 +63,12 @@ public class Enemy : MonoBehaviour
     {
         _currentState = _stateMachine.activeState.ToString();
         CanSeePlayer();
+
+        if (Kill)
+        {
+            TakeDamage(MaxHealth, Vector3.back);
+            Kill = false;
+        }
     }
 
     public bool CanSeePlayer()
@@ -203,7 +210,10 @@ public class Enemy : MonoBehaviour
 
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
-        obj.layer = newLayer;
+        if (obj.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            obj.layer = newLayer;
+        }
         foreach (Transform child in obj.transform)
         {
             SetLayerRecursively(child.gameObject, newLayer);
@@ -239,7 +249,7 @@ public class Enemy : MonoBehaviour
 
     public void ZombieScream()
     {
-        if(enemyType != EnemyType.Melee)
+        if (enemyType != EnemyType.Melee)
         {
             Debug.LogError("Wrong enemy type for function ZombieScream");
             return;
