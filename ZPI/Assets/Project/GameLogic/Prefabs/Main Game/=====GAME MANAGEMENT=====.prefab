@@ -47,11 +47,12 @@ GameObject:
   - component: {fileID: 5087333965495625061}
   - component: {fileID: 6672715972045503091}
   - component: {fileID: 4103712463386379400}
-  - component: {fileID: 3824902960725927753}
   - component: {fileID: 6934550681784510673}
   - component: {fileID: 2555006797238799597}
   - component: {fileID: 1679694867831697284}
   - component: {fileID: 127040716217611811}
+  - component: {fileID: 7877760354484792389}
+  - component: {fileID: 6583098166852860977}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -129,6 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PausePanel: {fileID: 0}
   HelpPanel: {fileID: 0}
+  SoundPanel: {fileID: 0}
+  VoiceRecognitionPanel: {fileID: 0}
 --- !u!114 &4103712463386379400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,24 +146,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemySpawners:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   delayBetweenWaves: 5
   upgradeWavesInterval: 1
   upgradeMenu: {fileID: 0}
   waveClearedText: {fileID: 0}
   waveClearedDisplayTime: 2
   intervalBeforeUpgradeMenuShow: 0.3
---- !u!114 &3824902960725927753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061530863420556397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050ada90b0892af438f75226c0b02a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6934550681784510673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,12 +195,14 @@ MonoBehaviour:
   shieldSound: {fileID: 8300000, guid: acbcb75601b0082458fda8807f67c813, type: 3}
   fireballSound: {fileID: 8300000, guid: 3bcbb5605887218498731a69e626f86f, type: 3}
   fireballExplosionSound: {fileID: 8300000, guid: c5486c17cf172c54aa3c63a8ff487773, type: 3}
+  stupefyExplosionSound: {fileID: 8300000, guid: 428126d84851bef48b67f52bbbbf5347, type: 3}
   zombieWalkSound: {fileID: 0}
   zombieDamageSound: {fileID: 8300000, guid: 0cadeda29fac61b41af4f46712d93786, type: 3}
   zombieDeathSound: {fileID: 8300000, guid: 2b154d6b77fa1b74ebf24eb82de6a7fb, type: 3}
   zombieAttackSound: {fileID: 8300000, guid: 77973099c39c1ad42bae642e198bdd3f, type: 3}
   zombieAmbientSound: {fileID: 8300000, guid: 880c074687a4a724f84973bc4f1db65b, type: 3}
   zombieEnemySpotted: {fileID: 8300000, guid: d521e8e8e43f49c4f8e4fcae06afb43b, type: 3}
+  zombieGrawlSound: {fileID: 8300000, guid: bb6f84406132f13439442b034f7321c7, type: 3}
   skeletonWalkSound: {fileID: 0}
   skeletonDamageSound: {fileID: 8300000, guid: 081de732e2672ed4f86af76c897065dd, type: 3}
   skeletonDeathSound: {fileID: 8300000, guid: 35b3dbcc989e9ad47a467e35defcb7ae, type: 3}
@@ -221,6 +217,8 @@ MonoBehaviour:
   nightAmbientSound: {fileID: 8300000, guid: 21538f6160ff48040a8488deb4ed6d5e, type: 3}
   dayAmbientSound: {fileID: 8300000, guid: bec1cfb465efc7a41bd5ccbac5b6f2a2, type: 3}
   exampleSound: {fileID: 0}
+  _masterVolume: 0.5
+  _volumeSlider: {fileID: 0}
 --- !u!114 &1679694867831697284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +244,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellCastingCanvas: {fileID: 0}
+--- !u!114 &7877760354484792389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061530863420556397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050ada90b0892af438f75226c0b02a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6583098166852860977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061530863420556397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54aac0184bdd23b40aeb50f566a8e18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8009724173711152546
 GameObject:
   m_ObjectHideFlags: 0
