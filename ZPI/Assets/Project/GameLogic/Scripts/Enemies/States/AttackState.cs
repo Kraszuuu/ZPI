@@ -96,7 +96,7 @@ public class AttackState : BaseState
                 // Sprawdzenie odległości w momencie trafienia
                 if (_distanceToPlayer <= 3f)
                 {
-                    _playerHealth.TakeDamage(_meleeDamage);
+                    _playerHealth.TakeDamage(EnemiesStats.Instance.GetDamageData("Zombie"));
                 }
 
                 _attackScheduled = false; // Resetuj planowanie ataku

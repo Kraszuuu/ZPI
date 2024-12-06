@@ -23,6 +23,7 @@ public class GameOverManager : MonoBehaviour
         gameTimer = FindObjectOfType<GameTimer>();
         sqLiteManager = FindObjectOfType<SQLiteManager>();
         SaveButton.onClick.AddListener(SaveScoreAndReturnToMainMenu);
+        Debug.Log(SaveButton);
     }
 
     public void EndGame()
@@ -40,12 +41,15 @@ public class GameOverManager : MonoBehaviour
     private void FulfillEndGamePanel()
     {
         double finalTime = gameTimer.GetTotalGameTime();
+        Debug.Log(gameTimer.GetTotalGameTime());
         MessageTextMesh.text =  $"YOU SURVIVED {finalTime:F2}s. ENTER YOUR NICKNAME AND SAVE YOUR RESULT";
     }
 
     private void SaveScoreAndReturnToMainMenu()
     {
-        string nickname = NicknameInput.text;
+        string nickname = NicknameInput.text.ToString();
+        Debug.Log(NicknameInput);
+        Debug.Log(nickname);
         double finalTime = gameTimer.GetTotalGameTime();
 
         if (nickname.Length >= 12)
@@ -58,8 +62,10 @@ public class GameOverManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("KURWANCELA");
             sqLiteManager.InsertData(new Score { Nickname = nickname, Time = finalTime });
 
+            Debug.Log("PROBLEMITOS");
             SceneManager.LoadScene("MainMenu");
         }
     }

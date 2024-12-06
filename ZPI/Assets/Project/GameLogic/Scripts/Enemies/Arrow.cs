@@ -46,13 +46,13 @@ public class Arrow : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Zadaj obrażenia graczowi i usuń strzałę
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(10);
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(EnemiesStats.Instance.GetDamageData("Skeleton"));
             Destroy(gameObject);
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             // Zadaj obrażenia wrogowi i usuń strzałę
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(10, transform.forward);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage((int)EnemiesStats.Instance.GetDamageData("Skeleton"), transform.forward);
             Destroy(gameObject);
         }
         else

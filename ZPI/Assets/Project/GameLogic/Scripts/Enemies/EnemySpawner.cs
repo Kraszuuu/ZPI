@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -53,6 +54,20 @@ public class EnemySpawner : MonoBehaviour
             for (int i = 0; i < waves[currentWave].GetEnemySpawnList().Count; i++)
             {
                 GameObject newSpawn = Instantiate(waves[currentWave].GetEnemySpawnList()[i], FindSpawnLoc(), Quaternion.identity);
+                Enemy enemyScript = newSpawn.GetComponent<Enemy>();
+                Debug.Log(enemyScript);
+                if (enemyScript.enemyType.Equals(EnemyType.Melee))
+                {
+                    enemyScript.MaxHealth = (int)EnemiesStats.Instance.GetHealthData("Zombie");
+                } 
+                else if (enemyScript.enemyType.Equals(EnemyType.Ranged))
+                {
+                    enemyScript.MaxHealth = (int)EnemiesStats.Instance.GetHealthData("Skeleton");
+                }
+                else
+                {
+                    Debug.Log("KLOPOTY KURWANCELA");
+                }
                 CurrentEnemies.Add(newSpawn);
             }
             currentWave++;
