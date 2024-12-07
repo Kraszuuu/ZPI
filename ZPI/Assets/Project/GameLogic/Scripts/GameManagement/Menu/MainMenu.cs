@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        AudioManagerMenu.instance.StopPlayingMusic();
         SceneManager.LoadScene("Cut Scene Scene");
     }
 

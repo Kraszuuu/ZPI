@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip exampleSound;
 
     [Header("Volume Settings")]
-    [Range(0f, 1f)] public float _masterVolume = 0.5f;
+    [Range(0f, 1f)] public float _masterVolume;
     [SerializeField] private Slider _volumeSlider;
 
     private HashSet<AudioClip> soundEffects;
@@ -77,6 +77,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        GetSettingFromMenu();
 
         // Wczytaj d�wi�ki
         soundEffects = new HashSet<AudioClip>
@@ -118,6 +119,12 @@ public class AudioManager : MonoBehaviour
             stupefyExplosionSound,
             zombieGrawlSound
         };
+    }
+    
+    private void GetSettingFromMenu()
+    {
+        if(AudioManagerMenu.instance != null) _masterVolume = AudioManagerMenu.instance.soundVolume;
+        _volumeSlider.value = _masterVolume;
     }
 
     public void SetMasterVolume()
