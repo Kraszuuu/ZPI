@@ -77,7 +77,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        _masterVolume = AudioManagerMenu.instance.soundVolume;
+        GetSettingFromMenu();
 
         // Wczytaj d�wi�ki
         soundEffects = new HashSet<AudioClip>
@@ -119,6 +119,12 @@ public class AudioManager : MonoBehaviour
             stupefyExplosionSound,
             zombieGrawlSound
         };
+    }
+    
+    private void GetSettingFromMenu()
+    {
+        _masterVolume = AudioManagerMenu.instance.soundVolume;
+        _volumeSlider.value = _masterVolume;
     }
 
     public void SetMasterVolume()
