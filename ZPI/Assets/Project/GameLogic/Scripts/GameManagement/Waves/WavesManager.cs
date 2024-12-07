@@ -35,9 +35,10 @@ public class WavesManager : MonoBehaviour
 
             if (_currentWave % upgradeWavesInterval == 0)
             {
-                EnemiesStats.Instance.SetHealthData("Zombie", EnemiesStats.Instance.GetHealthData("Zombie") + 10f);
-                EnemiesStats.Instance.SetDamageData("Zombie", EnemiesStats.Instance.GetDamageData("Zombie") + 100f);
-                Debug.Log(EnemiesStats.Instance.GetDamageData("Zombie"));
+                EnemiesStats.Instance.SetHealthData("Zombie", EnemiesStats.Instance.GetHealthData("Zombie") + 8f);
+                EnemiesStats.Instance.SetDamageData("Zombie", EnemiesStats.Instance.GetDamageData("Zombie") + 2f);
+                EnemiesStats.Instance.SetHealthData("Skeleton", EnemiesStats.Instance.GetHealthData("Skeleton") + 5f);
+                EnemiesStats.Instance.SetDamageData("Skeleton", EnemiesStats.Instance.GetDamageData("Skeleton") + 1f);
                 if (!IsEverySkillUnlocked())
                 {
                     StartCoroutine(ShowWaveClearedAndUpgradeMenu());

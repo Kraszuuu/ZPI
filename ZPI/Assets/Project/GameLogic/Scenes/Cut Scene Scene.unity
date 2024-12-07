@@ -6225,7 +6225,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -10162,6 +10162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1944421947}
   - component: {fileID: 1944421946}
+  - component: {fileID: 1944421948}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -10180,7 +10181,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.78431374, g: 0.78431374, b: 0.50980395, a: 1}
+  m_Color: {r: 0.7815923, g: 0.7815923, b: 0.51054573, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -10246,6 +10247,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1328463679}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1944421948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944421945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1950511762
 GameObject:
   m_ObjectHideFlags: 0
@@ -11673,6 +11697,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5309338655296738283, guid: f62c10233031b12408c8c8cbacb02b50, type: 3}
+      propertyPath: cutsceneDuration
+      value: 62
+      objectReference: {fileID: 0}
     - target: {fileID: 6961097391084933912, guid: f62c10233031b12408c8c8cbacb02b50, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
