@@ -123,7 +123,7 @@ public class AudioManager : MonoBehaviour
     
     private void GetSettingFromMenu()
     {
-        _masterVolume = AudioManagerMenu.instance.soundVolume;
+        if(AudioManagerMenu.instance != null) _masterVolume = AudioManagerMenu.instance.soundVolume;
         _volumeSlider.value = _masterVolume;
     }
 
