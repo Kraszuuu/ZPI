@@ -25,9 +25,9 @@ public class SpellManager : MonoBehaviour
 
     private void InitializeSpells()
     {
-        spellData["PrimaryAttack"] = 6f;
+        spellData["PrimaryAttack"] = 4f;
         spellData["PrimaryAttackAreaDamage"] = 0f;
-        spellData["Fireball"] = 40f;
+        spellData["Fireball"] = 50f;
         spellData["FireballAreaDamage"] = 20f;
         spellData["Shield"] = 6f;
         spellData["Lightning"] = 40f;
