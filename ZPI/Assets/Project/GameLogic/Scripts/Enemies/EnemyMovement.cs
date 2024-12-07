@@ -1,5 +1,6 @@
-using UnityEngine.AI;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
@@ -8,26 +9,25 @@ public class EnemyMovement : MonoBehaviour
     public float MinVelocity = 0.5f;
     public float CloseDistanceThreshold = 1.5f; // Minimalna odległość uznawana za "blisko celu"
     public float MaxStuckTime = 3f; // Maksymalny czas, po którym cel zostanie zresetowany
+    public float OffsetAdjustmentSpeed = 5f; // Szybkość dostosowania offsetu
+    public float OffsetTolerance = 0.01f; // Tolerancja różnicy w wysokości
 
-    private NavMeshAgent Agent;
-    private Animator Animator;
-    [SerializeField]
-    private LookAt LookAt;
-    [SerializeField]
-    private bool DebugMode = false;
+    private NavMeshAgent _agent;
+    private Animator _animator;
+    [SerializeField] private LookAt LookAt;
+    [SerializeField] private bool DebugMode = false;
 
-    private Vector2 Velocity;
-    private Vector2 SmoothDeltaPosition;
-
-    private float stuckTimer = 0f; // Licznik czasu, przez który agent jest "zablokowany"
+    private Vector2 _velocity;
+    private Vector2 _smoothDeltaPosition;
+    private float _stuckTimer = 0f; // Licznik czasu, przez który agent jest "zablokowany"
 
     private void Awake()
     {
-        Agent = GetComponent<NavMeshAgent>();
-        Animator = GetComponent<Animator>();
-        Animator.applyRootMotion = true;
-        Agent.updatePosition = false;
-        Agent.updateRotation = true;
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+        _animator.applyRootMotion = true;
+        _agent.updatePosition = false;
+        _agent.updateRotation = true;
     }
 
     private void Update()
@@ -35,10 +35,9 @@ public class EnemyMovement : MonoBehaviour
         SynchronizeAnimatorAndAgent();
         CheckForStuck();
 
-        // Obsługa prawego przycisku myszy
         if (DebugMode)
         {
-            if (Input.GetMouseButtonDown(1)) // 1 oznacza prawy przycisk myszy
+            if (Input.GetMouseButtonDown(1)) // Obsługa prawego przycisku myszy
             {
                 MoveToMouseClickPosition();
             }
@@ -47,15 +46,15 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        Vector3 rootPosition = Animator.rootPosition;
-        rootPosition.y = Agent.nextPosition.y;
+        Vector3 rootPosition = _animator.rootPosition;
+        rootPosition.y = _agent.nextPosition.y;
         transform.position = rootPosition;
-        Agent.nextPosition = rootPosition;
+        _agent.nextPosition = rootPosition;
     }
 
     private void SynchronizeAnimatorAndAgent()
     {
-        Vector3 worldDeltaPosition = Agent.nextPosition - transform.position;
+        Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
         worldDeltaPosition.y = 0;
 
         // Map 'worldDeltaPosition' to local space
@@ -65,66 +64,57 @@ public class EnemyMovement : MonoBehaviour
 
         // Low-pass filter the deltaMove
         float smooth = Mathf.Min(1, Time.deltaTime / 0.1f);
-        SmoothDeltaPosition = Vector2.Lerp(SmoothDeltaPosition, deltaPosition, smooth);
+        _smoothDeltaPosition = Vector2.Lerp(_smoothDeltaPosition, deltaPosition, smooth);
 
-        Velocity = SmoothDeltaPosition / Time.deltaTime;
-        if (Agent.remainingDistance <= Agent.stoppingDistance)
+        _velocity = _smoothDeltaPosition / Time.deltaTime;
+        if (_agent.remainingDistance <= _agent.stoppingDistance)
         {
-            Velocity = Vector2.Lerp(Vector2.zero, Velocity, Agent.remainingDistance);
+            _velocity = Vector2.Lerp(Vector2.zero, _velocity, _agent.remainingDistance);
         }
 
-        bool shouldMove = Velocity.magnitude > MinVelocity && Agent.remainingDistance > Agent.stoppingDistance;
+        bool shouldMove = _velocity.magnitude > MinVelocity && _agent.remainingDistance > _agent.stoppingDistance;
 
-        Animator.SetBool("move", shouldMove);
-        Animator.SetFloat("velx", Velocity.x);
-        Animator.SetFloat("vely", Velocity.y);
+        _animator.SetBool("move", shouldMove);
+        _animator.SetFloat("velx", _velocity.x);
+        _animator.SetFloat("vely", _velocity.y);
 
-        LookAt.lookAtTargetPosition = Agent.steeringTarget + transform.forward;
+        LookAt.lookAtTargetPosition = _agent.steeringTarget + transform.forward;
     }
 
     private void MoveToMouseClickPosition()
     {
-        // Rzutowanie promienia z pozycji myszy
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            // Sprawdzenie, czy kliknięcie nastąpiło na NavMesh
             if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
             {
-                // Ustawienie celu na pozycji kliknięcia
-                Agent.SetDestination(navHit.position);
-                Agent.isStopped = false;
-
-                // Reset licznika "zablokowania"
-                stuckTimer = 0f;
+                _agent.SetDestination(navHit.position);
+                _agent.isStopped = false;
+                _stuckTimer = 0f; // Reset licznika "zablokowania"
             }
         }
     }
 
     public void StopMoving()
     {
-        Agent.isStopped = true;
+        _agent.isStopped = true;
     }
 
     private void CheckForStuck()
     {
-        // Jeśli agent znajduje się blisko celu, ale nie dotarł do niego
-        if (Agent.remainingDistance <= CloseDistanceThreshold && Agent.velocity.magnitude < MinVelocity)
+        if (_agent.remainingDistance <= CloseDistanceThreshold && _agent.velocity.magnitude < MinVelocity)
         {
-            stuckTimer += Time.deltaTime;
-
-            // Jeśli agent jest "zablokowany" przez dłużej niż MaxStuckTime
-            if (stuckTimer >= MaxStuckTime)
+            _stuckTimer += Time.deltaTime;
+            if (_stuckTimer >= MaxStuckTime)
             {
                 Debug.Log("Agent zablokowany. Reset celu.");
-                Agent.SetDestination(transform.position); // Ustaw cel na bieżącą pozycję agenta
-                stuckTimer = 0f; // Reset licznika
+                _agent.SetDestination(transform.position);
+                _stuckTimer = 0f;
             }
         }
         else
         {
-            // Jeśli agent porusza się prawidłowo, resetuj licznik
-            stuckTimer = 0f;
+            _stuckTimer = 0f;
         }
     }
 }

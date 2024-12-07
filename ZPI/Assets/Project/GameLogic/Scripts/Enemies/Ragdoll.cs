@@ -49,7 +49,6 @@ public class Ragdoll : MonoBehaviour
     {
         // Włączenie głównego collidera i rigidbody
         if (mainCollider != null) mainCollider.enabled = true;
-        if (mainRigidbody != null) mainRigidbody.isKinematic = false;
 
         // Wyłączenie colliderów i rigidbody w ragdollu
         foreach (var col in ragdollColliders)
