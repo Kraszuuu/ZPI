@@ -13,6 +13,7 @@ public class PrimaryAttack : MonoBehaviour
     public float ArcRange = 1;
     [Range(0, 0.2f)] public float DelayedFire = 0f;
     [Range(0, 1f)] public float CriticalChance = 0.1f;
+    public ParticleSystem WandParticleSystem;
 
     private Vector3 _destination;
     private float _timeToFire;
@@ -42,7 +43,10 @@ public class PrimaryAttack : MonoBehaviour
     void InstantiateProjectile()
     {
         // Tworzenie pocisku dokładnie w FirePoint
-        var projectileObj = Instantiate(Projectile, FirePoint.position, Quaternion.identity) as GameObject;
+        var projectileObj = Instantiate(Projectile, FirePoint.position, Quaternion.identity);
+
+        // Wywołanie efektu cząsteczek
+        PlaySpellEffect();
 
         // Ustawienie kierunku pocisku
         Vector3 direction = (_destination - FirePoint.position).normalized;
@@ -61,4 +65,27 @@ public class PrimaryAttack : MonoBehaviour
         // Opcjonalny efekt dla pocisku
         iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-ArcRange, ArcRange), Random.Range(-ArcRange, ArcRange), 0), Random.Range(0.5f, 2));
     }
+
+    void PlaySpellEffect()
+    {
+        Debug.Log("PlaySpellEffect");
+        if (WandParticleSystem != null)
+        {
+            // Sprawdź, czy system jest aktywny
+            if (WandParticleSystem.isPlaying)
+            {
+                // Zatrzymaj emisję, ale pozostaw istniejące cząsteczki
+                WandParticleSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+
+                // Zresetuj czas i uruchom system od nowa
+                WandParticleSystem.Play();
+            }
+            else
+            {
+                // Jeśli system nie jest aktywny, po prostu uruchom
+                WandParticleSystem.Play();
+            }
+        }
+    }
+
 }
