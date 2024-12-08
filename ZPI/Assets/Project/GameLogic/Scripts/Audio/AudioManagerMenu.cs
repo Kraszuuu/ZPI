@@ -21,7 +21,7 @@ public class AudioManagerMenu : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         if (_audioSource == null)
         {
-            Debug.LogWarning("AudioSource nie znaleziono, dodajê nowy.");
+            Debug.LogWarning("AudioSource nie znaleziono, dodajï¿½ nowy.");
             _audioSource = gameObject.AddComponent<AudioSource>();
             _audioSource.volume = soundVolume;
         }
@@ -39,6 +39,12 @@ public class AudioManagerMenu : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+
+            if (transform.parent != null)
+            {
+                transform.SetParent(null);
+            }
+
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -49,7 +55,7 @@ public class AudioManagerMenu : MonoBehaviour
 
     public void PlayButtonSound()
     {
-        if (buttonClickSound != null) _audioSource.PlayOneShot(buttonClickSound); 
+        if (buttonClickSound != null) _audioSource.PlayOneShot(buttonClickSound);
     }
 
     public void SetSoundVolume()

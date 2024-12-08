@@ -6,12 +6,9 @@ using UnityEngine;
 
 public class RecognitionManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _recognitionResult;
-    [SerializeField] private TMP_InputField _templateName;
-
     private GestureTemplates _templates => GestureTemplates.Get();
-    private static readonly DollarOneRecognizer _dollarOneRecognizer = new DollarOneRecognizer();
-    private static readonly DollarPRecognizer _dollarPRecognizer = new DollarPRecognizer();
+    private static readonly DollarOneRecognizer _dollarOneRecognizer = new();
+    private static readonly DollarPRecognizer _dollarPRecognizer = new();
     private IRecognizer _currentRecognizer = _dollarPRecognizer;
     private RecognizerState _state = RecognizerState.RECOGNITION;
 
@@ -35,9 +32,6 @@ public class RecognitionManager : MonoBehaviour
         }
     }
 
-    private string TemplateName => _templateName.text;
-
-
     private void Start()
     {
         SetupState(_state);
@@ -46,10 +40,6 @@ public class RecognitionManager : MonoBehaviour
     private void SetupState(RecognizerState state)
     {
         _state = state;
-        _templateName.gameObject.SetActive(_state == RecognizerState.TEMPLATE);
-        _recognitionResult.gameObject.SetActive(_state == RecognizerState.RECOGNITION);
-
-
     }
 
     public (string, float) OnDrawFinished(DollarPoint[] points)

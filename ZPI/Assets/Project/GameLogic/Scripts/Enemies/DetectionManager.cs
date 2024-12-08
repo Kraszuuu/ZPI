@@ -18,15 +18,20 @@ public class DetectionManager : MonoBehaviour
 
     private void Awake()
     {
-        // Sprawdzenie, czy instancja już istnieje
         if (Instance == null)
         {
-            Instance = this; // Ustaw obecną instancję
-            DontDestroyOnLoad(gameObject); // Zabezpiecza przed zniszczeniem obiektu przy zmianie scen
+            Instance = this;
+
+            if (transform.parent != null)
+            {
+                transform.SetParent(null);
+            }
+
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Usuń nową instancję, jeśli już istnieje
+            Destroy(gameObject);
         }
     }
 

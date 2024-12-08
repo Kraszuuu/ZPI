@@ -63,7 +63,7 @@ public class SpellCasting : MonoBehaviour
         _chainLightningShootScript = GetComponent<ChainLightningShoot>();
 
         _gameFreezer = FindObjectOfType<GameFreezer>();
-        _recognitionManager = new RecognitionManager();
+        _recognitionManager = GetComponent<RecognitionManager>();
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;

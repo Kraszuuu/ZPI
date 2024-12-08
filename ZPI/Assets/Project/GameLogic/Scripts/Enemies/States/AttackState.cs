@@ -11,7 +11,6 @@ public class AttackState : BaseState
     private float _stopDistanceRanged = 10f;
     private float _stopDistanceMelee = 2f;
     private PlayerHealth _playerHealth;
-    private float _meleeDamage = 10f;
 
     private bool _attackScheduled = false; // Flaga, czy atak jest zaplanowany
     private float _attackDelayTimer = 0f; // Timer do odliczania opóźnienia

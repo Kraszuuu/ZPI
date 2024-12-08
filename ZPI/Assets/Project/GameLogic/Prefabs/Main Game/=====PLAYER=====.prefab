@@ -11559,6 +11559,7 @@ GameObject:
   - component: {fileID: 767395927334832254}
   - component: {fileID: 8538152980648542259}
   - component: {fileID: 8675757029279877807}
+  - component: {fileID: 1915256585551245987}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -12128,6 +12129,18 @@ MonoBehaviour:
   ProjectileSpeed: 20
   SpawnShake: 1
   DelayedFire: 0
+--- !u!114 &1915256585551245987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5855145445931858584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667457a269dee574aad51fa79836ecc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5930818989675225543
 GameObject:
   m_ObjectHideFlags: 0

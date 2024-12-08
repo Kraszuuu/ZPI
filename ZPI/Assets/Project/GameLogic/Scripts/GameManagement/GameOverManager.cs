@@ -42,7 +42,7 @@ public class GameOverManager : MonoBehaviour
     {
         double finalTime = gameTimer.GetTotalGameTime();
         Debug.Log(gameTimer.GetTotalGameTime());
-        MessageTextMesh.text =  $"YOU SURVIVED {finalTime:F2}s. ENTER YOUR NICKNAME AND SAVE YOUR RESULT";
+        MessageTextMesh.text = $"YOU SURVIVED {finalTime:F2}s. ENTER YOUR NICKNAME AND SAVE YOUR RESULT";
     }
 
     private void SaveScoreAndReturnToMainMenu()
@@ -75,6 +75,13 @@ public class GameOverManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+
+            if (transform.parent != null)
+            {
+                transform.SetParent(null);
+            }
+
+            DontDestroyOnLoad(gameObject);
         }
         else
         {

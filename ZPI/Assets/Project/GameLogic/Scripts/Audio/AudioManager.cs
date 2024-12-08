@@ -71,6 +71,12 @@ public class AudioManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+
+            if (transform.parent != null)
+            {
+                transform.SetParent(null);
+            }
+
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -120,10 +126,10 @@ public class AudioManager : MonoBehaviour
             zombieGrawlSound
         };
     }
-    
+
     private void GetSettingFromMenu()
     {
-        if(AudioManagerMenu.instance != null) _masterVolume = AudioManagerMenu.instance.soundVolume;
+        if (AudioManagerMenu.instance != null) _masterVolume = AudioManagerMenu.instance.soundVolume;
         _volumeSlider.value = _masterVolume;
     }
 
