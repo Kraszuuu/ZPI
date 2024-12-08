@@ -107,7 +107,7 @@ public class SpellCasting : MonoBehaviour
 
     void RecognizeSpell(string name, float distance)
     {
-        if (name != null || distance > 2f)
+        if (name != null && distance < 2f)
         {
             if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && GameState.Instance.IsSpeechRecognitionEnabled) || !GameState.Instance.IsSpeechRecognitionEnabled))
             {
@@ -210,6 +210,7 @@ public class SpellCasting : MonoBehaviour
 
     private void FinalizeSpellCasting()
     {
+
         (string result, float points) = _recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
         RecognizeSpell(result, points);

@@ -71,6 +71,8 @@ public class MeteroAOEDamage : MonoBehaviour
         _audioSource.spatialBlend = 1.0f;
         AudioManager.instance.PlayMeteorRainSound(_audioSource);
 
+        Destroy(meteor, 4f);
+
     }
     void OnDrawGizmosSelected()
     {
