@@ -9,7 +9,7 @@ public class DollarPRecognizer : Recognizer, IRecognizer
     public (string, float) DoRecognition(DollarPoint[] points, int n,
         List<RecognitionManager.GestureTemplate> gestureTemplates)
     {
-        if (points.Length > 1)
+        if (points.Length > 2)
         {
 
             DollarPoint[] normalizedPoints = Normalize(points, n);
@@ -65,7 +65,8 @@ public class DollarPRecognizer : Recognizer, IRecognizer
                 {
                     try
                     {
-                        float distance = Vector2.Distance(points[i].Point, templatePoints[j].Point);
+                        float distance = Vector2.Distance(points[i].Point,
+                            templatePoints[j].Point);
                         if (distance < min)
                         {
                             min = distance;
