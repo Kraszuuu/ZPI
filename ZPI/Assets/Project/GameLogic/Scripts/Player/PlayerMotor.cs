@@ -71,6 +71,11 @@ public class PlayerMotor : MonoBehaviour
             if (_isSprinting)
             {
                 _staminaManager.ConsumeStamina();
+                if (_staminaManager.IsExhausted)
+                {
+                    _isSprinting = false;
+                    _currentSpeed = WalkingSpeed;
+                }
             }
             else
             {
