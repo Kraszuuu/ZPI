@@ -31,10 +31,10 @@ public class EnemiesStats : MonoBehaviour
 
     private void InitializeStats()
     {
-        enemiesDamage["Zombie"] = 10f;
-        enemiesDamage["Skeleton"] = 12f;
-        enemiesHealth["Zombie"] = 120f;
-        enemiesHealth["Skeleton"] = 80f;
+        enemiesDamage["Zombie"] = 6f;
+        enemiesDamage["Skeleton"] = 8f;
+        enemiesHealth["Zombie"] = 80f;
+        enemiesHealth["Skeleton"] = 50f;
     }
 
     public float GetHealthData(string enemy)

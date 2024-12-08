@@ -116,7 +116,7 @@ public class SpellCasting : MonoBehaviour
                     FireballSelectedEffect.Play();
                     CastFireball();
                     FireballImage.fillAmount = 1;
-                    FireballCooldown = 3f;
+                    FireballCooldown = 10f;
                 }
             }
             else if (name.Equals("Meteors") && ((_playerVoiceCommands.recognizedSpell == "Meteors" && GameState.Instance.IsSpeechRecognitionEnabled) || !GameState.Instance.IsSpeechRecognitionEnabled))
@@ -126,7 +126,7 @@ public class SpellCasting : MonoBehaviour
                     MeteorsSelectedEffect.Play();
                     CastMeteorRain();
                     MeteorsImage.fillAmount = 1;
-                    MeteorsCooldown = 5f;
+                    MeteorsCooldown = 25f;
                 }
             }
             else if (name.Equals("Shield") && ((_playerVoiceCommands.recognizedSpell == "Shield" && GameState.Instance.IsSpeechRecognitionEnabled) || !GameState.Instance.IsSpeechRecognitionEnabled))
@@ -136,7 +136,7 @@ public class SpellCasting : MonoBehaviour
                     ShieldSelectedEffect.Play();
                     _shieldScript.activateShield();
                     ShieldImage.fillAmount = 1;
-                    ShieldCooldown = 5f;
+                    ShieldCooldown = 20f;
                 }
             }
             else if (name.Equals("Lightning") && ((_playerVoiceCommands.recognizedSpell == "Lightning" && GameState.Instance.IsSpeechRecognitionEnabled) || !GameState.Instance.IsSpeechRecognitionEnabled))
@@ -146,7 +146,7 @@ public class SpellCasting : MonoBehaviour
                     LightningSelectedEffect.Play();
                     _chainLightningShootScript.StartShooting();
                     LightningImage.fillAmount = 1;
-                    LightningCooldown = 5f;
+                    LightningCooldown = 15f;
                 }
             }
             Debug.Log("Spell casted! Number of points: " + _mousePositions.Count);
