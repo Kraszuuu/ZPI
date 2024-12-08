@@ -11545,6 +11545,7 @@ GameObject:
   - component: {fileID: 7822322065535976200}
   - component: {fileID: 6367473559023663655}
   - component: {fileID: 3287277701196068767}
+  - component: {fileID: 6267257982804223455}
   - component: {fileID: 4560712268194803560}
   - component: {fileID: 3984586873370978207}
   - component: {fileID: 245897539085753000}
@@ -11646,26 +11647,15 @@ MonoBehaviour:
   SprintingSpeed: 8
   CrouchingSpeed: 2
   MovementSharpnessOnGround: 8
-  SprintHoldToLockThreshold: 1
   AccelerationSpeedInAir: 7
   GravityForce: -18
   JumpHeight: 2
   DashSpeed: 10
   DashDuration: 0.4
   DashCooldown: 1
-  MaxStamina: 100
-  StaminaConsumptionRate: 25
-  StaminaRegenRate: 10
-  IsExhaustedValue: 30
-  CurrentStamina: 0
-  StaminaSlider: {fileID: 0}
-  FlashDuration: 0.5
-  ExhaustedColor: {r: 1, g: 0, b: 0, a: 1}
-  NormalColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   SlowDuration: 3
   SlowMultiplier: 0.9
   DamageEffectImage: {fileID: 0}
-  isEnabled: 1
 --- !u!114 &7822322065535976200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11706,14 +11696,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad2c80041e35324cb50bb07bf7755af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  chipSpeed: 2
-  frontHealthBar: {fileID: 0}
-  backHealthBar: {fileID: 0}
-  duration: 1
-  fadeSpeed: 1.5
-  HealthSlider: {fileID: 0}
-  EaseHealthSlider: {fileID: 0}
+  MaxHealth: 100
+  Mask: {fileID: 0}
+  HealthBar: {fileID: 0}
+  EaseMask: {fileID: 0}
+  EaseHealthBar: {fileID: 0}
+  DebugTakeDamage: 0
+  DebugRestoreHealth: 0
+  DebugDamageAmount: 10
+  DebugHealAmount: 10
+--- !u!114 &6267257982804223455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5855145445931858584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc180234b7b413c478bc58060c312d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxStamina: 100
+  StaminaConsumptionRate: 25
+  StaminaRegenRate: 10
+  IsExhaustedValue: 30
+  CurrentStamina: 0
+  StaminaBarMask: {fileID: 0}
+  StaminaBarImage: {fileID: 0}
+  NormalColor: {r: 1, g: 1, b: 1, a: 1}
+  ExhaustedColor: {r: 1, g: 0, b: 0, a: 1}
+  FlashDuration: 0.5
 --- !u!114 &4560712268194803560
 MonoBehaviour:
   m_ObjectHideFlags: 0

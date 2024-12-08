@@ -10,7 +10,6 @@ public class PlayerMotor : MonoBehaviour
     public float SprintingSpeed = 8f;
     public float CrouchingSpeed = 2f;
     public float MovementSharpnessOnGround = 15f;
-    public float SprintHoldToLockThreshold = 2f;
 
     [Header("Movement in air")]
     public float AccelerationSpeedInAir = 2f;
@@ -24,29 +23,14 @@ public class PlayerMotor : MonoBehaviour
     public float DashDuration = 0.4f;
     public float DashCooldown = 1f;
 
-    [Header("Stamina")]
-    public float MaxStamina = 100f;
-    public float StaminaConsumptionRate = 25f;
-    public float StaminaRegenRate = 10f;
-    public float IsExhaustedValue = 30f;
-    public float CurrentStamina;
-    public Slider StaminaSlider;
-    private bool _isExhausted = false;
-    private Image _sliderFill;
-    private bool _isFlashing;
-    private float _flashTimer;
-    public float FlashDuration = 0.5f;
-    public Color ExhaustedColor = Color.red;
-    public Color NormalColor = Color.yellow;
-
     [Header("Slow Movement")]
     public float SlowDuration = 5f;
     public float SlowMultiplier = 0.8f;
     public GameObject DamageEffectImage;
-    private int _activeDamageEffects = 0;
 
+    private PlayerStamina _staminaManager; // Zarządzanie staminą
     private CharacterController _controller;
-    private Vector3 _playerVelocity;
+    private int _activeDamageEffects = 0;
     private bool _isGrounded;
     private bool _isCrouching;
     private bool _lerpCrouch;
@@ -55,12 +39,10 @@ public class PlayerMotor : MonoBehaviour
     private float _crouchTimer;
     private float _dashTimer;
     private float _currentSpeed;
-
     private float _dashTime = 0f;
     private float _dashCooldownTime = 0f;
+    private Vector3 _playerVelocity;
     private Vector3 _dashDirection;
-
-    public bool isEnabled = true;
 
     //Sound related
     private AudioManager _audioManager;
@@ -73,18 +55,28 @@ public class PlayerMotor : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _currentSpeed = WalkingSpeed;
         _audioManager = FindObjectOfType<AudioManager>();
-        CurrentStamina = MaxStamina;
-        _sliderFill = StaminaSlider.fillRect.GetComponent<Image>();
+        _staminaManager = GetComponent<PlayerStamina>();
     }
 
     void Update()
     {
         CheckGroundStatus();
-        HandleStamina();
-        HandleFlashing();
         HandleCrouch();
         HandleDash();
         UpdateDamageEffects();
+
+        // Obsługa sprintu i regeneracji staminy
+        if (_staminaManager != null)
+        {
+            if (_isSprinting)
+            {
+                _staminaManager.ConsumeStamina();
+            }
+            else
+            {
+                _staminaManager.RegenerateStamina();
+            }
+        }
     }
 
     public void ProcessMove(Vector2 input)
@@ -193,7 +185,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void StartSprint()
     {
-        if (!_isCrouching && _isGrounded && !_isExhausted)
+        if (!_isCrouching && _isGrounded && _staminaManager != null && !_staminaManager.IsExhausted)
         {
             _isSprinting = true;
             _currentSpeed = SprintingSpeed;
@@ -209,70 +201,6 @@ public class PlayerMotor : MonoBehaviour
     private void CheckGroundStatus()
     {
         _isGrounded = _controller.isGrounded;
-    }
-
-    private void HandleStamina()
-    {
-        if (_isSprinting)
-        {
-            ConsumeStamina();
-        }
-        else
-        {
-            RegenerateStamina();
-        }
-
-        UpdateStaminaSlider();
-    }
-
-    private void ConsumeStamina()
-    {
-        CurrentStamina -= StaminaConsumptionRate * Time.deltaTime;
-        if (CurrentStamina <= 0)
-        {
-            CurrentStamina = 0;
-            _isExhausted = true;
-            _isSprinting = false;
-            _currentSpeed = WalkingSpeed;
-        }
-    }
-
-    private void RegenerateStamina()
-    {
-        CurrentStamina += StaminaRegenRate * Time.deltaTime;
-        if (CurrentStamina >= MaxStamina)
-        {
-            CurrentStamina = MaxStamina;
-        }
-        else if (CurrentStamina >= 30)
-        {
-            _isExhausted = false;
-        }
-    }
-
-    private void UpdateStaminaSlider()
-    {
-        if (StaminaSlider != null)
-        {
-            StaminaSlider.value = CurrentStamina;
-        }
-    }
-
-    private void HandleFlashing()
-    {
-        if (_isExhausted && !_isFlashing)
-        {
-            StartFlashing();
-        }
-        else if (!_isExhausted && _isFlashing)
-        {
-            StopFlashing();
-        }
-
-        if (_isFlashing)
-        {
-            FlashStaminaBar();
-        }
     }
 
     private void HandleCrouch()
@@ -299,31 +227,6 @@ public class PlayerMotor : MonoBehaviour
     private void UpdateDamageEffects()
     {
         DamageEffectImage.SetActive(_activeDamageEffects > 0);
-    }
-
-    private void FlashStaminaBar()
-    {
-        _flashTimer += Time.deltaTime;
-        if (_sliderFill != null)
-        {
-            float lerp = Mathf.PingPong(_flashTimer, FlashDuration) / FlashDuration;
-            _sliderFill.color = Color.Lerp(NormalColor, ExhaustedColor, lerp);
-        }
-    }
-
-    private void StartFlashing()
-    {
-        _isFlashing = true;
-        _flashTimer = 0f;
-    }
-
-    private void StopFlashing()
-    {
-        _isFlashing = false;
-        if (_sliderFill != null)
-        {
-            _sliderFill.color = NormalColor;
-        }
     }
 
     private void PlayStepSound()

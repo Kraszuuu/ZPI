@@ -2,69 +2,97 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private float health;
-    private float lerpTimer;
+    private float _health;
+
     [Header("Health Bar")]
-    public float maxHealth = 100f;
-    public float chipSpeed = 2f;
-    public Image frontHealthBar;
-    public Image backHealthBar;
+    public float MaxHealth = 100f;
 
-    [Header("Damage Overlay")]
-    public float duration;
-    public float fadeSpeed;
+    [Header("Mask and Health Bars")]
+    public RectTransform Mask;               // Maska głównego paska zdrowia
+    public RectTransform HealthBar;          // Główny pasek zdrowia (czerwony)
 
-    private float durationTimer;
+    public RectTransform EaseMask;           // Maska EaseHealthBar
+    public RectTransform EaseHealthBar;      // EaseHealthBar (żółty)
 
-    [Header("=== SLIDERS ===")]
-    public Slider HealthSlider;
-    public Slider EaseHealthSlider;
-    private float _lerpSpeed = 0.05f;
+    private float _originalMaskWidth;         // Początkowa szerokość maski
+    private Vector2 _originalMaskPos;         // Początkowa pozycja maski
 
-    private PlayerMotor _playerMotor;
+    private float _easeLerpSpeed = 5f;        // Szybkość interpolacji EaseHealthBar
 
     private AudioManager _audioManager;
+    private PlayerMotor _playerMotor;
+
+    [Header("Debugging")]
+    public bool DebugTakeDamage = false;      // Debugowanie obrażeń
+    public bool DebugRestoreHealth = false;   // Debugowanie przywracania zdrowia
+    public float DebugDamageAmount = 10f;     // Ilość obrażeń do debugowania
+    public float DebugHealAmount = 10f;       // Ilość zdrowia do debugowania
 
     void Start()
     {
-        health = maxHealth;
+        _health = MaxHealth;
+
         _audioManager = FindObjectOfType<AudioManager>();
         _playerMotor = GetComponent<PlayerMotor>();
+
+        // Zapisujemy początkowe wartości maski
+        _originalMaskWidth = Mask.rect.width;
+        _originalMaskPos = Mask.anchoredPosition;
     }
 
     void Update()
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthUI();
-        
+        _health = Mathf.Clamp(_health, 0, MaxHealth);
+        UpdateHealthBars();
+
+        HandleDebugging(); // Obsługa trybu debugowania
     }
 
-    public void UpdateHealthUI()
+    private void UpdateHealthBars()
     {
-        float normalizedHealth = (health / maxHealth) * 100f;
-        if (HealthSlider.value != normalizedHealth)
-        {
-            HealthSlider.value = normalizedHealth;
-        }
+        // Oblicz procent zdrowia
+        float healthPercentage = _health / MaxHealth;
 
-        if (EaseHealthSlider.value != normalizedHealth)
-        {
-            EaseHealthSlider.value = Mathf.Lerp(EaseHealthSlider.value, normalizedHealth, _lerpSpeed);
-        }
+        // Oblicz przesunięcie maski głównego paska
+        float offset = (1 - healthPercentage) * _originalMaskWidth;
+
+        // Przesuwamy maskę głównego paska w lewo
+        Mask.anchoredPosition = new Vector2(_originalMaskPos.x - offset, _originalMaskPos.y);
+
+        // Kompensujemy pozycję paska zdrowia w prawo
+        HealthBar.anchoredPosition = new Vector2(offset, HealthBar.anchoredPosition.y);
+
+        // Aktualizujemy EaseHealthBar (żółty pasek) z opóźnieniem
+        UpdateEaseHealthBar(offset);
+    }
+
+    private void UpdateEaseHealthBar(float targetOffset)
+    {
+        // Interpolacja maski EaseHealthBar
+        EaseMask.anchoredPosition = Vector2.Lerp(
+            EaseMask.anchoredPosition,
+            new Vector2(_originalMaskPos.x - targetOffset, _originalMaskPos.y),
+            Time.deltaTime * _easeLerpSpeed
+        );
+
+        // Interpolacja obrazu EaseHealthBar
+        EaseHealthBar.anchoredPosition = Vector2.Lerp(
+            EaseHealthBar.anchoredPosition,
+            new Vector2(targetOffset, EaseHealthBar.anchoredPosition.y),
+            Time.deltaTime * _easeLerpSpeed
+        );
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        lerpTimer = 0f;
-        durationTimer = 0f;
+        _health -= damage;
+
         if (CompareTag("Player"))
         {
-            if (health <= 0)
+            if (_health <= 0)
             {
                 GameOverManager.Instance.EndGame();
                 _audioManager.PlayPlayerDeathSound();
@@ -74,24 +102,39 @@ public class PlayerHealth : MonoBehaviour
                 _audioManager.PlayPlayerDamageSound();
             }
         }
+
         _playerMotor.ApplyDamageEffect();
     }
 
     public void RestoreHealth(float healAmount)
     {
-        health += healAmount;
-        lerpTimer = 0f;
+        _health += healAmount;
         _audioManager.PlayHealSound();
     }
 
     public void RenewHealth()
     {
-        health = maxHealth;
+        _health = MaxHealth;
     }
 
     public void BuffHealth()
     {
-        maxHealth += 100;
-        health += 100;
+        MaxHealth += 100;
+        _health += 100;
+    }
+
+    private void HandleDebugging()
+    {
+        if (DebugTakeDamage)
+        {
+            DebugTakeDamage = false; // Wyłącz opcję po jednokrotnym użyciu
+            TakeDamage(DebugDamageAmount);
+        }
+
+        if (DebugRestoreHealth)
+        {
+            DebugRestoreHealth = false; // Wyłącz opcję po jednokrotnym użyciu
+            RestoreHealth(DebugHealAmount);
+        }
     }
 }

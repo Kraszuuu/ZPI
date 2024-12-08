@@ -24,6 +24,12 @@ public class WavesManager : MonoBehaviour
         }
     }
 
+    public int GetCurrentWave()
+    {
+        return _currentWave;
+    }
+
+
     private void OnSpawnerWaveCleared()
     {
         _spawnersCleared++;
