@@ -133,9 +133,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 403650, guid: 379aef8e43219a14ebef74d9cdd557e8, type: 3}
   m_PrefabInstance: {fileID: 1776537650}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &22796933 stripped
+--- !u!198 &19149488 stripped
 ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4164925139915811591, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4135352801400965049, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
   m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &28461611
@@ -1049,6 +1049,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 424582, guid: 1d4405cf69adec64a97df561b9f3661a, type: 3}
   m_PrefabInstance: {fileID: 134122634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &181804559 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8695582552181702391, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &189206123 stripped
 Transform:
@@ -2736,6 +2741,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 490268, guid: 68a8f186e1f1db64dbfe8ddd247816ec, type: 3}
   m_PrefabInstance: {fileID: 650141028}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &431777267 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4514737429934864448, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &438666452
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4271,6 +4287,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 403650, guid: 379aef8e43219a14ebef74d9cdd557e8, type: 3}
   m_PrefabInstance: {fileID: 1634459026}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &629071796 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8629301449249680381, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &634710753
 GameObject:
   m_ObjectHideFlags: 0
@@ -4304,6 +4325,17 @@ Transform:
   - {fileID: 1759494639}
   m_Father: {fileID: 1889508656}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &639853753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6587574804728800479, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &642555529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 423054, guid: fa993d692bbb7fe4eadefb231970e8b7, type: 3}
@@ -4477,11 +4509,6 @@ Transform:
   - {fileID: 50691492}
   m_Father: {fileID: 443594967}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &658636899 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8010800747806963807, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-  m_PrefabInstance: {fileID: 4669242325582227672}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &661628688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5198,6 +5225,17 @@ Transform:
   - {fileID: 1975084320}
   m_Father: {fileID: 1331762367}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &826553487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1847728359940239169, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &827151063
 GameObject:
   m_ObjectHideFlags: 0
@@ -7072,11 +7110,6 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 429872, guid: a403260d581bded4d85f723fd39eb456, type: 3}
   m_PrefabInstance: {fileID: 1593959456}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1151616352 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3434431678751852786, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-  m_PrefabInstance: {fileID: 4669242325582227672}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1152512952
 GameObject:
@@ -14536,28 +14569,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a403260d581bded4d85f723fd39eb456, type: 3}
---- !u!114 &1163383623263333355 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 804472801808972679, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-  m_PrefabInstance: {fileID: 4669242325582227672}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2222658880245555547 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5716695388942713804, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
-  m_PrefabInstance: {fileID: 4669242325582227672}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2506401193434500566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14818,11 +14829,11 @@ PrefabInstance:
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: ShieldImage
       value: 
-      objectReference: {fileID: 5820310268815964934}
+      objectReference: {fileID: 431777267}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: MeteorsImage
       value: 
-      objectReference: {fileID: 2222658880245555547}
+      objectReference: {fileID: 826553487}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: FireballImage
       value: 
@@ -14830,15 +14841,15 @@ PrefabInstance:
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: LightningImage
       value: 
-      objectReference: {fileID: 1163383623263333355}
+      objectReference: {fileID: 639853753}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: ShieldSelectedEffect
       value: 
-      objectReference: {fileID: 1151616352}
+      objectReference: {fileID: 181804559}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: MeteorsSelectedEffect
       value: 
-      objectReference: {fileID: 22796933}
+      objectReference: {fileID: 19149488}
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: FireballSelectedEffect
       value: 
@@ -14846,11 +14857,7 @@ PrefabInstance:
     - target: {fileID: 4560712268194803560, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: LightningSelectedEffect
       value: 
-      objectReference: {fileID: 658636899}
-    - target: {fileID: 5085655637795568323, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 629071796}
     - target: {fileID: 6267257982804223455, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: StaminaBarMask
       value: 
@@ -14859,10 +14866,6 @@ PrefabInstance:
       propertyPath: StaminaBarImage
       value: 
       objectReference: {fileID: 529760130}
-    - target: {fileID: 9023357119736219266, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 89.6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
