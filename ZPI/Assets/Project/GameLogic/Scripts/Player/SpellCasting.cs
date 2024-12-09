@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class SpellCasting : MonoBehaviour
 {
     public CameraShake CameraShake;
+    public Animator PlayerAnimator;
     public float MinDistanceBetweenPoints = 20f;
     public float SpellCastDistance = 10f;
     public GameObject LineRendererPrefab;
@@ -48,6 +50,7 @@ public class SpellCasting : MonoBehaviour
     public ParticleSystem LightningSelectedEffect;
 
     private int _strokeIndex;
+    private Dictionary<int, int> _strokePointsCounts = new Dictionary<int, int>();
 
     private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
 
@@ -67,6 +70,7 @@ public class SpellCasting : MonoBehaviour
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+        EnablePrimaryAttack();
     }
 
     void Update()
@@ -114,7 +118,8 @@ public class SpellCasting : MonoBehaviour
                 if (FireballImage.fillAmount <= 0)
                 {
                     FireballSelectedEffect.Play();
-                    CastFireball();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastFireball");
                     FireballImage.fillAmount = 1;
                     FireballCooldown = 10f;
                 }
@@ -124,7 +129,8 @@ public class SpellCasting : MonoBehaviour
                 if (MeteorsImage.fillAmount <= 0)
                 {
                     MeteorsSelectedEffect.Play();
-                    CastMeteorRain();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastMeteors");
                     MeteorsImage.fillAmount = 1;
                     MeteorsCooldown = 25f;
                 }
@@ -134,7 +140,8 @@ public class SpellCasting : MonoBehaviour
                 if (ShieldImage.fillAmount <= 0)
                 {
                     ShieldSelectedEffect.Play();
-                    _shieldScript.activateShield();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastShield");
                     ShieldImage.fillAmount = 1;
                     ShieldCooldown = 20f;
                 }
@@ -144,7 +151,8 @@ public class SpellCasting : MonoBehaviour
                 if (LightningImage.fillAmount <= 0)
                 {
                     LightningSelectedEffect.Play();
-                    _chainLightningShootScript.StartShooting();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastLightning");
                     LightningImage.fillAmount = 1;
                     LightningCooldown = 15f;
                 }
@@ -171,6 +179,15 @@ public class SpellCasting : MonoBehaviour
         _meteorsScript.CastMeteorRain();
     }
 
+    public void CastShield()
+    {
+        _shieldScript.activateShield();
+    }
+
+    public void CastLightning()
+    {
+        _chainLightningShootScript.StartShooting();
+    }
 
     private void HandleMouseInput()
     {
@@ -181,6 +198,10 @@ public class SpellCasting : MonoBehaviour
         if (_mousePositions.Count == 0 || Vector3.Distance(_mousePositions[_mousePositions.Count - 1], mousePos) > MinDistanceBetweenPoints)
         {
             _mousePositions.Add(mousePos);
+            if (_strokePointsCounts.ContainsKey(_strokeIndex))
+                _strokePointsCounts[_strokeIndex] = _strokePointsCounts[_strokeIndex] + 1;
+            else
+                _strokePointsCounts[_strokeIndex] = 1;
             _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = _strokeIndex });
 
             _lineRenderer.positionCount = _mousePositions.Count;
@@ -210,10 +231,13 @@ public class SpellCasting : MonoBehaviour
 
     private void FinalizeSpellCasting()
     {
+        string result = null;
+        float distance = 0;
 
-        (string result, float points) = _recognitionManager.OnDrawFinished(_drawPoints.ToArray());
+        if (!(_strokePointsCounts.Any(kv => kv.Value == 1)))
+            (result, distance) = _recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        RecognizeSpell(result, points);
+        RecognizeSpell(result, distance);
         _mousePositions.Clear();
         ClearLineRenderers();
         SpellCastingParticleSystem.Stop();
@@ -222,6 +246,8 @@ public class SpellCasting : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         _strokeIndex = 0;
+        _strokePointsCounts.Clear();
+
     }
 
     private void ClearLineRenderers()
@@ -283,5 +309,15 @@ public class SpellCasting : MonoBehaviour
             LightningImage.color = new Color(0.68f, 0.85f, 0.9f, 0.7f);
             IsLightningUnlocked = true;
         }
+    }
+
+    public void DisablePrimaryAttack()
+    {
+        GameState.Instance.IsPrimaryAttackEnabled = false;
+    }
+    public void EnablePrimaryAttack()
+    {
+        GameState.Instance.IsPrimaryAttackEnabled = true;
+        Debug.Log("EnablePrimaryAttack");
     }
 }

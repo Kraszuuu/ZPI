@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,115 +5,125 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class EnemyMovement : MonoBehaviour
 {
-    public float MinVelocity = 0.5f;
-    public float CloseDistanceThreshold = 1.5f; // Minimalna odległość uznawana za "blisko celu"
-    public float MaxStuckTime = 3f; // Maksymalny czas, po którym cel zostanie zresetowany
-    public float OffsetAdjustmentSpeed = 5f; // Szybkość dostosowania offsetu
-    public float OffsetTolerance = 0.01f; // Tolerancja różnicy w wysokości
+    [Header("Movement Settings")]
+    public float MinSpeed = 0.5f;
+    public float StopThreshold = 1.5f;
+    public float StuckDuration = 3f;
 
-    private NavMeshAgent _agent;
+    [Header("Debug Settings")]
+    [SerializeField] private bool enableDebug = false;
+
+    private NavMeshAgent _navMeshAgent;
+    private LookAt _lookAt;
     private Animator _animator;
-    [SerializeField] private LookAt LookAt;
-    [SerializeField] private bool DebugMode = false;
-
+    private Vector2 _smoothDeltaPos;
     private Vector2 _velocity;
-    private Vector2 _smoothDeltaPosition;
-    private float _stuckTimer = 0f; // Licznik czasu, przez który agent jest "zablokowany"
+    private float _stuckTime = 0f;
 
     private void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _animator.applyRootMotion = true;
-        _agent.updatePosition = false;
-        _agent.updateRotation = true;
+        _lookAt = GetComponent<LookAt>();
+        InitializeAgent();
     }
 
     private void Update()
     {
-        SynchronizeAnimatorAndAgent();
-        CheckForStuck();
+        UpdateAnimator();
+        HandleStuckDetection();
 
-        if (DebugMode)
+        if (enableDebug && Input.GetMouseButtonDown(1))
         {
-            if (Input.GetMouseButtonDown(1)) // Obsługa prawego przycisku myszy
-            {
-                MoveToMouseClickPosition();
-            }
+            SetDestinationToMousePosition();
         }
     }
 
     private void OnAnimatorMove()
     {
-        Vector3 rootPosition = _animator.rootPosition;
-        rootPosition.y = _agent.nextPosition.y;
-        transform.position = rootPosition;
-        _agent.nextPosition = rootPosition;
+        SyncRootMotionWithAgent();
     }
 
-    private void SynchronizeAnimatorAndAgent()
+    private void InitializeAgent()
     {
-        Vector3 worldDeltaPosition = _agent.nextPosition - transform.position;
-        worldDeltaPosition.y = 0;
+        _animator.applyRootMotion = true;
+        _navMeshAgent.updatePosition = false;
+        _navMeshAgent.updateRotation = true;
+    }
 
-        // Map 'worldDeltaPosition' to local space
-        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
-        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
-        Vector2 deltaPosition = new Vector2(dx, dy);
+    private void SyncRootMotionWithAgent()
+    {
+        Vector3 newPosition = _animator.rootPosition;
+        newPosition.y = _navMeshAgent.nextPosition.y;
+        transform.position = newPosition;
+        _navMeshAgent.nextPosition = newPosition;
+    }
 
-        // Low-pass filter the deltaMove
-        float smooth = Mathf.Min(1, Time.deltaTime / 0.1f);
-        _smoothDeltaPosition = Vector2.Lerp(_smoothDeltaPosition, deltaPosition, smooth);
+    private void UpdateAnimator()
+    {
+        Vector3 worldOffset = _navMeshAgent.nextPosition - transform.position;
+        worldOffset.y = 0;
 
-        _velocity = _smoothDeltaPosition / Time.deltaTime;
-        if (_agent.remainingDistance <= _agent.stoppingDistance)
+        float localX = Vector3.Dot(transform.right, worldOffset);
+        float localY = Vector3.Dot(transform.forward, worldOffset);
+        Vector2 localDeltaPos = new Vector2(localX, localY);
+
+        float smoothFactor = Mathf.Clamp01(Time.deltaTime / 0.1f);
+        _smoothDeltaPos = Vector2.Lerp(_smoothDeltaPos, localDeltaPos, smoothFactor);
+
+        _velocity = _smoothDeltaPos / Time.deltaTime;
+
+        if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
         {
-            _velocity = Vector2.Lerp(Vector2.zero, _velocity, _agent.remainingDistance);
+            _velocity = Vector2.Lerp(Vector2.zero, _velocity, _navMeshAgent.remainingDistance);
         }
 
-        bool shouldMove = _velocity.magnitude > MinVelocity && _agent.remainingDistance > _agent.stoppingDistance;
+        bool isMoving = _velocity.magnitude > MinSpeed && _navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance;
 
-        _animator.SetBool("move", shouldMove);
+        _animator.SetBool("move", isMoving);
         _animator.SetFloat("velx", _velocity.x);
         _animator.SetFloat("vely", _velocity.y);
 
-        LookAt.lookAtTargetPosition = _agent.steeringTarget + transform.forward;
+        if (_lookAt != null)
+        {
+            _lookAt.lookAtTargetPosition = _navMeshAgent.steeringTarget + transform.forward;
+        }
     }
 
-    private void MoveToMouseClickPosition()
+    private void SetDestinationToMousePosition()
     {
+        if (Camera.main == null) return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
             {
-                _agent.SetDestination(navHit.position);
-                _agent.isStopped = false;
-                _stuckTimer = 0f; // Reset licznika "zablokowania"
+                _navMeshAgent.SetDestination(navHit.position);
+                _navMeshAgent.isStopped = false;
+                _stuckTime = 0f;
             }
         }
     }
 
-    public void StopMoving()
+    private void HandleStuckDetection()
     {
-        _agent.isStopped = true;
-    }
+        bool isCloseToTarget = _navMeshAgent.remainingDistance <= StopThreshold;
+        bool isVelocityLow = _navMeshAgent.velocity.magnitude < MinSpeed;
 
-    private void CheckForStuck()
-    {
-        if (_agent.remainingDistance <= CloseDistanceThreshold && _agent.velocity.magnitude < MinVelocity)
+        if (isCloseToTarget && isVelocityLow)
         {
-            _stuckTimer += Time.deltaTime;
-            if (_stuckTimer >= MaxStuckTime)
+            _stuckTime += Time.deltaTime;
+            if (_stuckTime >= StuckDuration)
             {
-                Debug.Log("Agent zablokowany. Reset celu.");
-                _agent.SetDestination(transform.position);
-                _stuckTimer = 0f;
+                Debug.Log("Agent appears stuck. Resetting destination.");
+                _navMeshAgent.SetDestination(transform.position);
+                _stuckTime = 0f;
             }
         }
         else
         {
-            _stuckTimer = 0f;
+            _stuckTime = 0f;
         }
     }
 }
