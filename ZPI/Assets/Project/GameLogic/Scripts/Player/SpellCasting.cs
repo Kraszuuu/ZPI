@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class SpellCasting : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class SpellCasting : MonoBehaviour
     public ParticleSystem LightningSelectedEffect;
 
     private int _strokeIndex;
+    private Dictionary<int, int> _strokePointsCounts = new Dictionary<int, int>();
 
     private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
 
@@ -67,6 +69,8 @@ public class SpellCasting : MonoBehaviour
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
+
+        UnlockSpell("Fireball");
     }
 
     void Update()
@@ -181,6 +185,10 @@ public class SpellCasting : MonoBehaviour
         if (_mousePositions.Count == 0 || Vector3.Distance(_mousePositions[_mousePositions.Count - 1], mousePos) > MinDistanceBetweenPoints)
         {
             _mousePositions.Add(mousePos);
+            if (_strokePointsCounts.ContainsKey(_strokeIndex))
+                _strokePointsCounts[_strokeIndex] = _strokePointsCounts[_strokeIndex] + 1;
+            else
+                _strokePointsCounts[_strokeIndex] = 1;
             _drawPoints.Add(new DollarPoint() { Point = new Vector2(mousePos.x, mousePos.y), StrokeIndex = _strokeIndex });
 
             _lineRenderer.positionCount = _mousePositions.Count;
@@ -210,10 +218,13 @@ public class SpellCasting : MonoBehaviour
 
     private void FinalizeSpellCasting()
     {
+        string result = null;
+        float distance = 0;
 
-        (string result, float points) = _recognitionManager.OnDrawFinished(_drawPoints.ToArray());
+        if (!(_strokePointsCounts.Any(kv => kv.Value == 1)))
+            (result, distance) = _recognitionManager.OnDrawFinished(_drawPoints.ToArray());
         _drawPoints.Clear();
-        RecognizeSpell(result, points);
+        RecognizeSpell(result, distance);
         _mousePositions.Clear();
         ClearLineRenderers();
         SpellCastingParticleSystem.Stop();
@@ -222,6 +233,8 @@ public class SpellCasting : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         _strokeIndex = 0;
+        _strokePointsCounts.Clear();
+
     }
 
     private void ClearLineRenderers()

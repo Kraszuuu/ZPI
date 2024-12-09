@@ -9,7 +9,7 @@ public class DollarPRecognizer : Recognizer, IRecognizer
     public (string, float) DoRecognition(DollarPoint[] points, int n,
         List<RecognitionManager.GestureTemplate> gestureTemplates)
     {
-        if (points.Length > 2)
+        if (points.Length > 1)
         {
 
             DollarPoint[] normalizedPoints = Normalize(points, n);
