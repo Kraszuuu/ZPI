@@ -11577,7 +11577,7 @@ Transform:
   m_GameObject: {fileID: 5855145445931858584}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 96.17, y: -1, z: -8.87}
+  m_LocalPosition: {x: 89.13, y: -1, z: -18.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11974,7 +11974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRadius: 16
-  drawGizmo: 1
+  drawGizmo: 0
 --- !u!114 &3880760116037998179
 MonoBehaviour:
   m_ObjectHideFlags: 0
