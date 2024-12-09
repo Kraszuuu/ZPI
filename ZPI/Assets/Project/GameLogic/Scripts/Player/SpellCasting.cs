@@ -70,7 +70,6 @@ public class SpellCasting : MonoBehaviour
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
 
-        UnlockSpell("Fireball");
     }
 
     void Update()
