@@ -8,6 +8,7 @@ public class PauseManager : MonoBehaviour
     public GameObject HelpPanel;
     public GameObject SoundPanel;
     public GameObject VoiceRecognitionPanel;
+    public GameObject ControlsPanel;
     //public bool isEnabled = true;
 
     private void Start()
@@ -62,6 +63,20 @@ public class PauseManager : MonoBehaviour
     {
         PausePanel.SetActive(true);
         SoundPanel.SetActive(false);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void DisplayControlsMenu()
+    {
+        PausePanel.SetActive(false);
+        ControlsPanel.SetActive(true);
+        AudioManager.instance.PlayButtonClickSound();
+    }
+
+    public void HideControlsMenu()
+    {
+        PausePanel.SetActive(true);
+        ControlsPanel.SetActive(false);
         AudioManager.instance.PlayButtonClickSound();
     }
 
