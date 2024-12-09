@@ -7,6 +7,7 @@ using System.Linq;
 public class SpellCasting : MonoBehaviour
 {
     public CameraShake CameraShake;
+    public Animator PlayerAnimator;
     public float MinDistanceBetweenPoints = 20f;
     public float SpellCastDistance = 10f;
     public GameObject LineRendererPrefab;
@@ -69,7 +70,7 @@ public class SpellCasting : MonoBehaviour
         _playerVoiceCommands = GetComponent<PlayerVoiceCommands>();
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
-
+        EnablePrimaryAttack();
     }
 
     void Update()
@@ -117,7 +118,8 @@ public class SpellCasting : MonoBehaviour
                 if (FireballImage.fillAmount <= 0)
                 {
                     FireballSelectedEffect.Play();
-                    CastFireball();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastFireball");
                     FireballImage.fillAmount = 1;
                     FireballCooldown = 10f;
                 }
@@ -127,7 +129,8 @@ public class SpellCasting : MonoBehaviour
                 if (MeteorsImage.fillAmount <= 0)
                 {
                     MeteorsSelectedEffect.Play();
-                    CastMeteorRain();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastMeteors");
                     MeteorsImage.fillAmount = 1;
                     MeteorsCooldown = 25f;
                 }
@@ -137,7 +140,8 @@ public class SpellCasting : MonoBehaviour
                 if (ShieldImage.fillAmount <= 0)
                 {
                     ShieldSelectedEffect.Play();
-                    _shieldScript.activateShield();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastShield");
                     ShieldImage.fillAmount = 1;
                     ShieldCooldown = 20f;
                 }
@@ -147,7 +151,8 @@ public class SpellCasting : MonoBehaviour
                 if (LightningImage.fillAmount <= 0)
                 {
                     LightningSelectedEffect.Play();
-                    _chainLightningShootScript.StartShooting();
+                    DisablePrimaryAttack();
+                    PlayerAnimator.SetTrigger("CastLightning");
                     LightningImage.fillAmount = 1;
                     LightningCooldown = 15f;
                 }
@@ -174,6 +179,15 @@ public class SpellCasting : MonoBehaviour
         _meteorsScript.CastMeteorRain();
     }
 
+    public void CastShield()
+    {
+        _shieldScript.activateShield();
+    }
+
+    public void CastLightning()
+    {
+        _chainLightningShootScript.StartShooting();
+    }
 
     private void HandleMouseInput()
     {
@@ -295,5 +309,15 @@ public class SpellCasting : MonoBehaviour
             LightningImage.color = new Color(0.68f, 0.85f, 0.9f, 0.7f);
             IsLightningUnlocked = true;
         }
+    }
+
+    public void DisablePrimaryAttack()
+    {
+        GameState.Instance.IsPrimaryAttackEnabled = false;
+    }
+    public void EnablePrimaryAttack()
+    {
+        GameState.Instance.IsPrimaryAttackEnabled = true;
+        Debug.Log("EnablePrimaryAttack");
     }
 }

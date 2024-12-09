@@ -19,7 +19,7 @@ public class PrimaryAttack : MonoBehaviour
 
     public void ShootProjectile()
     {
-        if (Time.time >= _timeToFire && GameState.Instance.IsWandEquipped && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused && !GameState.Instance.IsGameOver)
+        if (Time.time >= _timeToFire && GameState.Instance.IsWandEquipped && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused && !GameState.Instance.IsGameOver && GameState.Instance.IsPrimaryAttackEnabled)
         {
             AudioManager.instance.PlayStupefySound();
 
