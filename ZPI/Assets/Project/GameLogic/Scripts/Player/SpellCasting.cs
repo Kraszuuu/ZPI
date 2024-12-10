@@ -72,10 +72,6 @@ public class SpellCasting : MonoBehaviour
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
         EnablePrimaryAttack();
-        UnlockSpell("Fireball");
-        UnlockSpell("Meteors");
-        UnlockSpell("Shield");
-        UnlockSpell("Lightning");
     }
 
     void Update()
