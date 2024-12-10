@@ -51,7 +51,6 @@ GameObject:
   - component: {fileID: 2555006797238799597}
   - component: {fileID: 1679694867831697284}
   - component: {fileID: 127040716217611811}
-  - component: {fileID: 7877760354484792389}
   - component: {fileID: 6583098166852860977}
   - component: {fileID: 4534782095624144997}
   m_Layer: 0
@@ -133,6 +132,7 @@ MonoBehaviour:
   HelpPanel: {fileID: 0}
   SoundPanel: {fileID: 0}
   VoiceRecognitionPanel: {fileID: 0}
+  ControlsPanel: {fileID: 0}
 --- !u!114 &4103712463386379400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,18 +245,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellCastingCanvas: {fileID: 0}
---- !u!114 &7877760354484792389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061530863420556397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050ada90b0892af438f75226c0b02a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6583098166852860977
 MonoBehaviour:
   m_ObjectHideFlags: 0
