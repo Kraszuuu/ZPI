@@ -13,7 +13,18 @@ public class PrimaryAttack : MonoBehaviour
     public float ArcRange = 1;
     [Range(0, 0.2f)] public float DelayedFire = 0f;
     [Range(0, 1f)] public float CriticalChance = 0.1f;
-    public ParticleSystem WandParticleSystem;
+
+    // Lista systemów cząsteczek dla efektów
+    public List<ParticleSystem> ParticleSystems;
+
+    // Lista systemów trail z czasem działania
+    [System.Serializable]
+    public struct TrailParticle
+    {
+        public ParticleSystem TrailSystem;
+        public float EmitTime;
+    }
+    public List<TrailParticle> TrailParticleSystems;
 
     private Vector3 _destination;
     private float _timeToFire;
@@ -46,7 +57,7 @@ public class PrimaryAttack : MonoBehaviour
         var projectileObj = Instantiate(Projectile, FirePoint.position, Quaternion.identity);
 
         // Wywołanie efektu cząsteczek
-        PlaySpellEffect();
+        PlaySpellEffects();
 
         // Ustawienie kierunku pocisku
         Vector3 direction = (_destination - FirePoint.position).normalized;
@@ -66,26 +77,68 @@ public class PrimaryAttack : MonoBehaviour
         iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-ArcRange, ArcRange), Random.Range(-ArcRange, ArcRange), 0), Random.Range(0.5f, 2));
     }
 
-    void PlaySpellEffect()
+    void PlaySpellEffects()
     {
-        Debug.Log("PlaySpellEffect");
-        if (WandParticleSystem != null)
+        // Uruchomienie zwykłych systemów cząsteczek
+        foreach (var particleSystem in ParticleSystems)
         {
-            // Sprawdź, czy system jest aktywny
-            if (WandParticleSystem.isPlaying)
+            if (particleSystem != null)
             {
-                // Zatrzymaj emisję, ale pozostaw istniejące cząsteczki
-                WandParticleSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-
-                // Zresetuj czas i uruchom system od nowa
-                WandParticleSystem.Play();
+                if (particleSystem.isPlaying)
+                {
+                    particleSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                    particleSystem.Play();
+                }
+                else
+                {
+                    particleSystem.Play();
+                }
             }
-            else
+        }
+
+        // Uruchomienie systemów trail z czasem emitowania
+        foreach (var trail in TrailParticleSystems)
+        {
+            if (trail.TrailSystem != null)
             {
-                // Jeśli system nie jest aktywny, po prostu uruchom
-                WandParticleSystem.Play();
+                StartCoroutine(EmitTrailParticles(trail.TrailSystem, trail.EmitTime));
             }
         }
     }
 
+    private IEnumerator EmitTrailParticles(ParticleSystem trailSystem, float duration)
+    {
+        if (trailSystem.isPlaying)
+        {
+            trailSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        }
+
+        trailSystem.Play();
+
+        yield return new WaitForSeconds(duration);
+
+        // Po czasie wyłącz emisję, ale pozostaw istniejące cząsteczki
+        trailSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+    }
+
+    void StopSpellEffects()
+    {
+        // Zatrzymanie zwykłych systemów cząsteczek
+        foreach (var particleSystem in ParticleSystems)
+        {
+            if (particleSystem != null && particleSystem.isPlaying)
+            {
+                particleSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+            }
+        }
+
+        // Zatrzymanie systemów trail
+        foreach (var trail in TrailParticleSystems)
+        {
+            if (trail.TrailSystem != null && trail.TrailSystem.isPlaying)
+            {
+                trail.TrailSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+            }
+        }
+    }
 }
