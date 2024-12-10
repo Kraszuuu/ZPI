@@ -56,10 +56,11 @@ public class SpellCasting : MonoBehaviour
 
     public Vector3 boxHalfExtents = new Vector3(0.001f, 0.001f, 0.001f);
     public LayerMask Layer;
+    private PrimaryAttack _primaryAttackScript;
 
     private void Start()
     {
-
+        _primaryAttackScript = GetComponent<PrimaryAttack>();
         _meteorsScript = GetComponent<MeteroAOEDamage>();
         _fireballScript = GetComponent<FireballScript>();
         _shieldScript = GetComponent<Shield>();
@@ -81,6 +82,7 @@ public class SpellCasting : MonoBehaviour
 
         if (Input.GetMouseButton(1) && !GameState.Instance.IsSpellCasting && !GameState.Instance.IsGamePaused)
         {
+            _primaryAttackScript.StopSpellEffects();
             GameState.Instance.IsSpellCasting = true;
             Cursor.lockState = CursorLockMode.Confined;
         }

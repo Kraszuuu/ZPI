@@ -121,7 +121,7 @@ public class PrimaryAttack : MonoBehaviour
         trailSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
     }
 
-    void StopSpellEffects()
+    public void StopSpellEffects()
     {
         // Zatrzymanie zwykłych systemów cząsteczek
         foreach (var particleSystem in ParticleSystems)
@@ -137,7 +137,7 @@ public class PrimaryAttack : MonoBehaviour
         {
             if (trail.TrailSystem != null && trail.TrailSystem.isPlaying)
             {
-                trail.TrailSystem.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                trail.TrailSystem.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
     }

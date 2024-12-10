@@ -14591,6 +14591,10 @@ PrefabInstance:
       propertyPath: LightningSelectedEffect
       value: 
       objectReference: {fileID: 629071796}
+    - target: {fileID: 6081843455686172945, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
+      propertyPath: FollowStrength
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6267257982804223455, guid: 28df4096208ae6344849feada0b7cf07, type: 3}
       propertyPath: StaminaBarMask
       value: 

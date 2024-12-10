@@ -343,7 +343,7 @@ MonoBehaviour:
   CastingSmoothTime: 0.01
   DistanceFromCamera: 0.53
   CastingOffset: {x: 0.3, y: -0.27, z: 0}
-  FollowStrength: 0.5
+  FollowStrength: 0.75
   TransitionSpeed: 10
   NoiseAmplitude: 0.02
   NoiseFrequency: 14
