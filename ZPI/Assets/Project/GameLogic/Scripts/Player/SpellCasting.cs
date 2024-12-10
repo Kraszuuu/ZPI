@@ -275,7 +275,6 @@ public class SpellCasting : MonoBehaviour
         {
             ShieldImage.fillAmount -= 1 / ShieldCooldown * Time.deltaTime;
         }
-
         if (LightningCooldown > 0 && IsLightningUnlocked)
         {
             LightningImage.fillAmount -= 1 / LightningCooldown * Time.deltaTime;
@@ -287,7 +286,7 @@ public class SpellCasting : MonoBehaviour
         if (spell.Equals("Fireball"))
         {
             FireballImage.fillAmount = 0;
-            FireballImage.color = new Color(1f, 0.5f, 0f, 0.7f);
+            FireballImage.color = new Color(1f, 0.5f, 0.9f, 0.7f);
             IsFireballUnlocked = true;
         }
         if (spell.Equals("Meteors"))
@@ -306,7 +305,7 @@ public class SpellCasting : MonoBehaviour
         if (spell.Equals("Lightning"))
         {
             LightningImage.fillAmount = 0;
-            LightningImage.color = new Color(0.68f, 0.85f, 0.9f, 0.7f);
+            LightningImage.color = new Color(0f, 0f, 0.5f, 0.7f);
             IsLightningUnlocked = true;
         }
     }
