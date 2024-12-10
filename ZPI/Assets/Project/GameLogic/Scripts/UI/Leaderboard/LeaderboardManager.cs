@@ -23,7 +23,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public void DisplayLeaderboard()
     {
-        List<Score> topScores = sqLiteManager.GetTopScores();
+        List<Score> topScores = sqLiteManager.GetTopScores(10);
 
         for (int i = 0; i < topScores.Count; i++)
         {

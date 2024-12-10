@@ -15,11 +15,6 @@ public class EnemiesStats : MonoBehaviour
         {
             Instance = this;
 
-            if (transform.parent != null)
-            {
-                transform.SetParent(null);
-            }
-
             DontDestroyOnLoad(gameObject);
         }
         else

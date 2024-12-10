@@ -62,10 +62,8 @@ public class GameOverManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("KURWANCELA");
             sqLiteManager.InsertData(new Score { Nickname = nickname, Time = finalTime });
-
-            Debug.Log("PROBLEMITOS");
+            Destroy(gameObject);
             SceneManager.LoadScene("MainMenu");
         }
     }
@@ -75,11 +73,6 @@ public class GameOverManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-
-            if (transform.parent != null)
-            {
-                transform.SetParent(null);
-            }
 
             DontDestroyOnLoad(gameObject);
         }
