@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Project/GameLogic/Scenes/Final Scene.unity
-    guid: b92724fdcea6e0242bbbfb5703e5f66c
-  - enabled: 1
-    path: Assets/Project/GameLogic/Scenes/Cut Scene Scene.unity
-    guid: 66e43e3f1d8289743843beb02ad39708
-  - enabled: 1
     path: Assets/Project/GameLogic/Scenes/MainMenu.unity
     guid: 48547ef9fd91773459b3c16e94c928e8
+  - enabled: 1
+    path: Assets/Project/GameLogic/Scenes/Cut Scene Scene.unity
+    guid: f10240bdd6687f64c9e6e0c00a271618
+  - enabled: 1
+    path: Assets/Project/GameLogic/Scenes/Final Scene.unity
+    guid: b92724fdcea6e0242bbbfb5703e5f66c
   m_configObjects: {}

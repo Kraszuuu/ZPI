@@ -40,11 +40,6 @@ public class AudioManagerMenu : MonoBehaviour
         {
             instance = this;
 
-            if (transform.parent != null)
-            {
-                transform.SetParent(null);
-            }
-
             DontDestroyOnLoad(gameObject);
         }
         else
