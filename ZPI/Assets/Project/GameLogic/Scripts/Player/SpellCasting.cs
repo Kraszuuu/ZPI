@@ -72,6 +72,10 @@ public class SpellCasting : MonoBehaviour
         SpellCastingParticleSystem.Stop();
         SpellCastingParticleSystem.GetComponent<Renderer>().sortingOrder = 0;
         EnablePrimaryAttack();
+        UnlockSpell("Fireball");
+        UnlockSpell("Meteors");
+        UnlockSpell("Shield");
+        UnlockSpell("Lightning");
     }
 
     void Update()
@@ -113,6 +117,7 @@ public class SpellCasting : MonoBehaviour
 
     void RecognizeSpell(string name, float distance)
     {
+        Debug.Log(GameState.Instance.IsSpeechRecognitionEnabled);
         if (name != null && distance < 2f)
         {
             if (name.Equals("Fireball") && ((_playerVoiceCommands.recognizedSpell == "Fireball" && GameState.Instance.IsSpeechRecognitionEnabled) || !GameState.Instance.IsSpeechRecognitionEnabled))

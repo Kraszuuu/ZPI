@@ -12156,6 +12156,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6632839a4fe2f5640b64865057f79acc, type: 3}
+--- !u!1 &1820073146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7197380962553272613, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1820073149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820073146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8134ba1c812aa409cd2c652fb7dfb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1821790579
 GameObject:
   m_ObjectHideFlags: 0
@@ -14434,7 +14451,8 @@ PrefabInstance:
       propertyPath: VoiceRecognitionPanel
       value: 
       objectReference: {fileID: 1121362866}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7877760354484792389, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -14657,6 +14675,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3582394203085749110}
+    - target: {fileID: 271781838304637736, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 968160703121926256, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -14816,7 +14838,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7197380962553272613, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1820073149}
   m_SourcePrefab: {fileID: 100100000, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
 --- !u!1 &6460582244847466791 stripped
 GameObject:
