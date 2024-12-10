@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3980763105393747086}
   - component: {fileID: 1405645535455539924}
   - component: {fileID: 7267142591122606911}
-  - component: {fileID: 3413528842862851349}
   m_Layer: 0
   m_Name: Stones
   m_TagString: Untagged
@@ -4898,20 +4897,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3413528842862851349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963298783783106902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d1da9cd0f9d5844a542ce54cc94756, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 100
-  radius: 100
 --- !u!1 &1664122970461900358
 GameObject:
   m_ObjectHideFlags: 0
@@ -24494,6 +24479,7 @@ GameObject:
   - component: {fileID: 6281197938758783077}
   - component: {fileID: 6281197938758783076}
   - component: {fileID: 6281197938758783079}
+  - component: {fileID: 5432427493835037366}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -29496,6 +29482,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &5432427493835037366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281197938758783073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &6865372399660772086
 GameObject:
   m_ObjectHideFlags: 0
@@ -34404,6 +34413,7 @@ GameObject:
   - component: {fileID: 898328576160968675}
   - component: {fileID: 8176230078092200170}
   - component: {fileID: 8636462576248347671}
+  - component: {fileID: 7683123322763726452}
   m_Layer: 0
   m_Name: Meteors AOE 2
   m_TagString: Untagged
@@ -38254,7 +38264,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -39309,3 +39319,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7683123322763726452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7957833072274404953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b787bb90602974f93bbf8ad592c6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 0.01

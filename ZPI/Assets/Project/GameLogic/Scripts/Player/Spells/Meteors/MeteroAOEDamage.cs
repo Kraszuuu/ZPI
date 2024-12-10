@@ -11,37 +11,6 @@ public class MeteroAOEDamage : MonoBehaviour
     public LayerMask Layer;
     private float _damageRadius = 5f;
 
-    // Inicjalizacja meteoru z punktem ataku
-    public void Initialize(Vector3 attackPoint)
-    {
-        _hitPoint = attackPoint;
-    }
-
-    // Wykrycie kolizji cz�stek z ziemi� lub innymi obiektami
-    void OnParticleCollision(GameObject other)
-    {
-        DealDamageToEnemiesInRadius(_hitPoint);
-    }
-
-    // Funkcja, kt�ra zadaje obra�enia wszystkim przeciwnikom w promieniu wok� hitPoint
-    void DealDamageToEnemiesInRadius(Vector3 explosionCenter)
-    {
-        // Znajd� wszystkie obiekty w promieniu od punktu ataku
-        Collider[] hitColliders = Physics.OverlapSphere(explosionCenter, _damageRadius);
-
-        foreach (var hitCollider in hitColliders)
-        {
-            // Sprawd�, czy obiekt jest przeciwnikiem
-            Enemy enemy = hitCollider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                // Zadaj obra�enia przeciwnikowi
-                enemy.TakeDamage((int)SpellManager.Instance.GetSpellData("Meteors"), Vector3.down * 10f);
-            }
-        }
-    }
-
-
     public void CastMeteorRain()
     {
         // Pozycja i kierunek patrzenia kamery
@@ -64,8 +33,10 @@ public class MeteroAOEDamage : MonoBehaviour
     {
         // Tworzenie instancji meteorytu
         GameObject meteor = Instantiate(meteorPrefab, new Vector3(hitPoint.x, 0.01f, hitPoint.z), Quaternion.identity);
-        MeteroAOEDamage meteroAOE = meteor.transform.GetChild(0).GetComponent<MeteroAOEDamage>();
+        MeteorsPrefabScirpt meteroAOE = meteor.GetComponent<MeteorsPrefabScirpt>();
         meteroAOE.Initialize(hitPoint);
+
+
         //Audio
         AudioSource _audioSource = meteor.AddComponent<AudioSource>();
         _audioSource.spatialBlend = 1.0f;
