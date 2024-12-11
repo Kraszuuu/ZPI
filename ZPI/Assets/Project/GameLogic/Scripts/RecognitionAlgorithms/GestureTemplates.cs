@@ -50,7 +50,7 @@ public class GestureTemplates
 
     private void Load()
     {
-        string path = Application.dataPath + "/SavedTemplates.json";
+        string path = Application.streamingAssetsPath + "/SavedTemplates.json";
         if (File.Exists(path))
         {
             GestureTemplates data = JsonUtility.FromJson<GestureTemplates>(File.ReadAllText(path));
