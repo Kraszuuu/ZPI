@@ -13,7 +13,7 @@ public class LeaderboardManager : MonoBehaviour
     private void OnEnable()
     {
         sqLiteManager = FindObjectOfType<SQLiteManager>();
-        DisplayLeaderboard();
+        StartCoroutine(DelayedDisplay());
     }
 
     private void OnDisable()
@@ -34,6 +34,12 @@ public class LeaderboardManager : MonoBehaviour
                 textComponent.text = $"{(i + 1),2}.   {topScores[i].Nickname,-15} {topScores[i].Time,5:F2}s.";
             }
         }
+    }
+
+    private IEnumerator DelayedDisplay()
+    {
+        yield return null; // Opóźnienie o jedną klatkę
+        DisplayLeaderboard();
     }
 
     private void ClearLeaderboard()

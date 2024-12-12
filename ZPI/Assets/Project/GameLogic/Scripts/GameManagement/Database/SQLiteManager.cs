@@ -8,10 +8,13 @@ public class SQLiteManager : MonoBehaviour
 {
     private string dbPath;
 
-    private void Start()
+    private void Awake()
     {
         // Ustaw ścieżkę bazy danych
-        dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
+        if (string.IsNullOrEmpty(dbPath))
+        {
+            dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
+        }
         CreateDatabase();
     }
 
@@ -76,6 +79,10 @@ public class SQLiteManager : MonoBehaviour
 
     public List<Score> GetTopScores(int limit = 10)
     {
+        if (string.IsNullOrEmpty(dbPath))
+        {
+            dbPath = System.IO.Path.Combine(Application.persistentDataPath, "mydatabase.db");
+        }
         var topScores = new List<Score>();
         using (var connection = new SqliteConnection($"URI=file:{dbPath}"))
         {
