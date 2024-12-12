@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         AudioManagerMenu.instance.StopPlayingMusic();
+        GameState.Instance.IsGameOver = false;
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Cut Scene Scene");
     }
 
