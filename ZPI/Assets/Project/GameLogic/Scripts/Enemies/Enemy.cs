@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
         _ragdoll.EnableRagdoll();
         _ragdoll.ApplyForce(hitForceVector);
         SetLayerRecursively(_ragdoll.gameObject, LayerMask.NameToLayer("IgnorePlayer"));
-        StartCoroutine(FadeOutAndDestroy());
+        StartCoroutine(FlickerAndDestroy());
         AudioManager.instance.PlayEnemyDeathSound(audioSource, enemyType);
     }
 
@@ -206,6 +206,48 @@ public class Enemy : MonoBehaviour
 
         // Zniszcz obiekt po zakończeniu zanikania
         Destroy(gameObject);
+    }
+
+    private IEnumerator FlickerAndDestroy()
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        float initialDelay = 3f; // Krótkie oczekiwanie przed migotaniem
+        float flickerDuration = 0.1f; // Czas trwania migotania
+        float flickerFrequency = 0.4f; // Początkowa częstotliwość migotania (im mniejsza wartość, tym szybciej)
+        float offRatio = 0.5f; // Proporcja czasu, przez który renderery są wyłączone (np. 0.2 = 20% czasu)
+
+        // Początkowe oczekiwanie
+        yield return new WaitForSeconds(initialDelay);
+
+        float timer = 0f;
+
+        // Migotanie obiektu
+        while (timer < flickerDuration)
+        {
+            timer += Time.deltaTime;
+
+            // Wyłącz renderowanie na krótki czas
+            SetRenderersEnabled(renderers, false);
+            yield return new WaitForSeconds(flickerFrequency * offRatio);
+
+            // Włącz renderowanie na resztę czasu
+            SetRenderersEnabled(renderers, true);
+            yield return new WaitForSeconds(flickerFrequency * (1f - offRatio));
+
+            // Zwiększ częstotliwość migotania, aby była szybsza pod koniec
+            flickerFrequency = Mathf.Lerp(flickerFrequency, 0.05f, timer / flickerDuration);
+        }
+
+        // Zniszcz obiekt po zakończeniu migotania
+        Destroy(gameObject);
+    }
+
+    private void SetRenderersEnabled(Renderer[] renderers, bool enabled)
+    {
+        foreach (var renderer in renderers)
+        {
+            renderer.enabled = enabled;
+        }
     }
 
     private void SetLayerRecursively(GameObject obj, int newLayer)
