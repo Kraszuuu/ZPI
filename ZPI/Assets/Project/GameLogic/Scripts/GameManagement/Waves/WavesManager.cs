@@ -15,6 +15,7 @@ public class WavesManager : MonoBehaviour
     public float waveClearedDisplayTime = 2f;
     public float intervalBeforeUpgradeMenuShow = 0.3f;
 
+    public GameObject crosshair;
 
     void Start()
     {
@@ -78,8 +79,10 @@ public class WavesManager : MonoBehaviour
     private IEnumerator ShowWaveClearedMessage()
     {
         waveClearedText.SetActive(true);
+        crosshair.SetActive(false);
         yield return new WaitForSeconds(waveClearedDisplayTime);
         waveClearedText.gameObject.SetActive(false);
+        crosshair.SetActive(true);
     }
 
     private IEnumerator DelayedStartNextWave()
@@ -100,6 +103,7 @@ public class WavesManager : MonoBehaviour
     {
         GameState.Instance.IsGamePaused = true;
         GameState.Instance.IsUpgrading = true;
+        crosshair.SetActive(false);
         upgradeMenu.Show();
         Cursor.lockState = CursorLockMode.Confined;
         upgradeMenu.OnUpgradeSelected += OnUpgradeSelected;
@@ -114,6 +118,7 @@ public class WavesManager : MonoBehaviour
     {
         GameState.Instance.IsGamePaused = false;
         GameState.Instance.IsUpgrading = false;
+        crosshair.SetActive(true);
         upgradeMenu.OnUpgradeSelected -= OnUpgradeSelected;
         StartCoroutine(DelayedStartNextWave());
     }

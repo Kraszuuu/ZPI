@@ -22,7 +22,19 @@ public class GameState : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    // Metoda statyczna do automatycznego utworzenia instancji, jeśli jej brak
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void EnsureInstanceExists()
+    {
+        if (Instance == null)
+        {
+            GameObject gameStateObject = new GameObject("GameState");
+            gameStateObject.AddComponent<GameState>();
+        }
     }
 }

@@ -18,6 +18,7 @@ public class PlayerVoiceCommands : MonoBehaviour
     private void Start()
     {
         Debug.Log($"Speech recognition initialized to: {GameState.Instance.IsSpeechRecognitionEnabled}");
+        recognizedWordText.text = "";
 
         AddWords();
 
@@ -41,13 +42,13 @@ public class PlayerVoiceCommands : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             recognizedWord = speech.text;
-            recognizedWordText.text = speech.text;
+            recognizedWordText.text = recognizedWord;
             recognizedSpell = actions[recognizedWord];
-            Debug.LogError("You said " + speech.text);
+            Debug.Log("You said " + recognizedWord);
         }
         else
         {
-            Debug.LogError("RMB not pressed " + speech.text);
+            Debug.Log("RMB not pressed " + speech.text);
         }
     }
 

@@ -14380,6 +14380,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 67467680}
     - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 4669242325582227673}
+    - target: {fileID: 4103712463386379400, guid: 700eeb437e0cc7741b3cceb49157fd1f, type: 3}
       propertyPath: upgradeMenu
       value: 
       objectReference: {fileID: 1311301799}
@@ -14843,6 +14847,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1820073149}
   m_SourcePrefab: {fileID: 100100000, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+--- !u!1 &4669242325582227673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7314995322553231917, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}
+  m_PrefabInstance: {fileID: 4669242325582227672}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6460582244847466791 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 271781838304637736, guid: a903034b8350eaf4386202b4fbf9d9d9, type: 3}

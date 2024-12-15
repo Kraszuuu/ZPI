@@ -163,13 +163,14 @@ public class SpellCasting : MonoBehaviour
             Debug.Log("Spell casted! Number of points: " + _mousePositions.Count);
             _playerVoiceCommands.recognizedSpell = null;
             _playerVoiceCommands.recognizedWord = null;
-            _playerVoiceCommands.recognizedWordText.text = null;
+            _playerVoiceCommands.recognizedWordText.text = "";
         }
         else
         {
             Debug.Log("Unrecognized spell pattern");
         }
         _playerVoiceCommands.recognizedSpell = null;
+        _playerVoiceCommands.recognizedWordText.text = "";
     }
 
     public void CastFireball()
